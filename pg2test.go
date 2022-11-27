@@ -12,8 +12,9 @@ func main() {
 		"test",
 		sdl.WINDOWPOS_UNDEFINED,
 		sdl.WINDOWPOS_UNDEFINED,
-		300, 300,
-		sdl.WINDOW_SHOWN)
+		320, 240,
+		sdl.WINDOW_SHOWN|sdl.WINDOW_BORDERLESS)
+
 	if err != nil {
 		panic(err)
 	}
