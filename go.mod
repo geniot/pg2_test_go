@@ -1,4 +1,4 @@
-module pg2_test
+module github.com/geniot/pg2_test_go
 
 go 1.19
 

@@ -8,6 +8,8 @@ OPK_NAME=pg2test.opk
 rm -rf ${TMP_FOLDER}
 mkdir ${TMP_FOLDER}
 
+cp media ${TMP_FOLDER} -R
+
 CC='/opt/gcw0-toolchain/usr/bin/mipsel-gcw0-linux-uclibc-gcc' \
  CGO_CFLAGS='-I/opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/include -D_REENTRANT' \
  CGO_ENABLED=1 \
