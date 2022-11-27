@@ -1,6 +1,7 @@
 package main
 
 import (
+	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
 	"strconv"
@@ -11,7 +12,7 @@ const (
 	fontSize           = 14
 	width              = 320
 	height             = 240
-	secondScreenOffset = 2500
+	secondScreenOffset = 2500 //used for testing/debugging
 )
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 	var surface *sdl.Surface
 	var text *sdl.Surface
 	var err error
+	var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
 
 	if err = ttf.Init(); err != nil {
 		return
@@ -80,6 +82,11 @@ func main() {
 				running = false
 			case *sdl.KeyboardEvent:
 				keyCode := t.Keysym.Sym
+				if t.State == sdl.RELEASED {
+					pressedKeysCodes.Remove(keyCode)
+				} else if t.State == sdl.PRESSED {
+					pressedKeysCodes.Add(keyCode)
+				}
 
 				rect := sdl.Rect{0, 0, width, height}
 				surface.FillRect(&rect, 0xffffffff)
@@ -87,13 +94,15 @@ func main() {
 				text, err = font.RenderUTF8Blended(txt, sdl.Color{R: 255, G: 0, B: 0, A: 255})
 				text.Blit(nil, surface, &sdl.Rect{X: width/2 - text.W/2, Y: height/2 - text.H/2, W: 0, H: 0})
 				window.UpdateSurface()
-				if string(keyCode) == "q" {
+
+				if pressedKeysCodes.Contains(sdl.K_q) ||
+					(pressedKeysCodes.Contains(GCW_BUTTON_L1) && pressedKeysCodes.Contains(GCW_BUTTON_START)) {
 					running = false
 				}
 			}
 		}
 
-		sdl.Delay(16)
+		//sdl.Delay(16)
 	}
 
 }
