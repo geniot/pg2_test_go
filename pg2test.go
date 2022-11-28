@@ -96,30 +96,7 @@ func redraw() {
 			}
 		}
 	}
-	//var colorKey, _ = pngImage.GetColorKey()
-	//var surf, _ = sdl.CreateRGBSurface(colorKey, pngImage.W, pngImage.H, 16, 0, 0, 0, 0)
-	//pngImage.Blit(nil, surf, nil)
-	//pngImage.Blit(nil, surface, &sdl.Rect{X: 90, Y: 50, W: pngImage.W, H: pngImage.H})
-	//surf.SetColorKey(true, sdl.MapRGB(surface.Format, 255, 0, 255))
-	//defer surf.Free()
 
-	// Create a red text with the font
-	//text, err := font.RenderUTF8Blended("Hello, World!", sdl.Color{R: 255, G: 0, B: 0, A: 255})
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//// Draw the text around the center of the window
-	//if err := text.Blit(nil, surface, &sdl.Rect{X: SCREEN_WIDTH/2 - text.W/2, Y: SCREEN_HEIGHT/2 - text.H/2, W: 0, H: 0}); err != nil {
-	//	panic(err)
-	//}
-	//rect := sdl.Rect{0, 0, SCREEN_WIDTH, SCREEN_HEIGHT}
-	//surface.FillRect(&rect, sdl.MapRGB(surface.Format, 16, 16, 16))
-	//
-	//var txt = strconv.Itoa(int(keyCode)) + ":" + string(keyCode)
-	//text, err = font.RenderUTF8Blended(txt, sdl.Color{R: 255, G: 0, B: 0, A: 255})
-	//text.Blit(nil, surface, &sdl.Rect{X: SCREEN_WIDTH/2 - text.W/2, Y: SCREEN_HEIGHT/2 - text.H/2, W: 0, H: 0})
-	//
 	err = window.UpdateSurface()
 	if err != nil {
 		panic(err)

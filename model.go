@@ -174,6 +174,101 @@ func initImageElements() {
 			imageName:      "media/info_padright.png",
 			displayOnPress: GCW_BUTTON_RIGHT,
 		},
+		//menu, select, start
+		{
+			offsetX:        206,
+			offsetY:        96,
+			imageName:      "media/info_menu.png",
+			displayOnPress: GCW_BUTTON_MENU,
+		},
+		{
+			offsetX:        206,
+			offsetY:        107,
+			imageName:      "media/info_select.png",
+			displayOnPress: GCW_BUTTON_SELECT,
+		},
+		{
+			offsetX:        206,
+			offsetY:        116,
+			imageName:      "media/info_start.png",
+			displayOnPress: GCW_BUTTON_START,
+		},
+		//L1
+		{
+			offsetX:        92,
+			offsetY:        55,
+			imageName:      "media/pg2_button_l1.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        92,
+			offsetY:        55,
+			imageName:      "media/pg2_button_l1_pressed.png",
+			displayOnPress: GCW_BUTTON_L1,
+		},
+		{
+			offsetX:        86,
+			offsetY:        40,
+			imageName:      "media/info_btnl1.png",
+			displayOnPress: GCW_BUTTON_L1,
+		},
+		//L2
+		{
+			offsetX:        110,
+			offsetY:        53,
+			imageName:      "media/pg2_button_l2.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        110,
+			offsetY:        53,
+			imageName:      "media/pg2_button_l2_pressed.png",
+			displayOnPress: GCW_BUTTON_L2,
+		},
+		{
+			offsetX:        109,
+			offsetY:        40,
+			imageName:      "media/info_btnl2.png",
+			displayOnPress: GCW_BUTTON_L2,
+		},
+		//R1
+		{
+			offsetX:        213,
+			offsetY:        55,
+			imageName:      "media/pg2_button_r1.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        213,
+			offsetY:        55,
+			imageName:      "media/pg2_button_r1_pressed.png",
+			displayOnPress: GCW_BUTTON_R1,
+		},
+		{
+			offsetX:        213,
+			offsetY:        40,
+			imageName:      "media/info_btnr1.png",
+			displayOnPress: GCW_BUTTON_R1,
+		},
+		//R2
+		{
+			offsetX:        199,
+			offsetY:        53,
+			imageName:      "media/pg2_button_r2.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        199,
+			offsetY:        53,
+			imageName:      "media/pg2_button_r2_pressed.png",
+			displayOnPress: GCW_BUTTON_R2,
+		},
+		{
+			offsetX:        200,
+			offsetY:        40,
+			imageName:      "media/info_btnr2.png",
+			displayOnPress: GCW_BUTTON_R2,
+		},
 	}
 	for i, imageElement := range imageElements {
 		var pngImage, err = img.Load(imageElement.imageName)
