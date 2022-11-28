@@ -81,10 +81,16 @@ func redraw() {
 	}
 
 	for i, imageElement := range imageElements {
-		imageElements[i].surface.Blit(
-			nil,
-			surface,
-			&sdl.Rect{X: imageElement.offsetX, Y: imageElement.offsetY, W: imageElements[i].surface.W, H: imageElements[i].surface.H})
+		if imageElement.displayOnPress == sdl.K_UNKNOWN ||
+			pressedKeysCodes.Contains(imageElement.displayOnPress) {
+			var err = imageElement.surface.Blit(
+				nil,
+				surface,
+				&sdl.Rect{X: imageElement.offsetX, Y: imageElement.offsetY, W: imageElements[i].surface.W, H: imageElements[i].surface.H})
+			if err != nil {
+				panic(err)
+			}
+		}
 	}
 	//var colorKey, _ = pngImage.GetColorKey()
 	//var surf, _ = sdl.CreateRGBSurface(colorKey, pngImage.W, pngImage.H, 16, 0, 0, 0, 0)
