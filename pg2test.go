@@ -17,6 +17,7 @@ var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
 var imageElements []ImageElement
 var audioChunk *mix.Chunk
 var joystick *sdl.Joystick
+var haptic *sdl.Haptic
 
 func main() {
 
@@ -49,8 +50,9 @@ func main() {
 						panic(err)
 					}
 				}
-				if pressedKeysCodes.Contains(GCW_BUTTON_L2) && pressedKeysCodes.Contains(GCW_BUTTON_R2) && joystick.HasRumble() {
-					var err = joystick.Rumble(0, 0xFFFF, 3000)
+				if pressedKeysCodes.Contains(GCW_BUTTON_L2) && pressedKeysCodes.Contains(GCW_BUTTON_R2) {
+					//var err = joystick.Rumble(0, 0xFFFF, 3000)
+					var err = haptic.RumblePlay(1.0, 3000)
 					if err != nil {
 						panic(err)
 					}
@@ -68,6 +70,8 @@ func main() {
 func initAll() {
 	err := ttf.Init()
 	err = sdl.Init(sdl.INIT_JOYSTICK | sdl.INIT_AUDIO | sdl.INIT_VIDEO)
+	haptic, err = sdl.HapticOpen(0)
+	err = haptic.RumbleInit()
 	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
 	sdl.JoystickEventState(sdl.ENABLE)
 	joystick = sdl.JoystickOpen(0)
@@ -96,6 +100,7 @@ func closeAll() {
 	closeImageElements()
 	audioChunk.Free()
 	joystick.Close()
+	haptic.Close()
 	font.Close()
 	ttf.Quit()
 	sdl.Quit()
