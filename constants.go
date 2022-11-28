@@ -30,7 +30,7 @@ const (
 
 	GCW_BUTTON_SELECT = sdl.K_ESCAPE
 	GCW_BUTTON_START  = sdl.K_RETURN
-	GCW_BUTTON_MENU   = sdl.K_RCTRL
+	GCW_BUTTON_MENU   = sdl.K_HOME
 
 	GCW_BUTTON_L3    = sdl.K_KP_DIVIDE
 	GCW_BUTTON_R3    = sdl.K_KP_PERIOD
@@ -39,7 +39,7 @@ const (
 	MSG_0 = "Press L1 + START to exit."
 	MSG_1 = "Press L1 + X to play a sound."
 	MSG_2 = "Last detected key:"
-	MSG_3 = "Press POWER + R1 to de/activate mouse."
+	//MSG_3 = "Press POWER + R1 to de/activate mouse."
 	MSG_4 = "reading..."
 	MSG_5 = "Press L2 + R2 to rumble."
 )

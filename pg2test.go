@@ -107,11 +107,10 @@ func redraw() {
 	//last detected key
 	drawText(MSG_2, 10, 160, 0, 255, 255)
 	drawText(fmt.Sprintf("%d [0x%04X]", lastPressedKey, lastPressedKey), 110, 160, 255, 255, 255)
-	//drawText(MSG_2, 180, 160, 0, 255, 255)
 
-	drawText(MSG_3, 10, 200, 255, 255, 0)
+	//drawText(MSG_3, 10, 200, 255, 255, 0)
 	drawText(MSG_4, 197, 20, 255, 255, 255)
-	drawText(MSG_5, 10, 210, 255, 255, 0)
+	drawText(MSG_5, 10, 200, 255, 255, 0)
 
 	err = window.UpdateSurface()
 	if err != nil {
