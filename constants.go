@@ -32,9 +32,9 @@ const (
 	GCW_BUTTON_START  = sdl.K_RETURN
 	GCW_BUTTON_MENU   = sdl.K_HOME
 
-	GCW_BUTTON_L3    = sdl.K_KP_DIVIDE
-	GCW_BUTTON_R3    = sdl.K_KP_PERIOD
-	GCW_BUTTON_POWER = sdl.K_HOME
+	//GCW_BUTTON_L3    = sdl.K_KP_DIVIDE
+	//GCW_BUTTON_R3    = sdl.K_KP_PERIOD
+	//GCW_BUTTON_POWER = sdl.K_HOME
 
 	MSG_0 = "Press L1 + START to exit."
 	MSG_1 = "Press L1 + X to play a sound."

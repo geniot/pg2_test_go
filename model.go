@@ -174,18 +174,56 @@ func initImageElements() {
 			imageName:      "media/info_padright.png",
 			displayOnPress: GCW_BUTTON_RIGHT,
 		},
-		//menu, select, start
+		//MENU
+		{
+			offsetX:        200,
+			offsetY:        96,
+			imageName:      "media/pg2_button_s.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        200,
+			offsetY:        96,
+			imageName:      "media/pg2_button_s_pressed.png",
+			displayOnPress: GCW_BUTTON_MENU,
+		},
 		{
 			offsetX:        206,
-			offsetY:        96,
+			offsetY:        98,
 			imageName:      "media/info_menu.png",
 			displayOnPress: GCW_BUTTON_MENU,
+		},
+		//SELECT
+		{
+			offsetX:        200,
+			offsetY:        105,
+			imageName:      "media/pg2_button_s.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        200,
+			offsetY:        105,
+			imageName:      "media/pg2_button_s_pressed.png",
+			displayOnPress: GCW_BUTTON_SELECT,
 		},
 		{
 			offsetX:        206,
 			offsetY:        107,
 			imageName:      "media/info_select.png",
 			displayOnPress: GCW_BUTTON_SELECT,
+		},
+		//START
+		{
+			offsetX:        200,
+			offsetY:        114,
+			imageName:      "media/pg2_button_s.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        200,
+			offsetY:        114,
+			imageName:      "media/pg2_button_s_pressed.png",
+			displayOnPress: GCW_BUTTON_START,
 		},
 		{
 			offsetX:        206,
