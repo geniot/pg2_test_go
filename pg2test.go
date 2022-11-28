@@ -7,6 +7,7 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
 	"os"
+	"strconv"
 )
 
 var window *sdl.Window
@@ -69,12 +70,43 @@ func main() {
 
 func initAll() {
 	err := ttf.Init()
-	err = sdl.Init(sdl.INIT_JOYSTICK | sdl.INIT_AUDIO | sdl.INIT_VIDEO)
-	haptic, err = sdl.HapticOpen(0)
-	err = haptic.RumbleInit()
+	if err != nil {
+		panic(err)
+	}
+	err = sdl.Init(sdl.INIT_EVERYTHING)
+	if err != nil {
+		panic(err)
+	}
+	numHaptics, err := sdl.NumHaptics()
+	if err != nil {
+		panic(err)
+	}
+	if numHaptics > 0 {
+		println("Haptics: " + strconv.Itoa(numHaptics))
+		println(sdl.HapticName(0))
+		haptic, err = sdl.HapticOpen(0)
+		if err != nil {
+			panic(err)
+		}
+		err = haptic.RumbleInit()
+		if err != nil {
+			panic(err)
+		}
+	}
 	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
+
+	numJoysticks := sdl.NumJoysticks()
+	if numJoysticks > 0 {
+		println("Joysticks: " + strconv.Itoa(numJoysticks))
+		println(sdl.JoystickNameForIndex(0))
+		joystick = sdl.JoystickOpen(0)
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	sdl.JoystickEventState(sdl.ENABLE)
-	joystick = sdl.JoystickOpen(0)
+
 	//_, err = sdl.ShowCursor(0)
 	numVideoDisplay, err := sdl.GetNumVideoDisplays()
 	window, err = sdl.CreateWindow(
