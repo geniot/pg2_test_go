@@ -52,6 +52,8 @@ func main() {
 func initAll() {
 	err := ttf.Init()
 	err = sdl.Init(sdl.INIT_EVERYTHING)
+	sdl.JoystickOpen(0)
+	_, err = sdl.ShowCursor(0)
 	numVideoDisplay, err := sdl.GetNumVideoDisplays()
 	window, err = sdl.CreateWindow(
 		"pg2_test_go",
@@ -68,11 +70,11 @@ func initAll() {
 }
 
 func closeAll() {
+	err := window.Destroy()
 	closeImageElements()
 	font.Close()
 	ttf.Quit()
 	sdl.Quit()
-	err := window.Destroy()
 
 	if err != nil {
 		panic(err)
