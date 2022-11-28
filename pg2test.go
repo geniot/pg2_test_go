@@ -16,6 +16,7 @@ var lastPressedKey sdl.Keycode
 var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
 var imageElements []ImageElement
 var audioChunk *mix.Chunk
+var joystick *sdl.Joystick
 
 func main() {
 
@@ -48,6 +49,12 @@ func main() {
 						panic(err)
 					}
 				}
+				if pressedKeysCodes.Contains(GCW_BUTTON_L2) && pressedKeysCodes.Contains(GCW_BUTTON_R2) && joystick.HasRumble() {
+					var err = joystick.Rumble(0, 0xFFFF, 3000)
+					if err != nil {
+						panic(err)
+					}
+				}
 				redraw()
 				break
 			}
@@ -63,7 +70,7 @@ func initAll() {
 	err = sdl.Init(sdl.INIT_JOYSTICK | sdl.INIT_AUDIO | sdl.INIT_VIDEO)
 	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
 	sdl.JoystickEventState(sdl.ENABLE)
-	sdl.JoystickOpen(0)
+	joystick = sdl.JoystickOpen(0)
 	//_, err = sdl.ShowCursor(0)
 	numVideoDisplay, err := sdl.GetNumVideoDisplays()
 	window, err = sdl.CreateWindow(
@@ -88,6 +95,7 @@ func closeAll() {
 	err := window.Destroy()
 	closeImageElements()
 	audioChunk.Free()
+	joystick.Close()
 	font.Close()
 	ttf.Quit()
 	sdl.Quit()
