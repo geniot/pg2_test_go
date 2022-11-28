@@ -100,10 +100,35 @@ func initImageElements() {
 		},
 		//UP
 		{
+			offsetX:        102,
+			offsetY:        70,
+			imageName:      "media/pg2_button_up.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        102,
+			offsetY:        70,
+			imageName:      "media/pg2_button_up_pressed.png",
+			displayOnPress: GCW_BUTTON_UP,
+		},
+		{
 			offsetX:        71,
-			offsetY:        76,
+			offsetY:        64,
 			imageName:      "media/info_padup.png",
 			displayOnPress: GCW_BUTTON_UP,
+		},
+		//DOWN
+		{
+			offsetX:        102,
+			offsetY:        84,
+			imageName:      "media/pg2_button_down.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        102,
+			offsetY:        84,
+			imageName:      "media/pg2_button_down_pressed.png",
+			displayOnPress: GCW_BUTTON_DOWN,
 		},
 		{
 			offsetX:        59,
@@ -111,11 +136,37 @@ func initImageElements() {
 			imageName:      "media/info_paddown.png",
 			displayOnPress: GCW_BUTTON_DOWN,
 		},
+		//LEFT
+		{
+			offsetX:        95,
+			offsetY:        77,
+			imageName:      "media/pg2_button_left.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        95,
+			offsetY:        77,
+			imageName:      "media/pg2_button_left_pressed.png",
+			displayOnPress: GCW_BUTTON_LEFT,
+		},
 		{
 			offsetX:        63,
 			offsetY:        73,
 			imageName:      "media/info_padleft.png",
 			displayOnPress: GCW_BUTTON_LEFT,
+		},
+		//RIGHT
+		{
+			offsetX:        109,
+			offsetY:        77,
+			imageName:      "media/pg2_button_right.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        109,
+			offsetY:        77,
+			imageName:      "media/pg2_button_right_pressed.png",
+			displayOnPress: GCW_BUTTON_RIGHT,
 		},
 		{
 			offsetX:        58,
