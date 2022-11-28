@@ -24,6 +24,9 @@ func main() {
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 			switch t := event.(type) {
 			case *sdl.KeyboardEvent:
+				if t.Repeat > 0 {
+					break
+				}
 				keyCode := t.Keysym.Sym
 				if t.State == sdl.PRESSED {
 					pressedKeysCodes.Add(keyCode)
@@ -35,6 +38,7 @@ func main() {
 					running = false
 				}
 				redraw()
+				break
 			}
 		}
 
