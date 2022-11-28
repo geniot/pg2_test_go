@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
@@ -9,6 +10,7 @@ import (
 var window *sdl.Window
 var surface *sdl.Surface
 var font *ttf.Font
+var lastPressedKey sdl.Keycode
 var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
 var imageElements []ImageElement
 
@@ -27,11 +29,11 @@ func main() {
 				if t.Repeat > 0 {
 					break
 				}
-				keyCode := t.Keysym.Sym
+				lastPressedKey = t.Keysym.Sym
 				if t.State == sdl.PRESSED {
-					pressedKeysCodes.Add(keyCode)
+					pressedKeysCodes.Add(lastPressedKey)
 				} else { // if t.State == sdl.RELEASED {
-					pressedKeysCodes.Remove(keyCode)
+					pressedKeysCodes.Remove(lastPressedKey)
 				}
 				if pressedKeysCodes.Contains(sdl.K_q) ||
 					(pressedKeysCodes.Contains(GCW_BUTTON_L1) && pressedKeysCodes.Contains(GCW_BUTTON_START)) {
@@ -97,7 +99,30 @@ func redraw() {
 		}
 	}
 
+	drawText(MSG_0, 10, 180, 255, 255, 0)
+	drawText(MSG_1, 10, 190, 255, 255, 0)
+	//last detected key
+	drawText(MSG_2, 10, 160, 0, 255, 255)
+	drawText(fmt.Sprintf("%d [0x%04X]", lastPressedKey, lastPressedKey), 110, 160, 255, 255, 255)
+	//drawText(MSG_2, 180, 160, 0, 255, 255)
+
+	drawText(MSG_3, 10, 200, 255, 255, 0)
+	drawText(MSG_4, 197, 20, 255, 255, 255)
+	drawText(MSG_5, 10, 210, 255, 255, 0)
+
 	err = window.UpdateSurface()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func drawText(txt string, x int32, y int32, fR uint8, fG uint8, fB uint8) {
+	var text, err = font.RenderUTF8Blended(txt, sdl.Color{R: fR, G: fG, B: fB, A: 255})
+	if err != nil {
+		return
+	}
+	defer text.Free()
+	err = text.Blit(nil, surface, &sdl.Rect{X: x, Y: y, W: 0, H: 0})
 	if err != nil {
 		panic(err)
 	}

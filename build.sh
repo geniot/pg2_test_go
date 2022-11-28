@@ -27,8 +27,8 @@ echo ${OPK_NAME}
 # create default.gcw0.desktop
 cat > ${TMP_FOLDER}/default.gcw0.desktop <<EOF
 [Desktop Entry]
-Name=PocketGo2 test
-Comment=Test your PocketGo2
+Name=PocketGo2 v2 test
+Comment=Test your PocketGo2 v2
 Exec=pg2test.gcw
 Terminal=false
 Type=Application
