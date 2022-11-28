@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	mapset "github.com/deckarep/golang-set/v2"
+	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
+	"os"
 )
 
 var window *sdl.Window
@@ -13,6 +15,7 @@ var font *ttf.Font
 var lastPressedKey sdl.Keycode
 var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
 var imageElements []ImageElement
+var audioChunk *mix.Chunk
 
 func main() {
 
@@ -39,6 +42,12 @@ func main() {
 					(pressedKeysCodes.Contains(GCW_BUTTON_L1) && pressedKeysCodes.Contains(GCW_BUTTON_START)) {
 					running = false
 				}
+				if pressedKeysCodes.Contains(GCW_BUTTON_L1) && pressedKeysCodes.Contains(GCW_BUTTON_X) && mix.Playing(-1) != 1 {
+					_, err := audioChunk.Play(1, 0)
+					if err != nil {
+						panic(err)
+					}
+				}
 				redraw()
 				break
 			}
@@ -52,6 +61,7 @@ func main() {
 func initAll() {
 	err := ttf.Init()
 	err = sdl.Init(sdl.INIT_JOYSTICK | sdl.INIT_AUDIO | sdl.INIT_VIDEO)
+	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
 	sdl.JoystickEventState(sdl.ENABLE)
 	sdl.JoystickOpen(0)
 	//_, err = sdl.ShowCursor(0)
@@ -64,7 +74,11 @@ func initAll() {
 		sdl.WINDOW_SHOWN|sdl.WINDOW_BORDERLESS)
 	surface, err = window.GetSurface()
 	font, err = ttf.OpenFont(FONT_PATH, FONT_SIZE)
+
 	initImageElements()
+	data, err := os.ReadFile("media/tone.wav")
+	audioChunk, err = mix.QuickLoadWAV(data)
+
 	if err != nil {
 		panic(err)
 	}
@@ -73,9 +87,11 @@ func initAll() {
 func closeAll() {
 	err := window.Destroy()
 	closeImageElements()
+	audioChunk.Free()
 	font.Close()
 	ttf.Quit()
 	sdl.Quit()
+	mix.CloseAudio()
 
 	if err != nil {
 		panic(err)
