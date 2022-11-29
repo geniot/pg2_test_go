@@ -6,6 +6,7 @@ import (
 	"github.com/veandco/go-sdl2/ttf"
 	"os"
 	"strconv"
+	"fmt"
 )
 
 func initAll() {
@@ -35,15 +36,15 @@ func initAll() {
 		isRumbleSupported, _ = haptic.RumbleSupported()
 	}
 	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
+	if err != nil {
+		println(err)
+	}
 
 	numJoysticks := sdl.NumJoysticks()
 	if numJoysticks > 0 {
 		println("Joysticks: " + strconv.Itoa(numJoysticks))
 		println(sdl.JoystickNameForIndex(0))
 		joystick = sdl.JoystickOpen(0)
-		if err != nil {
-			panic(err)
-		}
 	}
 
 	sdl.JoystickEventState(sdl.ENABLE)
@@ -64,7 +65,7 @@ func initAll() {
 	audioChunk, err = mix.QuickLoadWAV(data)
 
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 }
 
