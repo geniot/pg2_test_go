@@ -7,6 +7,8 @@ const (
 	FONT_SIZE              = 8
 	SCREEN_WIDTH           = 320
 	SCREEN_HEIGHT          = 240
+	TEXT_OFFSET_X          = 10
+	TEXT_PADDING_X         = 4
 	SECOND_SCREEN_X_OFFSET = 2500 //used for testing/debugging
 
 	GCW_BUTTON_UP    = sdl.K_UP

@@ -19,6 +19,8 @@ var imageElements []ImageElement
 var audioChunk *mix.Chunk
 var joystick *sdl.Joystick
 var haptic *sdl.Haptic
+var isRumbleSupported bool
+var keyNames map[sdl.Keycode]string
 
 func main() {
 
@@ -51,15 +53,15 @@ func main() {
 						panic(err)
 					}
 				}
-				if pressedKeysCodes.Contains(GCW_BUTTON_L2) && pressedKeysCodes.Contains(GCW_BUTTON_R2) {
-					rumbleSupported, _ := haptic.RumbleSupported()
-					if rumbleSupported {
+				if isRumbleSupported {
+					if pressedKeysCodes.Contains(GCW_BUTTON_L2) && pressedKeysCodes.Contains(GCW_BUTTON_R2) {
 						var err = haptic.RumblePlay(0.33, 500)
 						if err != nil {
 							panic(err)
 						}
 					}
 				}
+
 				redraw()
 				break
 			}
@@ -94,6 +96,7 @@ func initAll() {
 		if err != nil {
 			panic(err)
 		}
+		isRumbleSupported, _ = haptic.RumbleSupported()
 	}
 	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
 
@@ -167,13 +170,22 @@ func redraw() {
 
 	drawText(MSG_0, 10, 180, 255, 255, 0)
 	drawText(MSG_1, 10, 190, 255, 255, 0)
+
 	//last detected key
-	drawText(MSG_2, 10, 160, 0, 255, 255)
-	drawText(fmt.Sprintf("%d [0x%04X]", lastPressedKey, lastPressedKey), 110, 160, 255, 255, 255)
+	var textWidth1 = drawText(MSG_2, TEXT_OFFSET_X, 160, 0, 255, 255)
+	var textWidth2 = drawText(fmt.Sprintf("%d [0x%04X]", lastPressedKey, lastPressedKey), TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1, 160, 255, 255, 255)
+	var value, ok = keyNames[lastPressedKey]
+	if ok {
+		drawText(value, TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1+TEXT_PADDING_X+textWidth2, 160, 0, 255, 255)
+	} else {
+		drawText("Not defined", TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1+TEXT_PADDING_X+textWidth2, 160, 0, 255, 255)
+	}
 
 	//drawText(MSG_3, 10, 200, 255, 255, 0)
 	drawText(MSG_4, 197, 20, 255, 255, 255)
-	drawText(MSG_5, 10, 200, 255, 255, 0)
+	if isRumbleSupported {
+		drawText(MSG_5, 10, 200, 255, 255, 0)
+	}
 
 	err = window.UpdateSurface()
 	if err != nil {
@@ -181,16 +193,17 @@ func redraw() {
 	}
 }
 
-func drawText(txt string, x int32, y int32, fR uint8, fG uint8, fB uint8) {
+func drawText(txt string, x int32, y int32, fR uint8, fG uint8, fB uint8) int32 {
 	var text, err = font.RenderUTF8Blended(txt, sdl.Color{R: fR, G: fG, B: fB, A: 255})
 	if err != nil {
-		return
+		return 0
 	}
 	defer text.Free()
 	err = text.Blit(nil, surface, &sdl.Rect{X: x, Y: y, W: 0, H: 0})
 	if err != nil {
 		panic(err)
 	}
+	return text.W
 }
 
 func If[T any](cond bool, vTrue, vFalse T) T {

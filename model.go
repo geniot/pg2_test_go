@@ -315,6 +315,28 @@ func initImageElements() {
 		}
 		imageElements[i].surface = pngImage
 	}
+
+	keyNames = map[sdl.Keycode]string{
+		GCW_BUTTON_UP:    "SDLK_UP",
+		GCW_BUTTON_DOWN:  "SDLK_DOWN",
+		GCW_BUTTON_LEFT:  "SDLK_LEFT",
+		GCW_BUTTON_RIGHT: "SDLK_RIGHT",
+
+		GCW_BUTTON_A: "SDLK_LCTRL",
+		GCW_BUTTON_B: "SDLK_LALT",
+		GCW_BUTTON_X: "SDLK_SPACE",
+		GCW_BUTTON_Y: "SDLK_LSHIFT",
+
+		GCW_BUTTON_L1: "SDLK_TAB",
+		GCW_BUTTON_R1: "SDLK_BACKSPACE",
+
+		GCW_BUTTON_L2: "SDLK_PAGEUP",
+		GCW_BUTTON_R2: "SDLK_PAGEDOWN",
+
+		GCW_BUTTON_SELECT: "SDLK_ESCAPE",
+		GCW_BUTTON_START:  "SDLK_RETURN",
+		GCW_BUTTON_MENU:   "SDLK_HOME",
+	}
 }
 
 func closeImageElements() {
