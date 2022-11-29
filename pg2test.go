@@ -52,9 +52,12 @@ func main() {
 					}
 				}
 				if pressedKeysCodes.Contains(GCW_BUTTON_L2) && pressedKeysCodes.Contains(GCW_BUTTON_R2) {
-					var err = haptic.RumblePlay(0.33, 500)
-					if err != nil {
-						panic(err)
+					rumbleSupported, _ := haptic.RumbleSupported()
+					if rumbleSupported {
+						var err = haptic.RumblePlay(0.33, 500)
+						if err != nil {
+							panic(err)
+						}
 					}
 				}
 				redraw()
