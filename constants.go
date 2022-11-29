@@ -45,3 +45,10 @@ const (
 	MSG_4 = "reading..."
 	MSG_5 = "Press L2 + R2 to rumble."
 )
+
+func If[T any](cond bool, vTrue, vFalse T) T {
+	if cond {
+		return vTrue
+	}
+	return vFalse
+}
