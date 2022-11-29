@@ -1,12 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
 	"os"
 	"strconv"
-	"fmt"
 )
 
 func initAll() {
@@ -37,7 +37,7 @@ func initAll() {
 	}
 	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
 	if err != nil {
-		println(err)
+		println(err.Error())
 	}
 
 	numJoysticks := sdl.NumJoysticks()
@@ -65,7 +65,7 @@ func initAll() {
 	audioChunk, err = mix.QuickLoadWAV(data)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 	}
 }
 

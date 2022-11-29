@@ -14,6 +14,27 @@ type ImageElement struct {
 }
 
 func initImageElements() {
+	joystickImageElements = []ImageElement{
+		{
+			offsetX:        101,
+			offsetY:        100,
+			imageName:      "media/pg2_stick.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        101,
+			offsetY:        100,
+			imageName:      "media/pg2_stick_moved.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        101,
+			offsetY:        100,
+			imageName:      "media/pg2_stick_pressed.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+	}
+
 	imageElements = []ImageElement{
 		//background
 		{
@@ -308,13 +329,17 @@ func initImageElements() {
 			displayOnPress: GCW_BUTTON_R2,
 		},
 	}
-	for i, imageElement := range imageElements {
-		var pngImage, err = img.Load(imageElement.imageName)
-		if err != nil {
-			panic(err)
-		}
-		imageElements[i].surface = pngImage
-	}
+
+	//for i, imageElement := range imageElements {
+	//	var pngImage, err = img.Load(imageElement.imageName)
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	imageElements[i].surface = pngImage
+	//}
+
+	loadImages(imageElements)
+	loadImages(joystickImageElements)
 
 	keyNames = map[sdl.Keycode]string{
 		GCW_BUTTON_UP:    "SDLK_UP",
@@ -339,8 +364,22 @@ func initImageElements() {
 	}
 }
 
+func loadImages(imgArray []ImageElement) {
+	for i, _ := range imgArray {
+		var pngImage, err = img.Load(imgArray[i].imageName)
+		if err != nil {
+			panic(err)
+		}
+		//see https://stackoverflow.com/questions/20185511/range-references-instead-values
+		imgArray[i].surface = pngImage
+	}
+}
+
 func closeImageElements() {
 	for i, _ := range imageElements {
 		imageElements[i].surface.Free()
+	}
+	for i, _ := range joystickImageElements {
+		joystickImageElements[i].surface.Free()
 	}
 }

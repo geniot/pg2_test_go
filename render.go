@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
-	"strconv"
 )
 
 func render() {
@@ -40,19 +39,45 @@ func redraw() {
 		panic(err)
 	}
 
-	for i, imageElement := range imageElements {
-		if imageElement.displayOnPress == sdl.K_UNKNOWN ||
-			pressedKeysCodes.Contains(imageElement.displayOnPress) {
-			var err = imageElement.surface.Blit(
+	for _, imgEl := range imageElements {
+		if imgEl.displayOnPress == sdl.K_UNKNOWN ||
+			pressedKeysCodes.Contains(imgEl.displayOnPress) {
+			var err = imgEl.surface.Blit(
 				nil,
 				surface,
-				&sdl.Rect{X: imageElement.offsetX, Y: imageElement.offsetY, W: imageElements[i].surface.W, H: imageElements[i].surface.H})
+				&sdl.Rect{X: imgEl.offsetX, Y: imgEl.offsetY, W: imgEl.surface.W, H: imgEl.surface.H})
 			if err != nil {
 				panic(err)
 			}
 		}
 	}
 
+	drawMessages()
+	drawJoystick()
+
+	err = window.UpdateSurface()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func drawJoystick() {
+	var x = int32(joystick.Axis(0) / 5461)
+	var y = int32(joystick.Axis(1) / 5461)
+	var jImgEl = joystickImageElements[0]
+	if x != 0 || y != 0 {
+		jImgEl = joystickImageElements[1]
+	}
+	var err = jImgEl.surface.Blit(
+		nil,
+		surface,
+		&sdl.Rect{X: jImgEl.offsetX + x, Y: jImgEl.offsetY + y, W: jImgEl.surface.W, H: jImgEl.surface.H})
+	if err != nil {
+		panic(err)
+	}
+}
+
+func drawMessages() {
 	drawText(MSG_0, 10, 180, 255, 255, 0)
 	drawText(MSG_1, 10, 190, 255, 255, 0)
 
@@ -70,18 +95,6 @@ func redraw() {
 	drawText(MSG_4, 197, 20, 255, 255, 255)
 	if isRumbleSupported {
 		drawText(MSG_5, 10, 200, 255, 255, 0)
-	}
-
-	if joystick.Axis(0) != 0 {
-		println("0:" + strconv.FormatInt(int64(joystick.Axis(0)), 10))
-	}
-	if joystick.Axis(1) != 0 {
-		println("1:" + strconv.FormatInt(int64(joystick.Axis(1)), 10))
-	}
-
-	err = window.UpdateSurface()
-	if err != nil {
-		panic(err)
 	}
 }
 
