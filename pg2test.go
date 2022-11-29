@@ -52,8 +52,7 @@ func main() {
 					}
 				}
 				if pressedKeysCodes.Contains(GCW_BUTTON_L2) && pressedKeysCodes.Contains(GCW_BUTTON_R2) {
-					//var err = joystick.Rumble(0, 0xFFFF, 3000)
-					var err = haptic.RumblePlay(1.0, 3000)
+					var err = haptic.RumblePlay(0.33, 500)
 					if err != nil {
 						panic(err)
 					}
