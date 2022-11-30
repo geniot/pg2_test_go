@@ -69,8 +69,10 @@ func redraw() {
 }
 
 func drawJoystick() {
-	var x = int32(joystick.Axis(0) / 5461)
-	var y = int32(joystick.Axis(1) / 5461)
+	var axisX = joystick.Axis(0)
+	var axisY = joystick.Axis(1)
+	var x = int32(axisX / 5461)
+	var y = int32(axisY / 5461)
 	var jImgEl = joystickImageElements[0]
 	if x != 0 || y != 0 {
 		jImgEl = joystickImageElements[1]
@@ -87,14 +89,14 @@ func drawJoystick() {
 		panic(err)
 	}
 
-	drawText(fmt.Sprintf("%.2f", float32(x)/32767.0), 131, 69, 255, 0, 255)
-	drawText(fmt.Sprintf("%.2f", float32(y)/32767.0), 131, 79, 255, 0, 255)
+	drawText(fmt.Sprintf("%.2f", float32(axisX)/32767.0), 131, 69, 255, 0, 255)
+	drawText(fmt.Sprintf("%.2f", float32(axisY)/32767.0), 131, 79, 255, 0, 255)
 
-	posX := (x + 32767) / 1130
-	posY := (y + 32767) / 1598
+	posX := 32767/1130+int32(axisX / 1130)
+	posY := 32767/1130+int32(axisY / 1598)
 
-	err = surface.FillRect(&sdl.Rect{X: 131 - 3 + posX, Y: 70 + posY, W: 7, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
-	err = surface.FillRect(&sdl.Rect{X: 131 + posX, Y: 70 - 3 + posY, W: 1, H: 7}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	err = surface.FillRect(&sdl.Rect{X: 131 - 3 + posX, Y: 65 + posY, W: 7, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	err = surface.FillRect(&sdl.Rect{X: 131 + posX, Y: 65 - 3 + posY, W: 1, H: 7}, sdl.MapRGB(surface.Format, 255, 0, 255))
 	//err = renderer.SetDrawColor(255, 0, 255, 255)
 	//err = renderer.DrawLine(131-3+posX, 70+posY, 131+4+posX, 70+posY)
 	//err = renderer.DrawLine(131+posX, 70-3+posY, 131+posX, 70+4+posY)
