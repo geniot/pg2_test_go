@@ -18,6 +18,16 @@ type PowerInfo struct {
 	isCharging bool
 }
 
+type DiskInfo struct {
+	isDiskAvailableA bool
+	diskSpaceA       float32
+	freeDiskSpaceA   float32
+
+	isDiskAvailableB bool
+	diskSpaceB       float32
+	freeDiskSpaceB   float32
+}
+
 func initArrays() {
 	batteryImageElements = []ImageElement{
 		{
