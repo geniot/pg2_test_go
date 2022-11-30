@@ -66,6 +66,29 @@ func redraw() {
 
 	drawJoystick()
 	drawMessages()
+	drawBattery()
+}
+
+func drawBattery() {
+	var bImgEl = batteryImageElements[0]
+	if powerInfo.powerState == sdl.POWERSTATE_CHARGING {
+		bImgEl = batteryImageElements[1]
+	} else {
+		drawText(fmt.Sprintf("%2d%%", powerInfo.pct), 279, 120, 255, 255, 255)
+	}
+	var err = bImgEl.surface.Blit(
+		nil,
+		surface,
+		&sdl.Rect{X: bImgEl.offsetX, Y: bImgEl.offsetY, W: bImgEl.surface.W, H: bImgEl.surface.H})
+	if err != nil {
+		panic(err)
+	}
+	var batteryLevelHeight = int32(powerInfo.pct * 39 / 100)
+	if powerInfo.pct > 24 {
+		err = surface.FillRect(&sdl.Rect{X: bImgEl.offsetX + 1, Y: bImgEl.offsetY + 43 - batteryLevelHeight, W: 14, H: batteryLevelHeight}, sdl.MapRGB(surface.Format, 64, 192, 64)) //green
+	} else {
+		err = surface.FillRect(&sdl.Rect{X: bImgEl.offsetX + 1, Y: bImgEl.offsetY + 43 - batteryLevelHeight, W: 14, H: batteryLevelHeight}, sdl.MapRGB(surface.Format, 192, 64, 64)) //red
+	}
 }
 
 func drawJoystick() {

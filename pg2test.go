@@ -16,12 +16,14 @@ var lastPressedKey sdl.Keycode
 var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
 var imageElements []ImageElement
 var joystickImageElements []ImageElement
+var batteryImageElements []ImageElement
 var audioChunk *mix.Chunk
 var joystick *sdl.Joystick
 var haptic *sdl.Haptic
 var isRumbleSupported bool
 var keyNames map[sdl.Keycode]string
 var running bool
+var powerInfo PowerInfo
 
 func main() {
 

@@ -64,19 +64,34 @@ func initAll() {
 
 	font, err = ttf.OpenFont(FONT_PATH, FONT_SIZE)
 
-	initImageElements()
+	initArrays()
+
+	loadImages(imageElements)
+	loadImages(joystickImageElements)
+	loadImages(batteryImageElements)
+
 	data, err := os.ReadFile("media/tone.wav")
 	audioChunk, err = mix.QuickLoadWAV(data)
 
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+
+	var state, secs, pct = sdl.GetPowerInfo()
+	if pct < 0 {
+		pct = 100
+	}
+	powerInfo = PowerInfo{secs, pct, state}
 }
 
 func closeAll() {
 	err := window.Destroy()
 	//err = renderer.Destroy()
-	closeImageElements()
+
+	freeImageElements(imageElements)
+	freeImageElements(joystickImageElements)
+	freeImageElements(batteryImageElements)
+
 	audioChunk.Free()
 	joystick.Close()
 	haptic.Close()

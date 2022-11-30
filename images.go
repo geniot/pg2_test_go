@@ -13,25 +13,40 @@ type ImageElement struct {
 	displayOnPress sdl.Keycode
 }
 
-func initImageElements() {
+type PowerInfo struct {
+	secs       int
+	pct        int
+	powerState int
+}
+
+func initArrays() {
+	batteryImageElements = []ImageElement{
+		{
+			offsetX:   280,
+			offsetY:   70,
+			imageName: "media/battery.png",
+		},
+		{
+			offsetX:   280,
+			offsetY:   70,
+			imageName: "media/battery2.png",
+		},
+	}
 	joystickImageElements = []ImageElement{
 		{
-			offsetX:        101,
-			offsetY:        100,
-			imageName:      "media/pg2_stick.png",
-			displayOnPress: sdl.K_UNKNOWN,
+			offsetX:   101,
+			offsetY:   100,
+			imageName: "media/pg2_stick.png",
 		},
 		{
-			offsetX:        101,
-			offsetY:        100,
-			imageName:      "media/pg2_stick_moved.png",
-			displayOnPress: sdl.K_UNKNOWN,
+			offsetX:   101,
+			offsetY:   100,
+			imageName: "media/pg2_stick_moved.png",
 		},
 		{
-			offsetX:        101,
-			offsetY:        100,
-			imageName:      "media/pg2_stick_pressed.png",
-			displayOnPress: sdl.K_UNKNOWN,
+			offsetX:   101,
+			offsetY:   100,
+			imageName: "media/pg2_stick_pressed.png",
 		},
 	}
 
@@ -330,17 +345,6 @@ func initImageElements() {
 		},
 	}
 
-	//for i, imageElement := range imageElements {
-	//	var pngImage, err = img.Load(imageElement.imageName)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	imageElements[i].surface = pngImage
-	//}
-
-	loadImages(imageElements)
-	loadImages(joystickImageElements)
-
 	keyNames = map[sdl.Keycode]string{
 		GCW_BUTTON_UP:    "SDLK_UP",
 		GCW_BUTTON_DOWN:  "SDLK_DOWN",
@@ -375,11 +379,8 @@ func loadImages(imgArray []ImageElement) {
 	}
 }
 
-func closeImageElements() {
-	for i, _ := range imageElements {
-		imageElements[i].surface.Free()
-	}
-	for i, _ := range joystickImageElements {
-		joystickImageElements[i].surface.Free()
+func freeImageElements(imgArray []ImageElement) {
+	for i, _ := range imgArray {
+		imgArray[i].surface.Free()
 	}
 }

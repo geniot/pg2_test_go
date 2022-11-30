@@ -10,3 +10,9 @@ See:
 3. https://github.com/Ninoh-FOX/POCKETGO2_ROGUE_CFW
 4. https://github.com/Ninoh-FOX/toolchain
 
+TODO:
+- battery indicator
+- volume indicator
+- ssd cards
+- volume +/- buttons
+- power button
