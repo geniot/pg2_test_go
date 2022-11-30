@@ -9,6 +9,8 @@ import (
 
 var window *sdl.Window
 var surface *sdl.Surface
+
+// var renderer *sdl.Renderer
 var font *ttf.Font
 var lastPressedKey sdl.Keycode
 var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
@@ -48,7 +50,7 @@ func main() {
 		}
 
 		render()
-		//sdl.Delay(16)
+		sdl.Delay(1000 / 60)
 	}
 
 }

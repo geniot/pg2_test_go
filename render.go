@@ -7,11 +7,21 @@ import (
 )
 
 func render() {
-	processKeys()
+	//err := renderer.Clear()
+	//if err != nil {
+	//	panic(err)
+	//}
+	processKeyActions()
 	redraw()
+
+	//renderer.Present()
+	var err = window.UpdateSurface()
+	if err != nil {
+		panic(err)
+	}
 }
 
-func processKeys() {
+func processKeyActions() {
 	if pressedKeysCodes.Contains(sdl.K_q) ||
 		(pressedKeysCodes.Contains(GCW_BUTTON_L1) && pressedKeysCodes.Contains(GCW_BUTTON_START)) {
 		running = false
@@ -34,11 +44,13 @@ func processKeys() {
 
 func redraw() {
 
+	//background
 	var err = surface.FillRect(nil, sdl.MapRGB(surface.Format, 16, 16, 16))
 	if err != nil {
 		panic(err)
 	}
 
+	//images
 	for _, imgEl := range imageElements {
 		if imgEl.displayOnPress == sdl.K_UNKNOWN ||
 			pressedKeysCodes.Contains(imgEl.displayOnPress) {
@@ -52,13 +64,8 @@ func redraw() {
 		}
 	}
 
-	drawMessages()
 	drawJoystick()
-
-	err = window.UpdateSurface()
-	if err != nil {
-		panic(err)
-	}
+	drawMessages()
 }
 
 func drawJoystick() {
@@ -68,6 +75,10 @@ func drawJoystick() {
 	if x != 0 || y != 0 {
 		jImgEl = joystickImageElements[1]
 	}
+	//left joystick in PG2v2 cannot be pressed, just moved, so I cannot test it
+	if pressedKeysCodes.Contains(GCW_BUTTON_L3) {
+		jImgEl = joystickImageElements[2]
+	}
 	var err = jImgEl.surface.Blit(
 		nil,
 		surface,
@@ -75,6 +86,19 @@ func drawJoystick() {
 	if err != nil {
 		panic(err)
 	}
+
+	drawText(fmt.Sprintf("%.2f", float32(x)/32767.0), 131, 69, 255, 0, 255)
+	drawText(fmt.Sprintf("%.2f", float32(y)/32767.0), 131, 79, 255, 0, 255)
+
+	posX := (x + 32767) / 1130
+	posY := (y + 32767) / 1598
+
+	err = surface.FillRect(&sdl.Rect{X: 131 - 3 + posX, Y: 70 + posY, W: 7, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	err = surface.FillRect(&sdl.Rect{X: 131 + posX, Y: 70 - 3 + posY, W: 1, H: 7}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	//err = renderer.SetDrawColor(255, 0, 255, 255)
+	//err = renderer.DrawLine(131-3+posX, 70+posY, 131+4+posX, 70+posY)
+	//err = renderer.DrawLine(131+posX, 70-3+posY, 131+posX, 70+4+posY)
+
 }
 
 func drawMessages() {

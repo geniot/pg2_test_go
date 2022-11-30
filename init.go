@@ -57,7 +57,11 @@ func initAll() {
 		sdl.WINDOWPOS_UNDEFINED,
 		SCREEN_WIDTH, SCREEN_HEIGHT,
 		sdl.WINDOW_SHOWN|sdl.WINDOW_BORDERLESS)
+
+	//renderer, err = sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED)
+
 	surface, err = window.GetSurface()
+
 	font, err = ttf.OpenFont(FONT_PATH, FONT_SIZE)
 
 	initImageElements()
@@ -71,6 +75,7 @@ func initAll() {
 
 func closeAll() {
 	err := window.Destroy()
+	//err = renderer.Destroy()
 	closeImageElements()
 	audioChunk.Free()
 	joystick.Close()
