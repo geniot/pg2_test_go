@@ -7,6 +7,7 @@ import (
 	"github.com/veandco/go-sdl2/ttf"
 	"os"
 	"strconv"
+	"github.com/robfig/cron/v3"
 )
 
 func initAll() {
@@ -77,10 +78,24 @@ func initAll() {
 		fmt.Println(err.Error())
 	}
 
+	updateBatteryStatus()
+
+	c := cron.New()
+	c.AddFunc("@every 5s", updateBatteryStatus)
+	c.Start()
+}
+
+func updateBatteryStatus(){
 	var state, secs, pct = sdl.GetPowerInfo()
 	if pct < 0 {
 		pct = 100
 	}
+	println(state==sdl.POWERSTATE_UNKNOWN)
+	println(state==sdl.POWERSTATE_ON_BATTERY)
+	println(state==sdl.POWERSTATE_NO_BATTERY)
+	println(state==sdl.POWERSTATE_CHARGING)
+	println(state==sdl.POWERSTATE_CHARGED)
+	println("**************")
 	powerInfo = PowerInfo{secs, pct, state}
 }
 
