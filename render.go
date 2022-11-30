@@ -105,8 +105,8 @@ func drawJoystick() {
 	var jPosX = int32(axisX / 5461)
 	var jPosY = int32(axisY / 5461)
 
-	var cPosX = SMALL_SCREEN_WIDTH / 2 * axisPctX / 50
-	var cPosY = SMALL_SCREEN_HEIGHT / 2 * axisPctY / 50
+	var cPosX = (SMALL_SCREEN_WIDTH / 2 * axisPctX / 50)/2
+	var cPosY = (SMALL_SCREEN_HEIGHT / 2 * axisPctY / 50)/2
 
 	var jImgEl = joystickImageElements[0]
 	if jPosX != 0 || jPosY != 0 {
