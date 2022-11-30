@@ -74,11 +74,10 @@ func drawBattery() {
 	var bChImgEl = batteryImageElements[1]
 	drawText(fmt.Sprintf("%2d%%", powerInfo.pct), 279, 120, 255, 255, 255)
 
-	 bImgEl.surface.Blit(
+	bImgEl.surface.Blit(
 		nil,
 		surface,
 		&sdl.Rect{X: bImgEl.offsetX, Y: bImgEl.offsetY, W: bImgEl.surface.W, H: bImgEl.surface.H})
-
 
 	var batteryLevelHeight = int32(powerInfo.pct * 39 / 100)
 	if powerInfo.pct > 24 {
@@ -100,10 +99,14 @@ func drawJoystick() {
 	var axisX = joystick.Axis(0)
 	var axisY = joystick.Axis(1)
 
+	var axisPctX = float32(axisX) * 100 / 32767.0
+	var axisPctY = float32(axisY) * 100 / 32767.0
+
 	var jPosX = int32(axisX / 5461)
 	var jPosY = int32(axisY / 5461)
-	var cPosX = 32767/1130 + int32(axisX/1130)
-	var cPosY = 32767/1130 + int32(axisY/1598)
+
+	var cPosX = SMALL_SCREEN_WIDTH / 2 * axisPctX / 50
+	var cPosY = SMALL_SCREEN_HEIGHT / 2 * axisPctY / 50
 
 	var jImgEl = joystickImageElements[0]
 	if jPosX != 0 || jPosY != 0 {
@@ -124,8 +127,13 @@ func drawJoystick() {
 	drawText(fmt.Sprintf("%.2f", float32(axisX)/32767.0), 131, 69, 255, 0, 255)
 	drawText(fmt.Sprintf("%.2f", float32(axisY)/32767.0), 131, 79, 255, 0, 255)
 
-	err = surface.FillRect(&sdl.Rect{X: 131 - J_CROSS_WIDTH/2 + cPosX, Y: 62 + cPosY, W: J_CROSS_WIDTH, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
-	err = surface.FillRect(&sdl.Rect{X: 131 + cPosX, Y: 62 - J_CROSS_WIDTH/2 + cPosY, W: 1, H: J_CROSS_WIDTH}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	//white rectangle can be used for debugging the small screen area
+	//err = surface.FillRect(&sdl.Rect{X: SMALL_SCREEN_X1, Y: SMALL_SCREEN_Y1, W: SMALL_SCREEN_WIDTH, H: SMALL_SCREEN_HEIGHT}, sdl.MapRGB(surface.Format, 255, 255, 255))
+
+	err = surface.FillRect(&sdl.Rect{X: int32(SMALL_SCREEN_X_CENTER - J_CROSS_WIDTH/2 + cPosX), Y: int32(SMALL_SCREEN_Y_CENTER + cPosY), W: J_CROSS_WIDTH, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	err = surface.FillRect(&sdl.Rect{X: int32(SMALL_SCREEN_X_CENTER + cPosX), Y: int32(SMALL_SCREEN_Y_CENTER - J_CROSS_WIDTH/2 + cPosY), W: 1, H: J_CROSS_WIDTH}, sdl.MapRGB(surface.Format, 255, 0, 255))
+
+	//correct way of drawing lines, caused blinking in clear-present, using FillRect for now
 	//err = renderer.SetDrawColor(255, 0, 255, 255)
 	//err = renderer.DrawLine(131-3+cPosX, 70+cPosY, 131+4+cPosX, 70+cPosY)
 	//err = renderer.DrawLine(131+cPosX, 70-3+cPosY, 131+cPosX, 70+4+cPosY)
