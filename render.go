@@ -71,10 +71,14 @@ func redraw() {
 func drawJoystick() {
 	var axisX = joystick.Axis(0)
 	var axisY = joystick.Axis(1)
-	var x = int32(axisX / 5461)
-	var y = int32(axisY / 5461)
+
+	var jPosX = int32(axisX / 5461)
+	var jPosY = int32(axisY / 5461)
+	var cPosX = 32767/1130 + int32(axisX/1130)
+	var cPosY = 32767/1130 + int32(axisY/1598)
+
 	var jImgEl = joystickImageElements[0]
-	if x != 0 || y != 0 {
+	if jPosX != 0 || jPosY != 0 {
 		jImgEl = joystickImageElements[1]
 	}
 	//left joystick in PG2v2 cannot be pressed, just moved, so I cannot test it
@@ -84,7 +88,7 @@ func drawJoystick() {
 	var err = jImgEl.surface.Blit(
 		nil,
 		surface,
-		&sdl.Rect{X: jImgEl.offsetX + x, Y: jImgEl.offsetY + y, W: jImgEl.surface.W, H: jImgEl.surface.H})
+		&sdl.Rect{X: jImgEl.offsetX + jPosX, Y: jImgEl.offsetY + jPosY, W: jImgEl.surface.W, H: jImgEl.surface.H})
 	if err != nil {
 		panic(err)
 	}
@@ -92,14 +96,11 @@ func drawJoystick() {
 	drawText(fmt.Sprintf("%.2f", float32(axisX)/32767.0), 131, 69, 255, 0, 255)
 	drawText(fmt.Sprintf("%.2f", float32(axisY)/32767.0), 131, 79, 255, 0, 255)
 
-	posX := 32767/1130+int32(axisX / 1130)
-	posY := 32767/1130+int32(axisY / 1598)
-
-	err = surface.FillRect(&sdl.Rect{X: 131 - 3 + posX, Y: 62 + posY, W: 7, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
-	err = surface.FillRect(&sdl.Rect{X: 131 + posX, Y: 62 - 3 + posY, W: 1, H: 7}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	err = surface.FillRect(&sdl.Rect{X: 131 - J_CROSS_WIDTH/2 + cPosX, Y: 62 + cPosY, W: J_CROSS_WIDTH, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	err = surface.FillRect(&sdl.Rect{X: 131 + cPosX, Y: 62 - J_CROSS_WIDTH/2 + cPosY, W: 1, H: J_CROSS_WIDTH}, sdl.MapRGB(surface.Format, 255, 0, 255))
 	//err = renderer.SetDrawColor(255, 0, 255, 255)
-	//err = renderer.DrawLine(131-3+posX, 70+posY, 131+4+posX, 70+posY)
-	//err = renderer.DrawLine(131+posX, 70-3+posY, 131+posX, 70+4+posY)
+	//err = renderer.DrawLine(131-3+cPosX, 70+cPosY, 131+4+cPosX, 70+cPosY)
+	//err = renderer.DrawLine(131+cPosX, 70-3+cPosY, 131+cPosX, 70+4+cPosY)
 
 }
 

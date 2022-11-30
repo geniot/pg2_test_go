@@ -9,6 +9,7 @@ const (
 	SCREEN_HEIGHT          = 240
 	TEXT_OFFSET_X          = 10
 	TEXT_PADDING_X         = 4
+	J_CROSS_WIDTH          = 7
 	SECOND_SCREEN_X_OFFSET = 2500 //used for testing/debugging
 
 	GCW_BUTTON_UP    = sdl.K_UP
