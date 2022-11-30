@@ -95,8 +95,8 @@ func drawJoystick() {
 	posX := 32767/1130+int32(axisX / 1130)
 	posY := 32767/1130+int32(axisY / 1598)
 
-	err = surface.FillRect(&sdl.Rect{X: 131 - 3 + posX, Y: 65 + posY, W: 7, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
-	err = surface.FillRect(&sdl.Rect{X: 131 + posX, Y: 65 - 3 + posY, W: 1, H: 7}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	err = surface.FillRect(&sdl.Rect{X: 131 - 3 + posX, Y: 62 + posY, W: 7, H: 1}, sdl.MapRGB(surface.Format, 255, 0, 255))
+	err = surface.FillRect(&sdl.Rect{X: 131 + posX, Y: 62 - 3 + posY, W: 1, H: 7}, sdl.MapRGB(surface.Format, 255, 0, 255))
 	//err = renderer.SetDrawColor(255, 0, 255, 255)
 	//err = renderer.DrawLine(131-3+posX, 70+posY, 131+4+posX, 70+posY)
 	//err = renderer.DrawLine(131+posX, 70-3+posY, 131+posX, 70+4+posY)
