@@ -3,13 +3,18 @@ package main
 import "github.com/veandco/go-sdl2/sdl"
 
 const (
-	FONT_PATH              = "media/pixelberry.ttf"
-	FONT_SIZE              = 8
-	SCREEN_WIDTH           = 320
-	SCREEN_HEIGHT          = 240
-	TEXT_OFFSET_X          = 10
-	TEXT_PADDING_X         = 4
-	J_CROSS_WIDTH          = 7
+	FONT_PATH      = "media/pixelberry.ttf"
+	FONT_SIZE      = 8
+	SCREEN_WIDTH   = 320
+	SCREEN_HEIGHT  = 240
+	TEXT_OFFSET_X  = 10
+	TEXT_PADDING_X = 4
+	J_CROSS_WIDTH  = 7
+	MAX_VOLTAGE    = 4150000
+	MIN_VOLTAGE    = 3330000
+	USB_VOLTAGE    = 110000 //PG2V2
+	//USB_VOLTAGE    = 80000 //PG2
+
 	SECOND_SCREEN_X_OFFSET = 2500 //used for testing/debugging
 
 	GCW_BUTTON_UP    = sdl.K_UP

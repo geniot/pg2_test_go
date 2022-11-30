@@ -14,9 +14,8 @@ type ImageElement struct {
 }
 
 type PowerInfo struct {
-	secs       int
 	pct        int
-	powerState int
+	isCharging bool
 }
 
 func initArrays() {

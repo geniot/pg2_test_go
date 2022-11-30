@@ -71,7 +71,7 @@ func redraw() {
 
 func drawBattery() {
 	var bImgEl = batteryImageElements[0]
-	if powerInfo.powerState == sdl.POWERSTATE_CHARGING {
+	if powerInfo.isCharging {
 		bImgEl = batteryImageElements[1]
 	} else {
 		drawText(fmt.Sprintf("%2d%%", powerInfo.pct), 279, 120, 255, 255, 255)

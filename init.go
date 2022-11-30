@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/robfig/cron/v3"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
 	"os"
+	"runtime"
 	"strconv"
-	"github.com/robfig/cron/v3"
 )
 
 func initAll() {
@@ -81,22 +82,45 @@ func initAll() {
 	updateBatteryStatus()
 
 	c := cron.New()
-	c.AddFunc("@every 5s", updateBatteryStatus)
+	_, err = c.AddFunc("@every 1s", updateBatteryStatus)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	c.Start()
 }
 
-func updateBatteryStatus(){
-	var state, secs, pct = sdl.GetPowerInfo()
-	if pct < 0 {
+func updateBatteryStatus() {
+	if runtime.GOOS == "windows" {
+		powerInfo = PowerInfo{100, false}
+		return
+	}
+
+	dat, err := os.ReadFile("/sys/class/power_supply/usb/online")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	isCharging := string(dat) == "1"
+
+	voltage, err := os.ReadFile("/sys/class/power_supply/battery/voltage_now")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	pct, err := strconv.Atoi(string(voltage))
+
+	pct = (pct - MIN_VOLTAGE) * 100 / (MAX_VOLTAGE - MIN_VOLTAGE)
+	if isCharging {
+		pct = ((pct - MIN_VOLTAGE) - USB_VOLTAGE) * 100 / (MAX_VOLTAGE - MIN_VOLTAGE)
+	}
+
+	if pct > 100 {
 		pct = 100
 	}
-	println(state==sdl.POWERSTATE_UNKNOWN)
-	println(state==sdl.POWERSTATE_ON_BATTERY)
-	println(state==sdl.POWERSTATE_NO_BATTERY)
-	println(state==sdl.POWERSTATE_CHARGING)
-	println(state==sdl.POWERSTATE_CHARGED)
-	println("**************")
-	powerInfo = PowerInfo{secs, pct, state}
+	if pct < 0 {
+		pct = 0
+	}
+
+	powerInfo = PowerInfo{pct, isCharging}
 }
 
 func closeAll() {
