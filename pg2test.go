@@ -24,6 +24,7 @@ var isRumbleSupported bool
 var keyNames map[sdl.Keycode]string
 var running bool
 var powerInfo PowerInfo
+var diskInfo DiskInfo
 
 func main() {
 

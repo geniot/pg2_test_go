@@ -80,6 +80,7 @@ func initAll() {
 
 	//todo: https://stackoverflow.com/questions/37135193/how-to-set-default-values-in-go-structs
 	powerInfo = PowerInfo{100, false}
+	diskInfo = DiskInfo{false,0,0,false,0,0}
 
 	go updateBatteryStatus()
 	go updateDiskStatus()

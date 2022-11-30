@@ -27,7 +27,6 @@ func printUsage(path string) {
 
 func updateBatteryStatus() {
 	if runtime.GOOS == "windows" {
-		powerInfo = PowerInfo{100, false}
 		return
 	}
 
@@ -56,7 +55,7 @@ func updateBatteryStatus() {
 	}
 
 	//voltage jumps a little but percentage cannot go up if we are not charging
-	if !isCharging && pct < powerInfo.pct {
+	if !isCharging && pct > powerInfo.pct {
 		pct = powerInfo.pct
 	}
 
