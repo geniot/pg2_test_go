@@ -71,23 +71,28 @@ func redraw() {
 
 func drawBattery() {
 	var bImgEl = batteryImageElements[0]
-	if powerInfo.isCharging {
-		bImgEl = batteryImageElements[1]
-	} else {
-		drawText(fmt.Sprintf("%2d%%", powerInfo.pct), 279, 120, 255, 255, 255)
-	}
-	var err = bImgEl.surface.Blit(
+	var bChImgEl = batteryImageElements[1]
+	drawText(fmt.Sprintf("%2d%%", powerInfo.pct), 279, 120, 255, 255, 255)
+
+	 bImgEl.surface.Blit(
 		nil,
 		surface,
 		&sdl.Rect{X: bImgEl.offsetX, Y: bImgEl.offsetY, W: bImgEl.surface.W, H: bImgEl.surface.H})
-	if err != nil {
-		panic(err)
-	}
+
+
 	var batteryLevelHeight = int32(powerInfo.pct * 39 / 100)
 	if powerInfo.pct > 24 {
-		err = surface.FillRect(&sdl.Rect{X: bImgEl.offsetX + 1, Y: bImgEl.offsetY + 43 - batteryLevelHeight, W: 14, H: batteryLevelHeight}, sdl.MapRGB(surface.Format, 64, 192, 64)) //green
+		surface.FillRect(&sdl.Rect{X: bImgEl.offsetX + 1, Y: bImgEl.offsetY + 43 - batteryLevelHeight, W: 14, H: batteryLevelHeight}, sdl.MapRGB(surface.Format, 64, 192, 64)) //green
 	} else {
-		err = surface.FillRect(&sdl.Rect{X: bImgEl.offsetX + 1, Y: bImgEl.offsetY + 43 - batteryLevelHeight, W: 14, H: batteryLevelHeight}, sdl.MapRGB(surface.Format, 192, 64, 64)) //red
+		surface.FillRect(&sdl.Rect{X: bImgEl.offsetX + 1, Y: bImgEl.offsetY + 43 - batteryLevelHeight, W: 14, H: batteryLevelHeight}, sdl.MapRGB(surface.Format, 192, 64, 64)) //red
+	}
+
+	if powerInfo.isCharging {
+		bChImgEl.surface.Blit(
+			nil,
+			surface,
+			&sdl.Rect{X: bChImgEl.offsetX, Y: bChImgEl.offsetY, W: bChImgEl.surface.W, H: bChImgEl.surface.H})
+
 	}
 }
 

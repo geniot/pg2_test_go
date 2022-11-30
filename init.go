@@ -9,6 +9,7 @@ import (
 	"os"
 	"runtime"
 	"strconv"
+	"strings"
 )
 
 func initAll() {
@@ -99,18 +100,17 @@ func updateBatteryStatus() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	isCharging := string(dat) == "1"
-
+	isCharging := strings.TrimSpace(string(dat)) == "1"
 	voltage, err := os.ReadFile("/sys/class/power_supply/battery/voltage_now")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+	pct, err := strconv.Atoi(strings.TrimSpace(string(voltage)))
 
-	pct, err := strconv.Atoi(string(voltage))
-
-	pct = (pct - MIN_VOLTAGE) * 100 / (MAX_VOLTAGE - MIN_VOLTAGE)
 	if isCharging {
 		pct = ((pct - MIN_VOLTAGE) - USB_VOLTAGE) * 100 / (MAX_VOLTAGE - MIN_VOLTAGE)
+	}else{
+		pct = (pct - MIN_VOLTAGE) * 100 / (MAX_VOLTAGE - MIN_VOLTAGE)
 	}
 
 	if pct > 100 {
