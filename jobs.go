@@ -11,18 +11,27 @@ import (
 )
 
 func updateDiskStatus() {
-	printUsage("/usr/local/home")
-	printUsage("/media/sdcard/")
+	if runtime.GOOS == "windows" {
+		return
+	}
+	updateDiskInfo("/usr/local/home", diskInfos[0])
+	updateDiskInfo("/media/sdcard/", diskInfos[1])
 }
 
-func printUsage(path string) {
-	di, _ := disk.GetInfo(path)
-	percentage := (float64(di.Total-di.Free) / float64(di.Total)) * 100
-	fmt.Printf("%s of %s disk space used (%0.2f%%)\n",
-		humanize.Bytes(di.Total-di.Free),
-		humanize.Bytes(di.Total),
-		percentage,
-	)
+func updateDiskInfo(path string, diskInfo DiskInfo) {
+	di, err := disk.GetInfo(path)
+	if err != nil {
+		println(err.Error())
+		diskInfo.isDiskAvailable = false
+		return
+	}
+	//we only do this once: when initializing or the disk has been inserted
+	if !diskInfo.isDiskAvailable {
+		diskInfo.isDiskAvailable = true
+		diskInfo.diskSpace = humanize.Bytes(di.Total)
+		diskInfo.freeDiskSpace = humanize.Bytes(di.Free)
+	}
+
 }
 
 func updateBatteryStatus() {
@@ -56,6 +65,10 @@ func updateBatteryStatus() {
 
 	//voltage jumps a little but percentage cannot go up if we are not charging
 	if !isCharging && pct > powerInfo.pct {
+		pct = powerInfo.pct
+	}
+	//we cannot go down when charging
+	if isCharging && pct < powerInfo.pct {
 		pct = powerInfo.pct
 	}
 

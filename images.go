@@ -19,13 +19,9 @@ type PowerInfo struct {
 }
 
 type DiskInfo struct {
-	isDiskAvailableA bool
-	diskSpaceA       float32
-	freeDiskSpaceA   float32
-
-	isDiskAvailableB bool
-	diskSpaceB       float32
-	freeDiskSpaceB   float32
+	isDiskAvailable bool
+	diskSpace       string
+	freeDiskSpace   string
 }
 
 func initArrays() {

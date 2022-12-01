@@ -80,13 +80,15 @@ func initAll() {
 
 	//todo: https://stackoverflow.com/questions/37135193/how-to-set-default-values-in-go-structs
 	powerInfo = PowerInfo{100, false}
-	diskInfo = DiskInfo{false,0,0,false,0,0}
+	diskInfos[0] = DiskInfo{false, "", ""}
+	diskInfos[1] = DiskInfo{false, "", ""}
 
 	go updateBatteryStatus()
 	go updateDiskStatus()
 
 	c := cron.New()
 	_, err = c.AddFunc("@every 1s", updateBatteryStatus)
+	_, err = c.AddFunc("@every 1s", updateDiskStatus)
 	if err != nil {
 		fmt.Println(err.Error())
 	}

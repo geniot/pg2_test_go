@@ -105,8 +105,8 @@ func drawJoystick() {
 	var jPosX = int32(axisX / 5461)
 	var jPosY = int32(axisY / 5461)
 
-	var cPosX = (SMALL_SCREEN_WIDTH / 2 * axisPctX / 50)/2
-	var cPosY = (SMALL_SCREEN_HEIGHT / 2 * axisPctY / 50)/2
+	var cPosX = (SMALL_SCREEN_WIDTH / 2 * axisPctX / 50) / 2
+	var cPosY = (SMALL_SCREEN_HEIGHT / 2 * axisPctY / 50) / 2
 
 	var jImgEl = joystickImageElements[0]
 	if jPosX != 0 || jPosY != 0 {
@@ -155,7 +155,7 @@ func drawMessages() {
 	}
 
 	//drawText(MSG_3, 10, 200, 255, 255, 0)
-	drawText(MSG_4, 197, 20, 255, 255, 255)
+	//drawText(MSG_4, 197, 20, 255, 255, 255)
 	if isRumbleSupported {
 		drawText(MSG_5, 10, 200, 255, 255, 0)
 	}

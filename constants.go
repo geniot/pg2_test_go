@@ -19,8 +19,8 @@ const (
 	//joystick cross is bound to this rectangle
 	SMALL_SCREEN_X1       = 124 + J_CROSS_WIDTH/2
 	SMALL_SCREEN_X2       = 196 - J_CROSS_WIDTH/2
-	SMALL_SCREEN_Y1       = 63+J_CROSS_WIDTH/2
-	SMALL_SCREEN_Y2       = 115-J_CROSS_WIDTH/2
+	SMALL_SCREEN_Y1       = 63 + J_CROSS_WIDTH/2
+	SMALL_SCREEN_Y2       = 115 - J_CROSS_WIDTH/2
 	SMALL_SCREEN_WIDTH    = SMALL_SCREEN_X2 - SMALL_SCREEN_X1
 	SMALL_SCREEN_HEIGHT   = SMALL_SCREEN_Y2 - SMALL_SCREEN_Y1
 	SMALL_SCREEN_X_CENTER = float32(SMALL_SCREEN_X1 + SMALL_SCREEN_WIDTH/2)
@@ -59,7 +59,7 @@ const (
 	MSG_1 = "Press L1 + X to play a sound."
 	MSG_2 = "Last detected key:"
 	//MSG_3 = "Press POWER + R1 to de/activate mouse."
-	MSG_4 = "reading..."
+	//MSG_4 = "reading..."
 	MSG_5 = "Press L2 + R2 to rumble."
 )
 
