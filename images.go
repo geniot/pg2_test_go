@@ -25,6 +25,13 @@ type DiskInfo struct {
 }
 
 func initArrays() {
+	volumeImageElements = []ImageElement{
+		{
+			offsetX:   24,
+			offsetY:   70,
+			imageName: "media/volume.png",
+		},
+	}
 	diskImageElements = []ImageElement{
 		{
 			offsetX:   133,

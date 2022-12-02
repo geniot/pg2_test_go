@@ -68,6 +68,7 @@ func redraw() {
 	drawMessages()
 	drawBattery()
 	drawDisks()
+	drawVolume()
 }
 
 func drawDisks() {
@@ -93,10 +94,19 @@ func drawDisks() {
 	}
 }
 
+func drawVolume() {
+	var volumeLevelHeight = int32(currentVolume * 39 / 100)
+	volumeImageElements[0].surface.Blit(nil, surface, &sdl.Rect{X: volumeImageElements[0].offsetX, Y: volumeImageElements[0].offsetY, W: volumeImageElements[0].surface.W, H: volumeImageElements[0].surface.H})
+	surface.FillRect(&sdl.Rect{X: volumeImageElements[0].offsetX + 1, Y: volumeImageElements[0].offsetY + 43 - volumeLevelHeight, W: 14, H: volumeLevelHeight}, sdl.MapRGB(surface.Format, 64, 192, 64)) //green
+	drawText(fmt.Sprintf("%2d%%", currentVolume), 24, 120, COLOR_WHITE)
+	drawText("VOL", 20, 55, COLOR_WHITE)
+}
+
 func drawBattery() {
 	var bImgEl = batteryImageElements[0]
 	var bChImgEl = batteryImageElements[1]
 	drawText(fmt.Sprintf("%2d%%", powerInfo.pct), 279, 120, COLOR_WHITE)
+	drawText("POW", 275, 55, COLOR_WHITE)
 
 	bImgEl.surface.Blit(
 		nil,

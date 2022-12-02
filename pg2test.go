@@ -18,6 +18,7 @@ var imageElements []ImageElement
 var joystickImageElements []ImageElement
 var batteryImageElements []ImageElement
 var diskImageElements []ImageElement
+var volumeImageElements []ImageElement
 var audioChunk *mix.Chunk
 var joystick *sdl.Joystick
 var haptic *sdl.Haptic
@@ -26,6 +27,7 @@ var keyNames map[sdl.Keycode]string
 var running bool
 var powerInfo PowerInfo
 var diskInfos [2]DiskInfo
+var currentVolume int
 
 func main() {
 

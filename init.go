@@ -71,6 +71,7 @@ func initAll() {
 	loadImages(joystickImageElements)
 	loadImages(batteryImageElements)
 	loadImages(diskImageElements)
+	loadImages(volumeImageElements)
 
 	data, err := os.ReadFile("media/tone.wav")
 	audioChunk, err = mix.QuickLoadWAV(data)
@@ -86,10 +87,12 @@ func initAll() {
 
 	go updateBatteryStatus()
 	go updateDiskStatus()
+	go updateVolume()
 
 	c := cron.New()
 	_, err = c.AddFunc("@every 1s", updateBatteryStatus)
 	_, err = c.AddFunc("@every 1s", updateDiskStatus)
+	_, err = c.AddFunc("@every 1s", updateVolume)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -104,6 +107,7 @@ func closeAll() {
 	freeImageElements(joystickImageElements)
 	freeImageElements(batteryImageElements)
 	freeImageElements(diskImageElements)
+	freeImageElements(volumeImageElements)
 
 	audioChunk.Free()
 	joystick.Close()

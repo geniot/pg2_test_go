@@ -2,12 +2,17 @@ package main
 
 import (
 	"fmt"
+	"github.com/itchyny/volume-go"
 	"github.com/pydio/minio-srv/pkg/disk"
 	"os"
 	"runtime"
 	"strconv"
 	"strings"
 )
+
+func updateVolume() {
+	currentVolume, _ = volume.GetVolume()
+}
 
 func updateDiskStatus() {
 	if runtime.GOOS == "windows" {

@@ -19,9 +19,9 @@ func humanateBytes(s uint64, base float64, sizes []string) string {
 	val := math.Floor(float64(s)/math.Pow(base, e)*10+0.5) / 10
 	//https://emptycharacter.com/
 	f := "%.0f%s"
-	if val < 10 {
-		f = "%.1f%s"
-	}
+	//if val < 10 {
+	//	f = "%.1f%s"
+	//}
 
 	return fmt.Sprintf(f, val, suffix)
 }
