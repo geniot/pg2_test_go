@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/itchyny/volume-go"
 	"github.com/pydio/minio-srv/pkg/disk"
@@ -13,25 +12,24 @@ import (
 )
 
 // https://stackoverflow.com/questions/6182369/exec-a-shell-command-in-go
+// https://www.sohamkamani.com/golang/exec-shell-command/
 func updateVolume() {
 	if runtime.GOOS == "windows" {
 		currentVolume, _ = volume.GetVolume()
 	} else {
-		command := "amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print $2 }'"
-		res, _, _ := ShellOut(command)
-		currentVolume, _ = strconv.Atoi(strings.TrimSpace(res[0 : len(res)-1]))
+		cmd := exec.Command("amixer", "sget", "Master")
+		res, _ := cmd.Output()
+		lines := strings.Split(string(res), "\n")
+		lastLine := lines[len(lines)-1]
+		percentSplit := strings.Split(lastLine, "[")[1]
+		percentStr := strings.Split(percentSplit, "%")[0]
+
+		println(lastLine)
+		println(percentSplit)
+		println(percentStr)
+		currentVolume, _ = strconv.Atoi(percentStr)
 	}
 
-}
-
-func ShellOut(command string) (string, string, error) {
-	var stdout bytes.Buffer
-	var stderr bytes.Buffer
-	cmd := exec.Command("bash", "-c", command)
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-	err := cmd.Run()
-	return stdout.String(), stderr.String(), err
 }
 
 func updateDiskStatus() {
