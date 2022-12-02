@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/itchyny/volume-go"
 	"github.com/pydio/minio-srv/pkg/disk"
 	"os"
 	"os/exec"
@@ -11,11 +10,9 @@ import (
 	"strings"
 )
 
-// https://stackoverflow.com/questions/6182369/exec-a-shell-command-in-go
-// https://www.sohamkamani.com/golang/exec-shell-command/
 func updateVolume() {
 	if runtime.GOOS == "windows" {
-		currentVolume, _ = volume.GetVolume()
+
 	} else {
 		cmd := exec.Command("amixer", "sget", "Master")
 		res, _ := cmd.Output()
