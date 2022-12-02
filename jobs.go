@@ -1,35 +1,37 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/itchyny/volume-go"
 	"github.com/pydio/minio-srv/pkg/disk"
 	"os"
+	"os/exec"
 	"runtime"
 	"strconv"
 	"strings"
-	"os/exec"
 )
 
-//https://stackoverflow.com/questions/6182369/exec-a-shell-command-in-go
+// https://stackoverflow.com/questions/6182369/exec-a-shell-command-in-go
 func updateVolume() {
 	if runtime.GOOS == "windows" {
 		currentVolume, _ = volume.GetVolume()
 	} else {
-		app := "amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print $2 }'"
-		cmd, err := exec.Run(app, []string{app}, nil, "", exec.DevNull, exec.Pipe, exec.Pipe)
-		if (err != nil) {
-			fmt.Fprintln(os.Stderr, err.String())
-			return
-		}
-
-		var b bytes.Buffer
-		io.Copy(&b, cmd.Stdout)
-		fmt.Println(b.String())
-
-		cmd.Close()
+		command := "amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print $2 }'"
+		res, _, _ := ShellOut(command)
+		currentVolume, _ = strconv.Atoi(strings.TrimSpace(res[0 : len(res)-1]))
 	}
 
+}
+
+func ShellOut(command string) (string, string, error) {
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+	cmd := exec.Command("bash", "-c", command)
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	return stdout.String(), stderr.String(), err
 }
 
 func updateDiskStatus() {
