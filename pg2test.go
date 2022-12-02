@@ -39,6 +39,7 @@ func main() {
 	running = true
 	for running {
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
+			println(event.GetType())
 			switch t := event.(type) {
 
 			case *sdl.KeyboardEvent:
