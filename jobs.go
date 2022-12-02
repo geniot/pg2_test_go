@@ -8,10 +8,28 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"os/exec"
 )
 
+//https://stackoverflow.com/questions/6182369/exec-a-shell-command-in-go
 func updateVolume() {
-	currentVolume, _ = volume.GetVolume()
+	if runtime.GOOS == "windows" {
+		currentVolume, _ = volume.GetVolume()
+	} else {
+		app := "amixer sget Master | grep 'Right:' | awk -F'[][]' '{ print $2 }'"
+		cmd, err := exec.Run(app, []string{app}, nil, "", exec.DevNull, exec.Pipe, exec.Pipe)
+		if (err != nil) {
+			fmt.Fprintln(os.Stderr, err.String())
+			return
+		}
+
+		var b bytes.Buffer
+		io.Copy(&b, cmd.Stdout)
+		fmt.Println(b.String())
+
+		cmd.Close()
+	}
+
 }
 
 func updateDiskStatus() {
