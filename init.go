@@ -70,6 +70,7 @@ func initAll() {
 	loadImages(imageElements)
 	loadImages(joystickImageElements)
 	loadImages(batteryImageElements)
+	loadImages(diskImageElements)
 
 	data, err := os.ReadFile("media/tone.wav")
 	audioChunk, err = mix.QuickLoadWAV(data)
@@ -102,6 +103,7 @@ func closeAll() {
 	freeImageElements(imageElements)
 	freeImageElements(joystickImageElements)
 	freeImageElements(batteryImageElements)
+	freeImageElements(diskImageElements)
 
 	audioChunk.Free()
 	joystick.Close()

@@ -20,11 +20,33 @@ type PowerInfo struct {
 
 type DiskInfo struct {
 	isDiskAvailable bool
-	diskSpace       string
+	maxDiskSpace    string
 	freeDiskSpace   string
 }
 
 func initArrays() {
+	diskImageElements = []ImageElement{
+		{
+			offsetX:   133,
+			offsetY:   10,
+			imageName: "media/sd1.png",
+		},
+		{
+			offsetX:   163,
+			offsetY:   10,
+			imageName: "media/sd2.png",
+		},
+		{
+			offsetX:   133,
+			offsetY:   10,
+			imageName: "media/sd0.png",
+		},
+		{
+			offsetX:   163,
+			offsetY:   10,
+			imageName: "media/sd0.png",
+		},
+	}
 	batteryImageElements = []ImageElement{
 		{
 			offsetX:   280,

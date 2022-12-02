@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	humanize "github.com/dustin/go-humanize"
 	"github.com/pydio/minio-srv/pkg/disk"
 	"os"
 	"runtime"
@@ -12,13 +11,14 @@ import (
 
 func updateDiskStatus() {
 	if runtime.GOOS == "windows" {
-		return
+		updateDiskInfo("C:\\", &diskInfos[0])
+	} else {
+		updateDiskInfo("/usr/local/home", &diskInfos[0])
+		updateDiskInfo("/media/sdcard/", &diskInfos[1])
 	}
-	updateDiskInfo("/usr/local/home", diskInfos[0])
-	updateDiskInfo("/media/sdcard/", diskInfos[1])
 }
 
-func updateDiskInfo(path string, diskInfo DiskInfo) {
+func updateDiskInfo(path string, diskInfo *DiskInfo) {
 	di, err := disk.GetInfo(path)
 	if err != nil {
 		println(err.Error())
@@ -28,8 +28,8 @@ func updateDiskInfo(path string, diskInfo DiskInfo) {
 	//we only do this once: when initializing or the disk has been inserted
 	if !diskInfo.isDiskAvailable {
 		diskInfo.isDiskAvailable = true
-		diskInfo.diskSpace = humanize.Bytes(di.Total)
-		diskInfo.freeDiskSpace = humanize.Bytes(di.Free)
+		diskInfo.maxDiskSpace = Bytes(di.Total)
+		diskInfo.freeDiskSpace = Bytes(di.Free)
 	}
 
 }

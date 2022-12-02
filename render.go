@@ -67,12 +67,36 @@ func redraw() {
 	drawJoystick()
 	drawMessages()
 	drawBattery()
+	drawDisks()
+}
+
+func drawDisks() {
+	diskImageElements[2].surface.Blit(nil, surface, &sdl.Rect{X: diskImageElements[2].offsetX, Y: diskImageElements[2].offsetY, W: diskImageElements[2].surface.W, H: diskImageElements[2].surface.H})
+	diskImageElements[3].surface.Blit(nil, surface, &sdl.Rect{X: diskImageElements[3].offsetX, Y: diskImageElements[3].offsetY, W: diskImageElements[3].surface.W, H: diskImageElements[3].surface.H})
+	if diskInfos[0].isDiskAvailable {
+		diskImageElements[0].surface.Blit(nil, surface, &sdl.Rect{X: diskImageElements[0].offsetX, Y: diskImageElements[0].offsetY, W: diskImageElements[0].surface.W, H: diskImageElements[0].surface.H})
+		var text1, _ = font.RenderUTF8Blended(diskInfos[0].freeDiskSpace, COLOR_RED)
+		var text2, _ = font.RenderUTF8Blended(" / ", COLOR_GREEN)
+		var text3, _ = font.RenderUTF8Blended(diskInfos[0].maxDiskSpace, COLOR_GRAY)
+		defer text1.Free()
+		defer text2.Free()
+		defer text3.Free()
+		text1.Blit(nil, surface, &sdl.Rect{X: 120 - text1.W - text2.W - text3.W, Y: 20, W: 0, H: 0})
+		text2.Blit(nil, surface, &sdl.Rect{X: 120 - text2.W - text3.W, Y: 20, W: 0, H: 0})
+		text3.Blit(nil, surface, &sdl.Rect{X: 120 - text3.W, Y: 20, W: 0, H: 0})
+	}
+	if diskInfos[1].isDiskAvailable {
+		diskImageElements[1].surface.Blit(nil, surface, &sdl.Rect{X: diskImageElements[1].offsetX, Y: diskImageElements[1].offsetY, W: diskImageElements[1].surface.W, H: diskImageElements[1].surface.H})
+		var txtWidth1 = drawText(diskInfos[1].freeDiskSpace, 197, 20, COLOR_RED)
+		var txtWidth2 = drawText(" / ", 197+txtWidth1, 20, COLOR_GREEN)
+		drawText(diskInfos[1].maxDiskSpace, 197+txtWidth1+txtWidth2, 20, COLOR_GRAY)
+	}
 }
 
 func drawBattery() {
 	var bImgEl = batteryImageElements[0]
 	var bChImgEl = batteryImageElements[1]
-	drawText(fmt.Sprintf("%2d%%", powerInfo.pct), 279, 120, 255, 255, 255)
+	drawText(fmt.Sprintf("%2d%%", powerInfo.pct), 279, 120, COLOR_WHITE)
 
 	bImgEl.surface.Blit(
 		nil,
@@ -124,8 +148,8 @@ func drawJoystick() {
 		panic(err)
 	}
 
-	drawText(fmt.Sprintf("%.2f", float32(axisX)/32767.0), 131, 69, 255, 0, 255)
-	drawText(fmt.Sprintf("%.2f", float32(axisY)/32767.0), 131, 79, 255, 0, 255)
+	drawText(fmt.Sprintf("%.2f", float32(axisX)/32767.0), 131, 69, COLOR_PURPLE)
+	drawText(fmt.Sprintf("%.2f", float32(axisY)/32767.0), 131, 79, COLOR_PURPLE)
 
 	//white rectangle can be used for debugging the small screen area
 	//err = surface.FillRect(&sdl.Rect{X: SMALL_SCREEN_X1, Y: SMALL_SCREEN_Y1, W: SMALL_SCREEN_WIDTH, H: SMALL_SCREEN_HEIGHT}, sdl.MapRGB(surface.Format, 255, 255, 255))
@@ -141,28 +165,28 @@ func drawJoystick() {
 }
 
 func drawMessages() {
-	drawText(MSG_0, 10, 180, 255, 255, 0)
-	drawText(MSG_1, 10, 190, 255, 255, 0)
+	drawText(MSG_0, 10, 180, COLOR_YELLOW)
+	drawText(MSG_1, 10, 190, COLOR_YELLOW)
 
 	//last detected key
-	var textWidth1 = drawText(MSG_2, TEXT_OFFSET_X, 160, 0, 255, 255)
-	var textWidth2 = drawText(fmt.Sprintf("%d [0x%04X]", lastPressedKey, lastPressedKey), TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1, 160, 255, 255, 255)
+	var textWidth1 = drawText(MSG_2, TEXT_OFFSET_X, 160, COLOR_BLUE)
+	var textWidth2 = drawText(fmt.Sprintf("%d [0x%04X]", lastPressedKey, lastPressedKey), TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1, 160, COLOR_WHITE)
 	var value, ok = keyNames[lastPressedKey]
 	if ok {
-		drawText(value, TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1+TEXT_PADDING_X+textWidth2, 160, 0, 255, 255)
+		drawText(value, TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1+TEXT_PADDING_X+textWidth2, 160, COLOR_BLUE)
 	} else {
-		drawText("Not defined", TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1+TEXT_PADDING_X+textWidth2, 160, 0, 255, 255)
+		drawText("Not defined", TEXT_OFFSET_X+TEXT_PADDING_X+textWidth1+TEXT_PADDING_X+textWidth2, 160, COLOR_BLUE)
 	}
 
 	//drawText(MSG_3, 10, 200, 255, 255, 0)
 	//drawText(MSG_4, 197, 20, 255, 255, 255)
 	if isRumbleSupported {
-		drawText(MSG_5, 10, 200, 255, 255, 0)
+		drawText(MSG_5, 10, 200, COLOR_YELLOW)
 	}
 }
 
-func drawText(txt string, x int32, y int32, fR uint8, fG uint8, fB uint8) int32 {
-	var text, err = font.RenderUTF8Blended(txt, sdl.Color{R: fR, G: fG, B: fB, A: 255})
+func drawText(txt string, x int32, y int32, color sdl.Color) int32 {
+	var text, err = font.RenderUTF8Blended(txt, color)
 	if err != nil {
 		return 0
 	}

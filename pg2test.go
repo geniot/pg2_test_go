@@ -17,6 +17,7 @@ var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
 var imageElements []ImageElement
 var joystickImageElements []ImageElement
 var batteryImageElements []ImageElement
+var diskImageElements []ImageElement
 var audioChunk *mix.Chunk
 var joystick *sdl.Joystick
 var haptic *sdl.Haptic
