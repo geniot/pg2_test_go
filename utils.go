@@ -17,6 +17,7 @@ func humanateBytes(s uint64, base float64, sizes []string) string {
 	e := math.Floor(logn(float64(s), base))
 	suffix := sizes[int(e)]
 	val := math.Floor(float64(s)/math.Pow(base, e)*10+0.5) / 10
+	//https://emptycharacter.com/
 	f := "%.0f %s"
 	if val < 10 {
 		f = "%.1f %s"

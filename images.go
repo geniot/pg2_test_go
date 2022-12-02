@@ -85,6 +85,44 @@ func initArrays() {
 			imageName:      "media/pg2_back.png",
 			displayOnPress: sdl.K_UNKNOWN,
 		},
+		//VOLUME DOWN
+		{
+			offsetX:        169,
+			offsetY:        53,
+			imageName:      "media/pg2_button_vol1.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        169,
+			offsetY:        53,
+			imageName:      "media/pg2_button_vol1_pressed.png",
+			displayOnPress: GCW_VOLUMEDOWN,
+		},
+		{
+			offsetX:        156,
+			offsetY:        40,
+			imageName:      "media/info_voldw.png",
+			displayOnPress: GCW_VOLUMEDOWN,
+		},
+		//VOLUME UP
+		{
+			offsetX:        169,
+			offsetY:        53,
+			imageName:      "media/pg2_button_vol2.png",
+			displayOnPress: sdl.K_UNKNOWN,
+		},
+		{
+			offsetX:        169,
+			offsetY:        53,
+			imageName:      "media/pg2_button_vol2_pressed.png",
+			displayOnPress: GCW_VOLUMEUP,
+		},
+		{
+			offsetX:        177,
+			offsetY:        40,
+			imageName:      "media/info_volup.png",
+			displayOnPress: GCW_VOLUMEUP,
+		},
 		//A
 		{
 			offsetX:        216,
