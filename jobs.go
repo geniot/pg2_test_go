@@ -20,13 +20,9 @@ func updateVolume() {
 		cmd := exec.Command("amixer", "sget", "Master")
 		res, _ := cmd.Output()
 		lines := strings.Split(string(res), "\n")
-		lastLine := lines[len(lines)-1]
+		lastLine := lines[len(lines)-2]
 		percentSplit := strings.Split(lastLine, "[")[1]
 		percentStr := strings.Split(percentSplit, "%")[0]
-
-		println(lastLine)
-		println(percentSplit)
-		println(percentStr)
 		currentVolume, _ = strconv.Atoi(percentStr)
 	}
 
