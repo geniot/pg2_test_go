@@ -36,7 +36,7 @@ func processKeyActions() {
 		if pressedKeysCodes.Contains(GCW_BUTTON_L2) && pressedKeysCodes.Contains(GCW_BUTTON_R2) {
 			var err = haptic.RumblePlay(0.33, 500)
 			if err != nil {
-				panic(err)
+				println(err.Error())
 			}
 		}
 	}
