@@ -15,7 +15,12 @@ import (
 // https://www.sohamkamani.com/golang/exec-shell-command/
 func updateVolume() {
 	if runtime.GOOS == "windows" {
-		currentVolume, _ = volume.GetVolume()
+		newVolume, err := volume.GetVolume()
+		if err != nil {
+			println(err.Error())
+		} else {
+			currentVolume = newVolume
+		}
 	} else {
 		//cmd := exec.Command("amixer", "sget", "Master")
 		//res, _ := cmd.Output()

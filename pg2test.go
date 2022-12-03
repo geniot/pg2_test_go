@@ -41,6 +41,10 @@ func main() {
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 			switch t := event.(type) {
 
+			case *sdl.QuitEvent:
+				running = false
+				break
+
 			case *sdl.KeyboardEvent:
 				if t.Repeat > 0 {
 					break
