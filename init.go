@@ -7,6 +7,7 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
 	"os"
+	"runtime"
 	"strconv"
 )
 
@@ -51,13 +52,19 @@ func initAll() {
 	sdl.JoystickEventState(sdl.ENABLE)
 
 	//_, err = sdl.ShowCursor(0)
-	numVideoDisplay, err := sdl.GetNumVideoDisplays()
+	//numVideoDisplay, err := sdl.GetNumVideoDisplays()
+	var windowProps uint32 = sdl.WINDOW_SHOWN | sdl.WINDOW_BORDERLESS
+	if runtime.GOOS == "windows" {
+		windowProps = sdl.WINDOW_SHOWN
+	}
+
 	window, err = sdl.CreateWindow(
 		"pg2_test_go",
-		int32(If(numVideoDisplay > 1, SECOND_SCREEN_X_OFFSET, sdl.WINDOWPOS_UNDEFINED)),
+		//int32(If(numVideoDisplay > 1, SECOND_SCREEN_X_OFFSET, sdl.WINDOWPOS_UNDEFINED)),
+		sdl.WINDOWPOS_UNDEFINED,
 		sdl.WINDOWPOS_UNDEFINED,
 		SCREEN_WIDTH, SCREEN_HEIGHT,
-		sdl.WINDOW_SHOWN|sdl.WINDOW_BORDERLESS)
+		windowProps)
 
 	//renderer, err = sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED)
 
