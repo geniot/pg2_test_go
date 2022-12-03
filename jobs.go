@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/go-ole/go-ole"
 	"github.com/itchyny/volume-go"
+	"github.com/moutend/go-wca/pkg/wca"
 	"github.com/pydio/minio-srv/pkg/disk"
+	"math"
 	"os"
-	"os/exec"
 	"runtime"
 	"strconv"
 	"strings"
@@ -17,15 +19,68 @@ func updateVolume() {
 	if runtime.GOOS == "windows" {
 		currentVolume, _ = volume.GetVolume()
 	} else {
-		cmd := exec.Command("amixer", "sget", "Master")
-		res, _ := cmd.Output()
-		lines := strings.Split(string(res), "\n")
-		lastLine := lines[len(lines)-2]
-		percentSplit := strings.Split(lastLine, "[")[1]
-		percentStr := strings.Split(percentSplit, "%")[0]
-		currentVolume, _ = strconv.Atoi(percentStr)
+		currentVolume, _ = GetVolume()
+		//cmd := exec.Command("amixer", "sget", "Master")
+		//res, _ := cmd.Output()
+		//lines := strings.Split(string(res), "\n")
+		//lastLine := lines[len(lines)-2]
+		//percentSplit := strings.Split(lastLine, "[")[1]
+		//percentStr := strings.Split(percentSplit, "%")[0]
+		//currentVolume, _ = strconv.Atoi(percentStr)
 	}
 
+}
+
+func GetVolume() (int, error) {
+	vol, err := invoke(func(aev *wca.IAudioEndpointVolume) (interface{}, error) {
+		var level float32
+		err := aev.GetChannelVolumeLevelScalar(1, &level)
+		vol := int(math.Floor(float64(level*100.0 + 0.5)))
+		return vol, err
+	})
+	if vol == nil {
+		return 0, err
+	}
+	return vol.(int), err
+}
+
+func invoke(f func(aev *wca.IAudioEndpointVolume) (interface{}, error)) (ret interface{}, err error) {
+	if err = ole.CoInitializeEx(0, ole.COINIT_APARTMENTTHREADED); err != nil {
+		return
+	}
+	defer ole.CoUninitialize()
+
+	var mmde *wca.IMMDeviceEnumerator
+	if err = wca.CoCreateInstance(wca.CLSID_MMDeviceEnumerator, 0, wca.CLSCTX_ALL, wca.IID_IMMDeviceEnumerator, &mmde); err != nil {
+		return
+	}
+	defer mmde.Release()
+
+	var mmd *wca.IMMDevice
+	if err = mmde.GetDefaultAudioEndpoint(wca.ERender, wca.EConsole, &mmd); err != nil {
+		return
+	}
+	defer mmd.Release()
+
+	var ps *wca.IPropertyStore
+	if err = mmd.OpenPropertyStore(wca.STGM_READ, &ps); err != nil {
+		return
+	}
+	defer ps.Release()
+
+	var pv wca.PROPVARIANT
+	if err = ps.GetValue(&wca.PKEY_Device_FriendlyName, &pv); err != nil {
+		return
+	}
+
+	var aev *wca.IAudioEndpointVolume
+	if err = mmd.Activate(wca.IID_IAudioEndpointVolume, wca.CLSCTX_ALL, nil, &aev); err != nil {
+		return
+	}
+	defer aev.Release()
+
+	ret, err = f(aev)
+	return
 }
 
 func updateDiskStatus() {
