@@ -68,7 +68,7 @@ func redraw() {
 	drawMessages()
 	drawBattery()
 	drawDisks()
-	drawVolume()
+	//drawVolume()
 }
 
 func drawDisks() {

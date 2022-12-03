@@ -5,7 +5,7 @@ import (
 	"github.com/itchyny/volume-go"
 	"github.com/pydio/minio-srv/pkg/disk"
 	"os"
-	"os/exec"
+	//"os/exec"
 	"runtime"
 	"strconv"
 	"strings"
@@ -17,13 +17,13 @@ func updateVolume() {
 	if runtime.GOOS == "windows" {
 		currentVolume, _ = volume.GetVolume()
 	} else {
-		cmd := exec.Command("amixer", "sget", "Master")
-		res, _ := cmd.Output()
-		lines := strings.Split(string(res), "\n")
-		lastLine := lines[len(lines)-2]
-		percentSplit := strings.Split(lastLine, "[")[1]
-		percentStr := strings.Split(percentSplit, "%")[0]
-		currentVolume, _ = strconv.Atoi(percentStr)
+		//cmd := exec.Command("amixer", "sget", "Master")
+		//res, _ := cmd.Output()
+		//lines := strings.Split(string(res), "\n")
+		//lastLine := lines[len(lines)-2]
+		//percentSplit := strings.Split(lastLine, "[")[1]
+		//percentStr := strings.Split(percentSplit, "%")[0]
+		//currentVolume, _ = strconv.Atoi(percentStr)
 	}
 
 }
