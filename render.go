@@ -193,9 +193,7 @@ func drawMessages() {
 
 	//drawText(MSG_3, 10, 200, 255, 255, 0)
 	//drawText(MSG_4, 197, 20, 255, 255, 255)
-	if isRumbleSupported {
-		drawText(MSG_5, 10, 200, COLOR_YELLOW)
-	}
+	drawText(MSG_5, 10, 200, COLOR_YELLOW)
 }
 
 func drawText(txt string, x int32, y int32, color sdl.Color) int32 {
