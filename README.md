@@ -7,7 +7,7 @@ Input and hardware test for PocketGo2 written in Go.
 It is a remake of https://github.com/RafaVico/pg2_test
 which is written in C++.
 
-It is my first program in Go, bear with me and don't learn much from the code.
+Some notes:
 
 - I use SDL2 bindings for Go
 - cross-compiling works on Linux, see build.sh
