@@ -1,4 +1,4 @@
-package model
+package mdl
 
 import (
 	"geniot.com/geniot/pg2_test_go/internal/imm"

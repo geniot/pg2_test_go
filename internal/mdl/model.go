@@ -1,4 +1,4 @@
-package domain
+package mdl
 
 import (
 	"github.com/veandco/go-sdl2/mix"
