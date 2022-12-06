@@ -8,7 +8,7 @@ import (
 
 const (
 	APP_NAME       = "PG2 Test"
-	APP_VERSION    = "0.1"
+	APP_VERSION    = "0.5"
 	CONF_FILE_NAME = ".pg2_test.properties"
 
 	WINDOW_XPOS_KEY   = "WINDOW_XPOS_KEY"

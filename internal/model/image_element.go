@@ -35,8 +35,7 @@ func NewImageElement(renderer *sdl.Renderer, fN string, oX, oY int32, dO sdl.Key
 func (iEl ImageElement) Render(renderer *sdl.Renderer, pressedKeysCodes mapset.Set[sdl.Keycode]) {
 	if iEl.displayOnPress == sdl.K_UNKNOWN ||
 		pressedKeysCodes.Contains(iEl.displayOnPress) {
-		srcRect := sdl.Rect{0, 0, iEl.width, iEl.height}
 		dstRect := sdl.Rect{iEl.offsetX, iEl.offsetY, iEl.width, iEl.height}
-		renderer.Copy(iEl.texture, &srcRect, &dstRect)
+		renderer.Copy(iEl.texture, nil, &dstRect)
 	}
 }

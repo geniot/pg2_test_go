@@ -7,26 +7,26 @@ import (
 )
 
 type Scene struct {
-	imageElements mapset.Set[*ImageElement]
+	imageElements []*ImageElement
 }
 
 func NewScene(renderer *sdl.Renderer) *Scene {
-	set := mapset.NewSet[*ImageElement]()
-	for i, _ := range utils.IMAGE_DESCRIPTORS {
+	imgElements := make([]*ImageElement, len(utils.IMAGE_DESCRIPTORS))
+	for i := range utils.IMAGE_DESCRIPTORS {
 		iEl := NewImageElement(
 			renderer,
 			utils.IMAGE_DESCRIPTORS[i].ImageName,
 			utils.IMAGE_DESCRIPTORS[i].OffsetX,
 			utils.IMAGE_DESCRIPTORS[i].OffsetY,
 			utils.IMAGE_DESCRIPTORS[i].DisplayOnPress)
-		set.Add(iEl)
+		imgElements[i] = iEl
 	}
-	return &Scene{set}
+	return &Scene{imgElements}
 }
 
-func (scene Scene) Render(renderer *sdl.Renderer, pressedKeysCodes mapset.Set[sdl.Keycode]) {
-	scene.imageElements.Each(func(iEl *ImageElement) bool {
-		iEl.Render(renderer, pressedKeysCodes)
-		return false
-	})
+func (scene Scene) Render(renderer *sdl.Renderer,
+	pressedKeysCodes mapset.Set[sdl.Keycode]) {
+	for i := range scene.imageElements {
+		scene.imageElements[i].Render(renderer, pressedKeysCodes)
+	}
 }
