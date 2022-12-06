@@ -1,6 +1,7 @@
 package main
 
 import (
+	"geniot.com/geniot/pg2_test_go/bak"
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
@@ -14,27 +15,27 @@ var surface *sdl.Surface
 var font *ttf.Font
 var lastPressedKey sdl.Keycode
 var pressedKeysCodes = mapset.NewSet[sdl.Keycode]()
-var imageElements []ImageElement
-var joystickImageElements []ImageElement
-var batteryImageElements []ImageElement
-var diskImageElements []ImageElement
-var volumeImageElements []ImageElement
+var imageElements []bak.ImageElement
+var joystickImageElements []bak.ImageElement
+var batteryImageElements []bak.ImageElement
+var diskImageElements []bak.ImageElement
+var volumeImageElements []bak.ImageElement
 var audioChunk *mix.Chunk
 var joystick *sdl.Joystick
 var haptic *sdl.Haptic
 var isRumbleSupported bool
 var keyNames map[sdl.Keycode]string
 var running bool
-var powerInfo PowerInfo
-var diskInfos [2]DiskInfo
+var powerInfo bak.PowerInfo
+var diskInfos [2]bak.DiskInfo
 var currentVolume int
 
 func main() {
 
-	initAll()
-	defer closeAll()
+	bak.initAll()
+	defer bak.closeAll()
 
-	render()
+	bak.render()
 
 	running = true
 	for running {
@@ -59,7 +60,7 @@ func main() {
 			}
 		}
 
-		render()
+		bak.render()
 		sdl.Delay(1000 / 60)
 	}
 

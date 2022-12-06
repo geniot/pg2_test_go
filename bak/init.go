@@ -1,8 +1,8 @@
-package main
+package bak
 
 import (
 	"fmt"
-	"github.com/robfig/cron/v3"
+	"geniot.com/geniot/pg2_test_go/bak"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
@@ -27,15 +27,15 @@ func initAll() {
 	if numHaptics > 0 {
 		println("Haptics: " + strconv.Itoa(numHaptics))
 		println(sdl.HapticName(0))
-		haptic, err = sdl.HapticOpen(0)
+		bak.haptic, err = sdl.HapticOpen(0)
 		if err != nil {
 			panic(err)
 		}
-		err = haptic.RumbleInit()
+		err = bak.haptic.RumbleInit()
 		if err != nil {
 			panic(err)
 		}
-		isRumbleSupported, _ = haptic.RumbleSupported()
+		bak.isRumbleSupported, _ = bak.haptic.RumbleSupported()
 	}
 	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 4096)
 	if err != nil {
@@ -46,7 +46,7 @@ func initAll() {
 	if numJoysticks > 0 {
 		println("Joysticks: " + strconv.Itoa(numJoysticks))
 		println(sdl.JoystickNameForIndex(0))
-		joystick = sdl.JoystickOpen(0)
+		bak.joystick = sdl.JoystickOpen(0)
 	}
 
 	sdl.JoystickEventState(sdl.ENABLE)
@@ -58,7 +58,7 @@ func initAll() {
 		windowProps = sdl.WINDOW_SHOWN
 	}
 
-	window, err = sdl.CreateWindow(
+	bak.window, err = sdl.CreateWindow(
 		"pg2_test_go",
 		//int32(If(numVideoDisplay > 1, SECOND_SCREEN_X_OFFSET, sdl.WINDOWPOS_UNDEFINED)),
 		sdl.WINDOWPOS_UNDEFINED,
@@ -68,29 +68,29 @@ func initAll() {
 
 	//renderer, err = sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED)
 
-	surface, err = window.GetSurface()
+	bak.surface, err = bak.window.GetSurface()
 
-	font, err = ttf.OpenFont(FONT_PATH, FONT_SIZE)
+	bak.font, err = ttf.OpenFont(FONT_PATH, FONT_SIZE)
 
 	initArrays()
 
-	loadImages(imageElements)
-	loadImages(joystickImageElements)
-	loadImages(batteryImageElements)
-	loadImages(diskImageElements)
-	loadImages(volumeImageElements)
+	loadImages(bak.imageElements)
+	loadImages(bak.joystickImageElements)
+	loadImages(bak.batteryImageElements)
+	loadImages(bak.diskImageElements)
+	loadImages(bak.volumeImageElements)
 
 	data, err := os.ReadFile("media/tone.wav")
-	audioChunk, err = mix.QuickLoadWAV(data)
+	bak.audioChunk, err = mix.QuickLoadWAV(data)
 
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
 	//todo: https://stackoverflow.com/questions/37135193/how-to-set-default-values-in-go-structs
-	powerInfo = PowerInfo{100, false}
-	diskInfos[0] = DiskInfo{false, "", ""}
-	diskInfos[1] = DiskInfo{false, "", ""}
+	bak.powerInfo = PowerInfo{100, false}
+	bak.diskInfos[0] = DiskInfo{false, "", ""}
+	bak.diskInfos[1] = DiskInfo{false, "", ""}
 
 	go updateBatteryStatus()
 	go updateDiskStatus()
@@ -107,19 +107,19 @@ func initAll() {
 }
 
 func closeAll() {
-	err := window.Destroy()
+	err := bak.window.Destroy()
 	//err = renderer.Destroy()
 
-	freeImageElements(imageElements)
-	freeImageElements(joystickImageElements)
-	freeImageElements(batteryImageElements)
-	freeImageElements(diskImageElements)
-	freeImageElements(volumeImageElements)
+	freeImageElements(bak.imageElements)
+	freeImageElements(bak.joystickImageElements)
+	freeImageElements(bak.batteryImageElements)
+	freeImageElements(bak.diskImageElements)
+	freeImageElements(bak.volumeImageElements)
 
-	audioChunk.Free()
-	joystick.Close()
-	haptic.Close()
-	font.Close()
+	bak.audioChunk.Free()
+	bak.joystick.Close()
+	bak.haptic.Close()
+	bak.font.Close()
 	ttf.Quit()
 	sdl.Quit()
 	mix.CloseAudio()

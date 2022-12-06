@@ -24,6 +24,13 @@ func NewWindow(app *Application) *Window {
 	rnd, _ := sdl.CreateRenderer(wnd, -1,
 		sdl.RENDERER_PRESENTVSYNC|sdl.RENDERER_ACCELERATED)
 	//sdl.RENDERER_ACCELERATED)
+	//srf, _ := wnd.GetSurface()
+	//wnd.UpdateSurface()
+	//
+	//srf.FillRect(&sdl.Rect{0, 0, srf.H, srf.W}, sdl.MapRGB(srf.Format, 16, 16, 16))
+	//rnd.SetDrawColor(16, 16, 16, 255)
+	//rnd.Clear()
+
 	w := Window{app, wnd, rnd}
 
 	sdl.AddEventWatchFunc(w.resizingEventWatcher, nil)

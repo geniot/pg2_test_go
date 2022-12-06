@@ -7,8 +7,8 @@ import (
 type ImageElement struct {
 	offsetX        int32
 	offsetY        int32
-	imageName      string
-	surface        *sdl.Surface
+	width          int32
+	height         int32
 	texture        *sdl.Texture
 	displayOnPress sdl.Keycode
 }
@@ -18,13 +18,7 @@ func NewImageElement() *ImageElement {
 }
 
 func (iEl ImageElement) Render(renderer *sdl.Renderer) {
-	txt, err := renderer.CreateTextureFromSurface(iEl.surface)
-	if err != nil {
-		println(err.Error())
-	}
-	iEl.texture = txt
-
-	srcRect := sdl.Rect{0, 0, 200, 200}
-	dstRect := sdl.Rect{0, 0, 200, 200}
+	srcRect := sdl.Rect{0, 0, iEl.width, iEl.height}
+	dstRect := sdl.Rect{iEl.offsetY, iEl.offsetY, iEl.width, iEl.height}
 	renderer.Copy(iEl.texture, &srcRect, &dstRect)
 }

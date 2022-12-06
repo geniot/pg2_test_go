@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"embed"
 	"os"
 	"path/filepath"
 )
@@ -22,6 +21,4 @@ var (
 	HOME_DIR, _    = os.UserHomeDir()
 	PATH_TO_CONFIG = filepath.Join(HOME_DIR, CONF_FILE_NAME)
 	WINDOW_TITLE   = APP_NAME + " " + APP_VERSION
-	//go:embed media/*
-	MEDIA_LIST embed.FS
 )

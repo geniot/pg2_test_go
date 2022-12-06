@@ -1,8 +1,8 @@
-package main
+package bak
 
 import (
 	"fmt"
-	"github.com/itchyny/volume-go"
+	"geniot.com/geniot/pg2_test_go/bak"
 	"github.com/pydio/minio-srv/pkg/disk"
 	"os"
 	//"os/exec"
@@ -19,7 +19,7 @@ func updateVolume() {
 		if err != nil {
 			println(err.Error())
 		} else {
-			currentVolume = newVolume
+			bak.currentVolume = newVolume
 		}
 	} else {
 		//cmd := exec.Command("amixer", "sget", "Master")
@@ -35,10 +35,10 @@ func updateVolume() {
 
 func updateDiskStatus() {
 	if runtime.GOOS == "windows" {
-		updateDiskInfo("C:\\", &diskInfos[0])
+		updateDiskInfo("C:\\", &bak.diskInfos[0])
 	} else {
-		updateDiskInfo("/usr/local/home", &diskInfos[0])
-		updateDiskInfo("/media/sdcard/", &diskInfos[1])
+		updateDiskInfo("/usr/local/home", &bak.diskInfos[0])
+		updateDiskInfo("/media/sdcard/", &bak.diskInfos[1])
 	}
 }
 
@@ -88,14 +88,14 @@ func updateBatteryStatus() {
 	}
 
 	//voltage jumps a little but percentage cannot go up if we are not charging
-	if !isCharging && pct > powerInfo.pct {
-		pct = powerInfo.pct
+	if !isCharging && pct > bak.powerInfo.pct {
+		pct = bak.powerInfo.pct
 	}
 	//we cannot go down when charging
-	if isCharging && pct < powerInfo.pct {
-		pct = powerInfo.pct
+	if isCharging && pct < bak.powerInfo.pct {
+		pct = bak.powerInfo.pct
 	}
 
-	powerInfo.pct = pct
-	powerInfo.isCharging = isCharging
+	bak.powerInfo.pct = pct
+	bak.powerInfo.isCharging = isCharging
 }

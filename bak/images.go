@@ -1,6 +1,7 @@
-package main
+package bak
 
 import (
+	"geniot.com/geniot/pg2_test_go/bak"
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -25,14 +26,14 @@ type DiskInfo struct {
 }
 
 func initArrays() {
-	volumeImageElements = []ImageElement{
+	bak.volumeImageElements = []ImageElement{
 		{
 			offsetX:   24,
 			offsetY:   70,
 			imageName: "media/volume.png",
 		},
 	}
-	diskImageElements = []ImageElement{
+	bak.diskImageElements = []ImageElement{
 		{
 			offsetX:   133,
 			offsetY:   10,
@@ -54,7 +55,7 @@ func initArrays() {
 			imageName: "media/sd0.png",
 		},
 	}
-	batteryImageElements = []ImageElement{
+	bak.batteryImageElements = []ImageElement{
 		{
 			offsetX:   280,
 			offsetY:   70,
@@ -66,7 +67,7 @@ func initArrays() {
 			imageName: "media/battery2.png",
 		},
 	}
-	joystickImageElements = []ImageElement{
+	bak.joystickImageElements = []ImageElement{
 		{
 			offsetX:   101,
 			offsetY:   100,
@@ -84,7 +85,7 @@ func initArrays() {
 		},
 	}
 
-	imageElements = []ImageElement{
+	bak.imageElements = []ImageElement{
 		//background
 		{
 			offsetX:        90,
@@ -417,7 +418,7 @@ func initArrays() {
 		},
 	}
 
-	keyNames = map[sdl.Keycode]string{
+	bak.keyNames = map[sdl.Keycode]string{
 		GCW_BUTTON_UP:    "UP",
 		GCW_BUTTON_DOWN:  "DOWN",
 		GCW_BUTTON_LEFT:  "LEFT",
@@ -438,7 +439,7 @@ func initArrays() {
 		GCW_BUTTON_START:  "RETURN",
 		GCW_BUTTON_MENU:   "HOME",
 
-		GCW_VOLUMEUP: "VOLUMEUP",
+		GCW_VOLUMEUP:   "VOLUMEUP",
 		GCW_VOLUMEDOWN: "VOLUMEDOWN",
 	}
 }

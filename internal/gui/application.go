@@ -19,14 +19,15 @@ func NewApplication() *Application {
 func (app Application) Start() {
 	sdl.Init(sdl.INIT_EVERYTHING)
 
-	scn := model.NewScene()
-	app.scene = scn
 	cnf := NewConfig(&app)
 	app.config = cnf
 	wnd := NewWindow(&app)
 	app.window = wnd
 	lp := NewLoop(&app)
 	app.loop = lp
+
+	scn := model.NewScene(wnd.sdlRenderer)
+	app.scene = scn
 
 	app.loop.Start()
 }
