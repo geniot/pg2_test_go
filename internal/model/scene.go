@@ -11,14 +11,11 @@ type Scene struct {
 }
 
 func NewScene(renderer *sdl.Renderer) *Scene {
-	imgElements := make([]*ImageElement, len(imm.ImageDescriptors))
-	for i := range imm.ImageDescriptors {
-		iEl := NewImageElement(
-			renderer,
-			imm.ImageDescriptors[i].ImageName,
-			imm.ImageDescriptors[i].OffsetX,
-			imm.ImageDescriptors[i].OffsetY,
-			imm.ImageDescriptors[i].DisplayOnPress)
+	l := imm.GetImageDescriptorsLength()
+	imgElements := make([]*ImageElement, l)
+	for i := 0; i < l; i++ {
+		oX, oY, fN, dO := imm.GetImageDescriptorPropsByIndex(i)
+		iEl := NewImageElement(renderer, fN, oX, oY, dO)
 		imgElements[i] = iEl
 	}
 	return &Scene{imgElements}
