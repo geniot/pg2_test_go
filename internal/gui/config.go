@@ -1,20 +1,30 @@
 package gui
 
 import (
-	"geniot.com/geniot/pg2_test_go/internal/utils"
+	"geniot.com/geniot/pg2_test_go/internal/imm"
 	"github.com/magiconair/properties"
 	"github.com/veandco/go-sdl2/sdl"
 	"os"
+	"path/filepath"
 	"strconv"
 )
 
 type Config struct {
-	application *Application
-	props       *properties.Properties
+	application  *Application
+	props        *properties.Properties
+	homeDir      string
+	pathToConfig string
 }
 
 func NewConfig(app *Application) *Config {
-	return &Config{app, Load()}
+	hD, _ := os.UserHomeDir()
+	pToC := filepath.Join(hD, imm.CONF_FILE_NAME)
+	cfg := &Config{app,
+		nil,
+		hD,
+		pToC}
+	cfg.load()
+	return cfg
 }
 
 func (cfg Config) Get(key string) uint32 {
@@ -27,31 +37,32 @@ func (cfg Config) Set(key string, value string) {
 	cfg.props.Set(key, value)
 }
 
-func Load() *properties.Properties {
-	loadedProps, _ := properties.LoadFile(utils.PATH_TO_CONFIG, properties.UTF8)
+func (cfg *Config) load() {
+	loadedProps, _ := properties.LoadFile(cfg.pathToConfig, properties.UTF8)
 
 	if loadedProps == nil {
 		loadedProps = properties.NewProperties()
-		loadedProps.Set(utils.WINDOW_XPOS_KEY, strconv.FormatInt(int64(sdl.WINDOWPOS_UNDEFINED), 10))
-		loadedProps.Set(utils.WINDOW_YPOS_KEY, strconv.FormatInt(int64(sdl.WINDOWPOS_UNDEFINED), 10))
+		loadedProps.Set(imm.WINDOW_XPOS_KEY, strconv.FormatInt(int64(sdl.WINDOWPOS_UNDEFINED), 10))
+		loadedProps.Set(imm.WINDOW_YPOS_KEY, strconv.FormatInt(int64(sdl.WINDOWPOS_UNDEFINED), 10))
 		displayMode, _ := sdl.GetCurrentDisplayMode(0)
-		loadedProps.Set(utils.WINDOW_WIDTH_KEY, strconv.FormatInt(int64(displayMode.W/2), 10))
-		loadedProps.Set(utils.WINDOW_HEIGHT_KEY, strconv.FormatInt(int64(displayMode.H/2), 10))
-		loadedProps.Set(utils.WINDOW_STATE_KEY, strconv.FormatInt(int64(sdl.WINDOW_SHOWN|sdl.WINDOW_RESIZABLE), 10))
+		loadedProps.Set(imm.WINDOW_WIDTH_KEY, strconv.FormatInt(int64(displayMode.W/2), 10))
+		loadedProps.Set(imm.WINDOW_HEIGHT_KEY, strconv.FormatInt(int64(displayMode.H/2), 10))
+		loadedProps.Set(imm.WINDOW_STATE_KEY, strconv.FormatInt(int64(sdl.WINDOW_SHOWN|sdl.WINDOW_RESIZABLE), 10))
 	}
 
 	//patching window state
-	windowStateStr, _ := loadedProps.Get(utils.WINDOW_STATE_KEY)
+	windowStateStr, _ := loadedProps.Get(imm.WINDOW_STATE_KEY)
 	windowState, _ := strconv.ParseInt(windowStateStr, 10, 0)
 	windowState |= sdl.WINDOW_SHOWN
 	windowState |= sdl.WINDOW_RESIZABLE
-	loadedProps.Set(utils.WINDOW_STATE_KEY, strconv.FormatInt(windowState, 10))
+	loadedProps.Set(imm.WINDOW_STATE_KEY, strconv.FormatInt(windowState, 10))
 
-	return loadedProps
+	cfg.props = loadedProps
 }
 
 func (cfg Config) Save() {
-	f, err := os.OpenFile(utils.PATH_TO_CONFIG, os.O_WRONLY|os.O_CREATE, 0600)
+	f, err := os.OpenFile(cfg.pathToConfig,
+		os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
 		println(err.Error())
 	}

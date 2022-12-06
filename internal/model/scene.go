@@ -1,7 +1,7 @@
 package model
 
 import (
-	"geniot.com/geniot/pg2_test_go/internal/utils"
+	"geniot.com/geniot/pg2_test_go/internal/imm"
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -11,14 +11,14 @@ type Scene struct {
 }
 
 func NewScene(renderer *sdl.Renderer) *Scene {
-	imgElements := make([]*ImageElement, len(utils.IMAGE_DESCRIPTORS))
-	for i := range utils.IMAGE_DESCRIPTORS {
+	imgElements := make([]*ImageElement, len(imm.ImageDescriptors))
+	for i := range imm.ImageDescriptors {
 		iEl := NewImageElement(
 			renderer,
-			utils.IMAGE_DESCRIPTORS[i].ImageName,
-			utils.IMAGE_DESCRIPTORS[i].OffsetX,
-			utils.IMAGE_DESCRIPTORS[i].OffsetY,
-			utils.IMAGE_DESCRIPTORS[i].DisplayOnPress)
+			imm.ImageDescriptors[i].ImageName,
+			imm.ImageDescriptors[i].OffsetX,
+			imm.ImageDescriptors[i].OffsetY,
+			imm.ImageDescriptors[i].DisplayOnPress)
 		imgElements[i] = iEl
 	}
 	return &Scene{imgElements}
