@@ -1,4 +1,4 @@
-package imm
+package mdl
 
 import (
 	"github.com/veandco/go-sdl2/sdl"

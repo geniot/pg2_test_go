@@ -7,11 +7,11 @@ import (
 
 var (
 	//go:embed media/*
-	MEDIA_LIST embed.FS
+	mediaList embed.FS
 )
 
 func GetResource(fileName string) *sdl.RWops {
-	file, _ := MEDIA_LIST.Open("media/" + fileName)
+	file, _ := mediaList.Open("media/" + fileName)
 	stat, _ := file.Stat()
 	buf := make([]byte, stat.Size())
 	file.Read(buf)

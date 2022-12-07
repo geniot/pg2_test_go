@@ -1,4 +1,4 @@
-package imm
+package mdl
 
 import (
 	"github.com/veandco/go-sdl2/sdl"
@@ -45,3 +45,10 @@ const (
 	//GCW_BUTTON_R3    = sdl.K_KP_PERIOD
 	//GCW_BUTTON_POWER = sdl.K_HOME
 )
+
+func If[T any](cond bool, vTrue, vFalse T) T {
+	if cond {
+		return vTrue
+	}
+	return vFalse
+}

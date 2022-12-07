@@ -18,6 +18,7 @@ type IConfig interface {
 type IDevice interface {
 	IsRumbleSupported() bool
 	Rumble()
+	PlaySound()
 }
 
 type IRunnable interface {

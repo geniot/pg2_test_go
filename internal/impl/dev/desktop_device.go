@@ -3,8 +3,13 @@ package dev
 type DesktopDeviceImpl struct {
 }
 
-func NewDesktopDevice() *DesktopDeviceImpl {
-	return &DesktopDeviceImpl{}
+func (device DesktopDeviceImpl) PlaySound() {
+	//TODO implement me
+	panic("implement me")
+}
+
+func NewDesktopDevice() DesktopDeviceImpl {
+	return DesktopDeviceImpl{}
 }
 
 func (device DesktopDeviceImpl) IsRumbleSupported() bool {

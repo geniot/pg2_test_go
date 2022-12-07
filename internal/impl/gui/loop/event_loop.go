@@ -2,7 +2,7 @@ package loop
 
 import (
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
-	"geniot.com/geniot/pg2_test_go/internal/impl/imm"
+	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -47,18 +47,18 @@ func (eventLoop EventLoop) Run() {
 
 func (eventLoop EventLoop) processKeyActions() {
 	if ctx.PressedKeysCodes.Contains(sdl.K_q) ||
-		(ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_L1) &&
-			ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_START)) {
+		(ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L1) &&
+			ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_START)) {
 		ctx.Loop.Stop()
 	}
-	if ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_L1) &&
-		ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_X) &&
+	if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L1) &&
+		ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_X) &&
 		mix.Playing(-1) != 1 {
 		ctx.Application.PlaySound()
 	}
 	if ctx.Device.IsRumbleSupported() {
-		if ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_L2) &&
-			ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_R2) {
+		if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L2) &&
+			ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_R2) {
 			ctx.Device.Rumble()
 		}
 	}
