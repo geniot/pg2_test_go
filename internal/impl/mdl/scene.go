@@ -5,11 +5,13 @@ type Scene struct {
 }
 
 func NewScene() *Scene {
-	l := GetImageDescriptorsLength()
-	imgElements := make([]*ImageElement, l)
-	for i := 0; i < l; i++ {
-		oX, oY, fN, dO := GetImageDescriptorPropsByIndex(i)
-		iEl := NewImageElement(fN, oX, oY, dO)
+	imgElements := make([]*ImageElement, len(ButtonImages))
+	for i := range ButtonImages {
+		iEl := NewImageElement(
+			ButtonImages[i].ImageName,
+			ButtonImages[i].OffsetX,
+			ButtonImages[i].OffsetY,
+			ButtonImages[i].DisplayOnPress)
 		imgElements[i] = iEl
 	}
 	return &Scene{imgElements}

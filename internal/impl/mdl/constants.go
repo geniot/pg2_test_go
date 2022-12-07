@@ -48,6 +48,33 @@ const (
 	//GCW_BUTTON_POWER = sdl.K_HOME
 )
 
+var (
+	KeyNames = map[sdl.Keycode]string{
+		GCW_BUTTON_UP:    "UP",
+		GCW_BUTTON_DOWN:  "DOWN",
+		GCW_BUTTON_LEFT:  "LEFT",
+		GCW_BUTTON_RIGHT: "RIGHT",
+
+		GCW_BUTTON_A: "LCTRL",
+		GCW_BUTTON_B: "LALT",
+		GCW_BUTTON_X: "SPACE",
+		GCW_BUTTON_Y: "LSHIFT",
+
+		GCW_BUTTON_L1: "TAB",
+		GCW_BUTTON_R1: "BACKSPACE",
+
+		GCW_BUTTON_L2: "PAGEUP",
+		GCW_BUTTON_R2: "PAGEDOWN",
+
+		GCW_BUTTON_SELECT: "ESCAPE",
+		GCW_BUTTON_START:  "RETURN",
+		GCW_BUTTON_MENU:   "HOME",
+
+		GCW_VOLUMEUP:   "VOLUMEUP",
+		GCW_VOLUMEDOWN: "VOLUMEDOWN",
+	}
+)
+
 func If[T any](cond bool, vTrue, vFalse T) T {
 	if cond {
 		return vTrue
