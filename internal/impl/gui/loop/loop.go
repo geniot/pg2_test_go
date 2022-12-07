@@ -1,4 +1,4 @@
-package gui
+package loop
 
 import (
 	"geniot.com/geniot/pg2_test_go/internal/ctx"

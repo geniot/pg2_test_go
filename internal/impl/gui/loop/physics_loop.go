@@ -1,4 +1,4 @@
-package gui
+package loop
 
 type PhysicsLoop struct {
 }

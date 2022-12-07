@@ -3,6 +3,7 @@ package gui
 import (
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/internal/impl/dev"
+	"geniot.com/geniot/pg2_test_go/internal/impl/gui/loop"
 	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
@@ -26,10 +27,10 @@ func (app ApplicationImpl) Start() {
 	ctx.Device = dev.NewDesktopDevice()
 	ctx.Window = NewWindow()
 
-	ctx.Loop = NewLoop()
-	ctx.EventLoop = NewEventLoop()
-	ctx.PhysicsLoop = NewPhysicsLoop()
-	ctx.RenderLoop = NewRenderLoop()
+	ctx.Loop = loop.NewLoop()
+	ctx.EventLoop = loop.NewEventLoop()
+	ctx.PhysicsLoop = loop.NewPhysicsLoop()
+	ctx.RenderLoop = loop.NewRenderLoop()
 
 	ctx.CurrentScene = mdl.NewScene()
 
