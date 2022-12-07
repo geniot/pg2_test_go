@@ -3,10 +3,11 @@ package api
 type IApplication interface {
 	Start()
 	PlaySound()
+	Stop()
 }
 
 type IWindow interface {
-	OnBeforeClose()
+	SaveWindowState()
 }
 
 type IConfig interface {
@@ -19,6 +20,10 @@ type IDevice interface {
 	GetWindowState() uint32
 	GetWindowPosAndSize() (int32, int32, int32, int32)
 	ProcessKeyActions()
+	UpdateBatteryStatus()
+	UpdateDiskStatus()
+	UpdateVolume()
+	Stop()
 }
 
 type IRunnable interface {

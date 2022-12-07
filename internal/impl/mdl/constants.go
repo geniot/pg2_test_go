@@ -10,6 +10,31 @@ const (
 	CONF_FILE_NAME = ".pg2_test.properties"
 	FONT_FILE_NAME = "pixelberry.ttf"
 	FONT_SIZE      = 8
+	TEXT_OFFSET_X  = 10
+	TEXT_PADDING_X = 4
+	J_CROSS_WIDTH  = 7
+
+	MAX_VOLTAGE = 4150000
+	MIN_VOLTAGE = 3330000
+	USB_VOLTAGE = 110000 //PG2V2
+	//USB_VOLTAGE    = 80000 //PG2
+
+	//joystick cross is bound to this rectangle
+	SMALL_SCREEN_X1       = 124 + J_CROSS_WIDTH/2
+	SMALL_SCREEN_X2       = 196 - J_CROSS_WIDTH/2
+	SMALL_SCREEN_Y1       = 63 + J_CROSS_WIDTH/2
+	SMALL_SCREEN_Y2       = 115 - J_CROSS_WIDTH/2
+	SMALL_SCREEN_WIDTH    = SMALL_SCREEN_X2 - SMALL_SCREEN_X1
+	SMALL_SCREEN_HEIGHT   = SMALL_SCREEN_Y2 - SMALL_SCREEN_Y1
+	SMALL_SCREEN_X_CENTER = float32(SMALL_SCREEN_X1 + SMALL_SCREEN_WIDTH/2)
+	SMALL_SCREEN_Y_CENTER = float32(SMALL_SCREEN_Y1 + SMALL_SCREEN_HEIGHT/2)
+
+	MSG_0 = "Press L1 + START to exit."
+	MSG_1 = "Press L1 + X to play a sound."
+	MSG_2 = "Last detected key:"
+	//MSG_3 = "Press POWER + R1 to de/activate mouse."
+	//MSG_4 = "reading..."
+	MSG_5 = "Press L2 + R2 to rumble."
 
 	WINDOW_XPOS_KEY   = "WINDOW_XPOS_KEY"
 	WINDOW_YPOS_KEY   = "WINDOW_YPOS_KEY"
@@ -73,6 +98,14 @@ var (
 		GCW_VOLUMEUP:   "VOLUMEUP",
 		GCW_VOLUMEDOWN: "VOLUMEDOWN",
 	}
+
+	COLOR_RED    = sdl.Color{R: 192, G: 64, B: 64, A: 255}
+	COLOR_GREEN  = sdl.Color{R: 64, G: 192, B: 64, A: 255}
+	COLOR_GRAY   = sdl.Color{R: 192, G: 192, B: 192, A: 255}
+	COLOR_WHITE  = sdl.Color{R: 255, G: 255, B: 255, A: 255}
+	COLOR_PURPLE = sdl.Color{R: 255, G: 0, B: 255, A: 255}
+	COLOR_YELLOW = sdl.Color{R: 255, G: 255, B: 0, A: 255}
+	COLOR_BLUE   = sdl.Color{R: 0, G: 255, B: 255, A: 255}
 )
 
 func If[T any](cond bool, vTrue, vFalse T) T {

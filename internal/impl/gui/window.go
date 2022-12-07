@@ -52,10 +52,6 @@ func (window Window) resizingEventWatcher(event sdl.Event, data interface{}) boo
 	return false
 }
 
-func (window Window) OnBeforeClose() {
-	window.SaveWindowState()
-}
-
 func (window Window) SaveWindowState() {
 	width, height := window.sdlWindow.GetSize()
 	xPos, yPos := window.sdlWindow.GetPosition()

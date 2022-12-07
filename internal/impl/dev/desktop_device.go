@@ -10,6 +10,22 @@ import (
 type DesktopDeviceImpl struct {
 }
 
+func (device DesktopDeviceImpl) Stop() {
+	closeCommon()
+}
+
+func (device DesktopDeviceImpl) UpdateBatteryStatus() {
+
+}
+
+func (device DesktopDeviceImpl) UpdateDiskStatus() {
+
+}
+
+func (device DesktopDeviceImpl) UpdateVolume() {
+
+}
+
 func (device DesktopDeviceImpl) ProcessKeyActions() {
 	if ctx.PressedKeysCodes.Contains(sdl.K_q) {
 		ctx.Loop.Stop()

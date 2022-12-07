@@ -37,3 +37,9 @@ func initCommon() {
 		println(err.Error())
 	}
 }
+
+func closeCommon() {
+	ttf.Quit()
+	sdl.Quit()
+	mix.CloseAudio()
+}

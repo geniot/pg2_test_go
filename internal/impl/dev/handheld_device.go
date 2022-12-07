@@ -14,6 +14,22 @@ type HandheldDeviceImpl struct {
 	isRumbleSupported bool
 }
 
+func (device HandheldDeviceImpl) Stop() {
+	closeCommon()
+}
+
+func (device HandheldDeviceImpl) UpdateBatteryStatus() {
+
+}
+
+func (device HandheldDeviceImpl) UpdateDiskStatus() {
+
+}
+
+func (device HandheldDeviceImpl) UpdateVolume() {
+
+}
+
 func (device HandheldDeviceImpl) ProcessKeyActions() {
 	if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L1) &&
 		ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_START) {

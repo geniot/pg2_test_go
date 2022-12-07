@@ -20,6 +20,10 @@ var (
 
 	CurrentScene api.IRenderable
 
+	PowerInformation PowerInfo = PowerInfo{100, false}
+	DiskInfo1        DiskInfo  = DiskInfo{false, "", ""}
+	DiskInfo2        DiskInfo  = DiskInfo{false, "", ""}
+
 	Renderer         *sdl.Renderer
 	Font             *ttf.Font
 	PressedKeysCodes mapset.Set[sdl.Keycode] = mapset.NewSet[sdl.Keycode]()

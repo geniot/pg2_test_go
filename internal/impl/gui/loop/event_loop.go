@@ -31,12 +31,12 @@ func (eventLoop EventLoop) Run() {
 
 		case *sdl.WindowEvent:
 			if t.Event == sdl.WINDOWEVENT_CLOSE {
-				ctx.Window.OnBeforeClose()
+				ctx.Window.SaveWindowState()
 			}
 			break
 
 		case *sdl.QuitEvent:
-			ctx.Loop.Stop()
+			ctx.Application.Stop()
 			break
 		}
 	}
