@@ -1,10 +1,10 @@
 package gui
 
 type RenderLoop struct {
-	application *Application
+	application *ApplicationImpl
 }
 
-func NewRenderLoop(app *Application) *RenderLoop {
+func NewRenderLoop(app *ApplicationImpl) *RenderLoop {
 	return &RenderLoop{app}
 }
 

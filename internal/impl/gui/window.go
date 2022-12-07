@@ -1,25 +1,26 @@
 package gui
 
 import (
-	"geniot.com/geniot/pg2_test_go/internal/imm"
+	"geniot.com/geniot/pg2_test_go/internal/ctx"
+	"geniot.com/geniot/pg2_test_go/internal/impl/imm"
 	"github.com/veandco/go-sdl2/sdl"
 	"strconv"
 )
 
 type Window struct {
-	application *Application
+	application *ApplicationImpl
 	sdlWindow   *sdl.Window
 	sdlRenderer *sdl.Renderer
 }
 
-func NewWindow(app *Application) *Window {
+func NewWindow(app *ApplicationImpl) *Window {
 	wnd, _ := sdl.CreateWindow(
 		imm.APP_NAME+" "+imm.APP_VERSION,
-		int32(app.config.Get(imm.WINDOW_XPOS_KEY)),
-		int32(app.config.Get(imm.WINDOW_YPOS_KEY)),
-		int32(app.config.Get(imm.WINDOW_WIDTH_KEY)),
-		int32(app.config.Get(imm.WINDOW_HEIGHT_KEY)),
-		app.config.Get(imm.WINDOW_STATE_KEY))
+		int32(ctx.Config.Get(imm.WINDOW_XPOS_KEY)),
+		int32(ctx.Config.Get(imm.WINDOW_YPOS_KEY)),
+		int32(ctx.Config.Get(imm.WINDOW_WIDTH_KEY)),
+		int32(ctx.Config.Get(imm.WINDOW_HEIGHT_KEY)),
+		ctx.Config.Get(imm.WINDOW_STATE_KEY))
 
 	rnd, _ := sdl.CreateRenderer(wnd, -1,
 		sdl.RENDERER_PRESENTVSYNC|sdl.RENDERER_ACCELERATED)
@@ -57,14 +58,14 @@ func (window Window) SaveWindowState() {
 	width, height := window.sdlWindow.GetSize()
 	xPos, yPos := window.sdlWindow.GetPosition()
 	windowState := window.sdlWindow.GetFlags()
-	window.application.config.Set(imm.WINDOW_STATE_KEY, strconv.FormatInt(int64(windowState), 10))
+	ctx.Config.Set(imm.WINDOW_STATE_KEY, strconv.FormatInt(int64(windowState), 10))
 
 	if windowState&sdl.WINDOW_MAXIMIZED <= 0 {
-		window.application.config.Set(imm.WINDOW_WIDTH_KEY, strconv.FormatInt(int64(width), 10))
-		window.application.config.Set(imm.WINDOW_HEIGHT_KEY, strconv.FormatInt(int64(height), 10))
-		window.application.config.Set(imm.WINDOW_XPOS_KEY, strconv.FormatInt(int64(xPos), 10))
-		window.application.config.Set(imm.WINDOW_YPOS_KEY, strconv.FormatInt(int64(yPos), 10))
+		ctx.Config.Set(imm.WINDOW_WIDTH_KEY, strconv.FormatInt(int64(width), 10))
+		ctx.Config.Set(imm.WINDOW_HEIGHT_KEY, strconv.FormatInt(int64(height), 10))
+		ctx.Config.Set(imm.WINDOW_XPOS_KEY, strconv.FormatInt(int64(xPos), 10))
+		ctx.Config.Set(imm.WINDOW_YPOS_KEY, strconv.FormatInt(int64(yPos), 10))
 	}
 
-	window.application.config.Save()
+	ctx.Config.Save()
 }

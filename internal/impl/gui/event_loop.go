@@ -1,20 +1,20 @@
 package gui
 
 import (
-	"geniot.com/geniot/pg2_test_go/internal/imm"
+	"geniot.com/geniot/pg2_test_go/internal/ctx"
+	"geniot.com/geniot/pg2_test_go/internal/impl/imm"
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
 type EventLoop struct {
-	application      *Application
 	pressedKeysCodes mapset.Set[sdl.Keycode]
 	lastPressedKey   sdl.Keycode
 }
 
-func NewEventLoop(app *Application) *EventLoop {
-	return &EventLoop{app, mapset.NewSet[sdl.Keycode](), sdl.K_UNKNOWN}
+func NewEventLoop() *EventLoop {
+	return &EventLoop{mapset.NewSet[sdl.Keycode](), sdl.K_UNKNOWN}
 }
 
 func (eventLoop EventLoop) Run() {
@@ -35,12 +35,12 @@ func (eventLoop EventLoop) Run() {
 
 		case *sdl.WindowEvent:
 			if t.Event == sdl.WINDOWEVENT_CLOSE {
-				eventLoop.application.window.OnBeforeClose()
+				ctx.Window.OnBeforeClose()
 			}
 			break
 
 		case *sdl.QuitEvent:
-			eventLoop.application.loop.isRunning.UnSet()
+			ctx.Loop.Stop()
 			break
 		}
 	}
@@ -51,23 +51,17 @@ func (eventLoop EventLoop) processKeyActions() {
 	if eventLoop.pressedKeysCodes.Contains(sdl.K_q) ||
 		(eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_L1) &&
 			eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_START)) {
-		eventLoop.application.loop.isRunning.UnSet()
+		ctx.Loop.Stop()
 	}
 	if eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_L1) &&
 		eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_X) &&
 		mix.Playing(-1) != 1 {
-		_, err := eventLoop.application.model.AudioChunk.Play(1, 0)
-		if err != nil {
-			panic(err)
-		}
+		ctx.Application.PlaySound()
 	}
-	if eventLoop.application.model.IsRumbleSupported {
+	if ctx.Device.IsRumbleSupported() {
 		if eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_L2) &&
 			eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_R2) {
-			var err = eventLoop.application.model.Haptic.RumblePlay(0.33, 500)
-			if err != nil {
-				println(err.Error())
-			}
+			ctx.Device.Rumble()
 		}
 	}
 }

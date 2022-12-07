@@ -1,10 +1,10 @@
 package gui
 
 type PhysicsLoop struct {
-	application *Application
+	application *ApplicationImpl
 }
 
-func NewPhysicsLoop(app *Application) *PhysicsLoop {
+func NewPhysicsLoop(app *ApplicationImpl) *PhysicsLoop {
 	return &PhysicsLoop{app}
 }
 

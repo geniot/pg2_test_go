@@ -1,7 +1,7 @@
 package gui
 
 import (
-	"geniot.com/geniot/pg2_test_go/internal/imm"
+	"geniot.com/geniot/pg2_test_go/internal/impl/imm"
 	"github.com/magiconair/properties"
 	"github.com/veandco/go-sdl2/sdl"
 	"os"
@@ -9,33 +9,33 @@ import (
 	"strconv"
 )
 
-type Config struct {
+type ConfigImpl struct {
 	props        *properties.Properties
 	homeDir      string
 	pathToConfig string
 }
 
-func NewConfig() *Config {
+func NewConfig() *ConfigImpl {
 	hD, _ := os.UserHomeDir()
 	pToC := filepath.Join(hD, imm.CONF_FILE_NAME)
-	cfg := &Config{nil,
+	cfg := &ConfigImpl{nil,
 		hD,
 		pToC}
 	cfg.load()
 	return cfg
 }
 
-func (cfg Config) Get(key string) uint32 {
+func (cfg ConfigImpl) Get(key string) uint32 {
 	valStr, _ := cfg.props.Get(key)
 	valInt, _ := strconv.ParseInt(valStr, 10, 0)
 	return uint32(valInt)
 }
 
-func (cfg Config) Set(key string, value string) {
+func (cfg ConfigImpl) Set(key string, value string) {
 	cfg.props.Set(key, value)
 }
 
-func (cfg *Config) load() {
+func (cfg *ConfigImpl) load() {
 	loadedProps, _ := properties.LoadFile(cfg.pathToConfig, properties.UTF8)
 
 	if loadedProps == nil {
@@ -58,7 +58,7 @@ func (cfg *Config) load() {
 	cfg.props = loadedProps
 }
 
-func (cfg Config) Save() {
+func (cfg ConfigImpl) Save() {
 	f, err := os.OpenFile(cfg.pathToConfig,
 		os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {

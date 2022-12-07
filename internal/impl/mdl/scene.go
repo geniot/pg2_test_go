@@ -1,7 +1,7 @@
 package mdl
 
 import (
-	"geniot.com/geniot/pg2_test_go/internal/imm"
+	"geniot.com/geniot/pg2_test_go/internal/impl/imm"
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/sdl"
 )

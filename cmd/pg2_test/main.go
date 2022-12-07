@@ -1,7 +1,11 @@
 package main
 
-import "geniot.com/geniot/pg2_test_go/internal/gui"
+import (
+	"geniot.com/geniot/pg2_test_go/internal/ctx"
+	"geniot.com/geniot/pg2_test_go/internal/impl/gui"
+)
 
 func main() {
-	gui.NewApplication().Start()
+	ctx.Application = gui.NewApplication()
+	ctx.Application.Start()
 }
