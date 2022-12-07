@@ -10,17 +10,15 @@ import (
 )
 
 type Config struct {
-	application  *Application
 	props        *properties.Properties
 	homeDir      string
 	pathToConfig string
 }
 
-func NewConfig(app *Application) *Config {
+func NewConfig() *Config {
 	hD, _ := os.UserHomeDir()
 	pToC := filepath.Join(hD, imm.CONF_FILE_NAME)
-	cfg := &Config{app,
-		nil,
+	cfg := &Config{nil,
 		hD,
 		pToC}
 	cfg.load()

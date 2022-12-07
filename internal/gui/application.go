@@ -20,7 +20,7 @@ func NewApplication() *Application {
 func (app Application) Start() {
 	sdl.Init(sdl.INIT_EVERYTHING)
 
-	app.config = NewConfig(&app)
+	app.config = NewConfig()
 	app.model = mdl.NewModel()
 	app.window = NewWindow(&app)
 	app.loop = NewLoop(&app)
