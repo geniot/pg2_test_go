@@ -2,28 +2,25 @@ package mdl
 
 import (
 	"geniot.com/geniot/pg2_test_go/internal/impl/imm"
-	mapset "github.com/deckarep/golang-set/v2"
-	"github.com/veandco/go-sdl2/sdl"
 )
 
 type Scene struct {
 	imageElements []*ImageElement
 }
 
-func NewScene(renderer *sdl.Renderer) *Scene {
+func NewScene() *Scene {
 	l := imm.GetImageDescriptorsLength()
 	imgElements := make([]*ImageElement, l)
 	for i := 0; i < l; i++ {
 		oX, oY, fN, dO := imm.GetImageDescriptorPropsByIndex(i)
-		iEl := NewImageElement(renderer, fN, oX, oY, dO)
+		iEl := NewImageElement(fN, oX, oY, dO)
 		imgElements[i] = iEl
 	}
 	return &Scene{imgElements}
 }
 
-func (scene Scene) Render(renderer *sdl.Renderer,
-	pressedKeysCodes mapset.Set[sdl.Keycode]) {
+func (scene Scene) Render() {
 	for i := range scene.imageElements {
-		scene.imageElements[i].Render(renderer, pressedKeysCodes)
+		scene.imageElements[i].Render()
 	}
 }

@@ -9,10 +9,6 @@ import (
 )
 
 type ApplicationImpl struct {
-	loop   *Loop
-	window *Window
-	scene  *mdl.Scene
-
 	IsRumbleSupported bool
 	AudioChunk        *mix.Chunk
 	Haptic            *sdl.Haptic
@@ -28,12 +24,16 @@ func (app ApplicationImpl) Start() {
 
 	ctx.Config = NewConfig()
 	ctx.Device = dev.NewDesktopDevice()
+	ctx.Window = NewWindow()
 
-	app.window = NewWindow(&app)
-	app.loop = NewLoop(&app)
-	app.scene = mdl.NewScene(app.window.sdlRenderer)
+	ctx.Loop = NewLoop()
+	ctx.EventLoop = NewEventLoop()
+	ctx.PhysicsLoop = NewPhysicsLoop()
+	ctx.RenderLoop = NewRenderLoop()
 
-	app.loop.Start()
+	ctx.CurrentScene = mdl.NewScene()
+
+	ctx.Loop.Start()
 }
 
 func (app ApplicationImpl) PlaySound() {

@@ -1,17 +1,17 @@
 package gui
 
+import "geniot.com/geniot/pg2_test_go/internal/ctx"
+
 type RenderLoop struct {
-	application *ApplicationImpl
 }
 
-func NewRenderLoop(app *ApplicationImpl) *RenderLoop {
-	return &RenderLoop{app}
+func NewRenderLoop() *RenderLoop {
+	return &RenderLoop{}
 }
 
 func (renderLoop RenderLoop) Run() {
-	window := renderLoop.application.window
-	window.sdlRenderer.SetDrawColor(16, 16, 16, 255)
-	window.sdlRenderer.Clear()
-	renderLoop.application.scene.Render(window.sdlRenderer, renderLoop.application.loop.eventLoop.pressedKeysCodes)
-	window.sdlRenderer.Present()
+	ctx.Renderer.SetDrawColor(16, 16, 16, 255)
+	ctx.Renderer.Clear()
+	ctx.CurrentScene.Render()
+	ctx.Renderer.Present()
 }

@@ -1,8 +1,8 @@
 package mdl
 
 import (
+	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/resources"
-	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -17,25 +17,20 @@ type ImageElement struct {
 	texture        *sdl.Texture
 }
 
-func NewImageElement(renderer *sdl.Renderer, fN string, oX, oY int32, dO sdl.Keycode) *ImageElement {
-	file, _ := resources.MEDIA_LIST.Open("media/" + fN)
-	stat, _ := file.Stat()
-	buf := make([]byte, stat.Size())
-	file.Read(buf)
-	rwops, _ := sdl.RWFromMem(buf)
-	surface, _ := img.LoadRW(rwops, true)
+func NewImageElement(fN string, oX, oY int32, dO sdl.Keycode) *ImageElement {
+	surface, _ := img.LoadRW(resources.GetResource(fN), true)
 	defer surface.Free()
-	txt, err := renderer.CreateTextureFromSurface(surface)
+	txt, err := ctx.Renderer.CreateTextureFromSurface(surface)
 	if err != nil {
 		println(err.Error())
 	}
 	return &ImageElement{fN, oX, oY, surface.W, surface.H, dO, txt}
 }
 
-func (iEl ImageElement) Render(renderer *sdl.Renderer, pressedKeysCodes mapset.Set[sdl.Keycode]) {
+func (iEl ImageElement) Render() {
 	if iEl.displayOnPress == sdl.K_UNKNOWN ||
-		pressedKeysCodes.Contains(iEl.displayOnPress) {
+		ctx.PressedKeysCodes.Contains(iEl.displayOnPress) {
 		dstRect := sdl.Rect{iEl.offsetX, iEl.offsetY, iEl.width, iEl.height}
-		renderer.Copy(iEl.texture, nil, &dstRect)
+		ctx.Renderer.Copy(iEl.texture, nil, &dstRect)
 	}
 }

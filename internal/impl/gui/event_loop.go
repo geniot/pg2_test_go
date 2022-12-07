@@ -3,18 +3,16 @@ package gui
 import (
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/internal/impl/imm"
-	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
 type EventLoop struct {
-	pressedKeysCodes mapset.Set[sdl.Keycode]
-	lastPressedKey   sdl.Keycode
+	lastPressedKey sdl.Keycode
 }
 
 func NewEventLoop() *EventLoop {
-	return &EventLoop{mapset.NewSet[sdl.Keycode](), sdl.K_UNKNOWN}
+	return &EventLoop{sdl.K_UNKNOWN}
 }
 
 func (eventLoop EventLoop) Run() {
@@ -27,9 +25,9 @@ func (eventLoop EventLoop) Run() {
 			}
 			eventLoop.lastPressedKey = t.Keysym.Sym
 			if t.State == sdl.PRESSED {
-				eventLoop.pressedKeysCodes.Add(eventLoop.lastPressedKey)
+				ctx.PressedKeysCodes.Add(eventLoop.lastPressedKey)
 			} else { // if t.State == sdl.RELEASED {
-				eventLoop.pressedKeysCodes.Remove(eventLoop.lastPressedKey)
+				ctx.PressedKeysCodes.Remove(eventLoop.lastPressedKey)
 			}
 			break
 
@@ -48,19 +46,19 @@ func (eventLoop EventLoop) Run() {
 }
 
 func (eventLoop EventLoop) processKeyActions() {
-	if eventLoop.pressedKeysCodes.Contains(sdl.K_q) ||
-		(eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_L1) &&
-			eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_START)) {
+	if ctx.PressedKeysCodes.Contains(sdl.K_q) ||
+		(ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_L1) &&
+			ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_START)) {
 		ctx.Loop.Stop()
 	}
-	if eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_L1) &&
-		eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_X) &&
+	if ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_L1) &&
+		ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_X) &&
 		mix.Playing(-1) != 1 {
 		ctx.Application.PlaySound()
 	}
 	if ctx.Device.IsRumbleSupported() {
-		if eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_L2) &&
-			eventLoop.pressedKeysCodes.Contains(imm.GCW_BUTTON_R2) {
+		if ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_L2) &&
+			ctx.PressedKeysCodes.Contains(imm.GCW_BUTTON_R2) {
 			ctx.Device.Rumble()
 		}
 	}

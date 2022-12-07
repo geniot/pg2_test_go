@@ -20,6 +20,15 @@ type IDevice interface {
 	Rumble()
 }
 
-type ILoop interface {
+type IRunnable interface {
+	Run()
+}
+
+type IStartable interface {
+	Start()
 	Stop()
+}
+
+type IRenderable interface {
+	Render()
 }

@@ -3,18 +3,21 @@ package gui
 import (
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/internal/impl/imm"
+	"geniot.com/geniot/pg2_test_go/resources"
+	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 	"strconv"
 )
 
 type Window struct {
-	application *ApplicationImpl
 	sdlWindow   *sdl.Window
-	sdlRenderer *sdl.Renderer
+	iconSurface *sdl.Surface
 }
 
-func NewWindow(app *ApplicationImpl) *Window {
-	wnd, _ := sdl.CreateWindow(
+func NewWindow() *Window {
+	w := Window{}
+
+	w.sdlWindow, _ = sdl.CreateWindow(
 		imm.APP_NAME+" "+imm.APP_VERSION,
 		int32(ctx.Config.Get(imm.WINDOW_XPOS_KEY)),
 		int32(ctx.Config.Get(imm.WINDOW_YPOS_KEY)),
@@ -22,7 +25,10 @@ func NewWindow(app *ApplicationImpl) *Window {
 		int32(ctx.Config.Get(imm.WINDOW_HEIGHT_KEY)),
 		ctx.Config.Get(imm.WINDOW_STATE_KEY))
 
-	rnd, _ := sdl.CreateRenderer(wnd, -1,
+	w.iconSurface, _ = img.LoadRW(resources.GetResource("pg2test.png"), true)
+	w.sdlWindow.SetIcon(w.iconSurface)
+
+	ctx.Renderer, _ = sdl.CreateRenderer(w.sdlWindow, -1,
 		sdl.RENDERER_PRESENTVSYNC|sdl.RENDERER_ACCELERATED)
 	//sdl.RENDERER_ACCELERATED)
 	//srf, _ := wnd.GetSurface()
@@ -31,8 +37,6 @@ func NewWindow(app *ApplicationImpl) *Window {
 	//srf.FillRect(&sdl.Rect{0, 0, srf.H, srf.W}, sdl.MapRGB(srf.Format, 16, 16, 16))
 	//rnd.SetDrawColor(16, 16, 16, 255)
 	//rnd.Clear()
-
-	w := Window{app, wnd, rnd}
 
 	sdl.AddEventWatchFunc(w.resizingEventWatcher, nil)
 
@@ -43,7 +47,7 @@ func (window Window) resizingEventWatcher(event sdl.Event, data interface{}) boo
 	switch t := event.(type) {
 	case *sdl.WindowEvent:
 		if t.Event == sdl.WINDOWEVENT_RESIZED {
-			window.application.loop.renderLoop.Run()
+			ctx.RenderLoop.Run()
 		}
 		break
 	}
