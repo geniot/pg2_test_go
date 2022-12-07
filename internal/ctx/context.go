@@ -23,6 +23,7 @@ var (
 	PowerInformation PowerInfo = PowerInfo{100, false}
 	DiskInfo1        DiskInfo  = DiskInfo{false, "", ""}
 	DiskInfo2        DiskInfo  = DiskInfo{false, "", ""}
+	CurrentVolume    int       = 0
 
 	Renderer         *sdl.Renderer
 	Font             *ttf.Font

@@ -107,10 +107,3 @@ var (
 	COLOR_YELLOW = sdl.Color{R: 255, G: 255, B: 0, A: 255}
 	COLOR_BLUE   = sdl.Color{R: 0, G: 255, B: 255, A: 255}
 )
-
-func If[T any](cond bool, vTrue, vFalse T) T {
-	if cond {
-		return vTrue
-	}
-	return vFalse
-}

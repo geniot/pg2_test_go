@@ -3,6 +3,7 @@ package dev
 import (
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
+	"github.com/itchyny/volume-go"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -19,11 +20,16 @@ func (device DesktopDeviceImpl) UpdateBatteryStatus() {
 }
 
 func (device DesktopDeviceImpl) UpdateDiskStatus() {
-
+	updateDiskInfo("C:\\", &ctx.DiskInfo1)
 }
 
 func (device DesktopDeviceImpl) UpdateVolume() {
-
+	newVolume, err := volume.GetVolume()
+	if err != nil {
+		println(err.Error())
+	} else {
+		ctx.CurrentVolume = newVolume
+	}
 }
 
 func (device DesktopDeviceImpl) ProcessKeyActions() {

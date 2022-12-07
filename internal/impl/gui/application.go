@@ -9,15 +9,11 @@ import (
 	"geniot.com/geniot/pg2_test_go/resources"
 	"github.com/robfig/cron/v3"
 	"github.com/veandco/go-sdl2/mix"
+	"github.com/veandco/go-sdl2/ttf"
 )
 
 type ApplicationImpl struct {
 	audioChunk *mix.Chunk
-}
-
-func (app *ApplicationImpl) Stop() {
-	ctx.Device.Stop()
-	ctx.Loop.Stop()
 }
 
 func NewApplication() *ApplicationImpl {
@@ -36,6 +32,7 @@ func (app *ApplicationImpl) Start() {
 
 	ctx.CurrentScene = mdl.NewScene()
 
+	ctx.Font, _ = ttf.OpenFontRW(resources.GetResource(mdl.FONT_FILE_NAME), 1, mdl.FONT_SIZE)
 	app.audioChunk, _ = mix.LoadWAVRW(resources.GetResource("tone.wav"), true)
 
 	go ctx.Device.UpdateBatteryStatus()
@@ -56,4 +53,11 @@ func (app *ApplicationImpl) Start() {
 
 func (app *ApplicationImpl) PlaySound() {
 	app.audioChunk.Play(1, 0)
+}
+
+func (app *ApplicationImpl) Stop() {
+	app.audioChunk.Free()
+	ctx.Font.Close()
+	ctx.Device.Stop()
+	ctx.Loop.Stop()
 }
