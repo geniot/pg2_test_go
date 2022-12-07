@@ -8,6 +8,8 @@ const (
 	APP_NAME       = "PG2 Test"
 	APP_VERSION    = "0.5"
 	CONF_FILE_NAME = ".pg2_test.properties"
+	FONT_FILE_NAME = "pixelberry.ttf"
+	FONT_SIZE      = 8
 
 	WINDOW_XPOS_KEY   = "WINDOW_XPOS_KEY"
 	WINDOW_YPOS_KEY   = "WINDOW_YPOS_KEY"

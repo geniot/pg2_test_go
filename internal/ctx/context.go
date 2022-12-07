@@ -4,6 +4,7 @@ import (
 	"geniot.com/geniot/pg2_test_go/internal/api"
 	mapset "github.com/deckarep/golang-set/v2"
 	"github.com/veandco/go-sdl2/sdl"
+	"github.com/veandco/go-sdl2/ttf"
 )
 
 var (
@@ -20,5 +21,6 @@ var (
 	CurrentScene api.IRenderable
 
 	Renderer         *sdl.Renderer
+	Font             *ttf.Font
 	PressedKeysCodes mapset.Set[sdl.Keycode] = mapset.NewSet[sdl.Keycode]()
 )

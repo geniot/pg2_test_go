@@ -21,8 +21,6 @@ func NewApplication() *ApplicationImpl {
 }
 
 func (app ApplicationImpl) Start() {
-	sdl.Init(sdl.INIT_EVERYTHING)
-
 	ctx.Config = NewConfig()
 	ctx.Device = dev.NewDevice()
 	ctx.Window = NewWindow()

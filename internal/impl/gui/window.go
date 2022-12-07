@@ -17,13 +17,11 @@ type Window struct {
 func NewWindow() *Window {
 	w := Window{}
 
+	xPos, yPos, width, height := ctx.Device.GetWindowPosAndSize()
 	w.sdlWindow, _ = sdl.CreateWindow(
 		mdl.APP_NAME+" "+mdl.APP_VERSION,
-		int32(ctx.Config.Get(mdl.WINDOW_XPOS_KEY)),
-		int32(ctx.Config.Get(mdl.WINDOW_YPOS_KEY)),
-		int32(ctx.Config.Get(mdl.WINDOW_WIDTH_KEY)),
-		int32(ctx.Config.Get(mdl.WINDOW_HEIGHT_KEY)),
-		ctx.Config.Get(mdl.WINDOW_STATE_KEY))
+		xPos, yPos, width, height,
+		ctx.Device.GetWindowState())
 
 	w.iconSurface, _ = img.LoadRW(resources.GetResource("pg2test.png"), true)
 	w.sdlWindow.SetIcon(w.iconSurface)
