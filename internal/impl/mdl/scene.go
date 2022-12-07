@@ -1,11 +1,14 @@
 package mdl
 
+import "geniot.com/geniot/pg2_test_go/internal/api"
+
 type Scene struct {
-	imageElements []*ImageElement
+	imageElements []api.IRenderable
 }
 
 func NewScene() *Scene {
-	imgElements := make([]*ImageElement, len(ButtonImages))
+	//totalLength := len(ButtonImages) + len(JoystickImages)
+	imgElements := make([]api.IRenderable, len(ButtonImages))
 	for i := range ButtonImages {
 		iEl := NewImageElement(
 			ButtonImages[i].ImageName,
