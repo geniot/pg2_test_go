@@ -36,7 +36,7 @@ func (eventLoop EventLoop) Run() {
 			break
 
 		case *sdl.QuitEvent:
-			ctx.Application.Stop()
+			ctx.Loop.Stop()
 			break
 		}
 	}

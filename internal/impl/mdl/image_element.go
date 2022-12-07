@@ -1,7 +1,6 @@
 package mdl
 
 import (
-	"geniot.com/geniot/pg2_test_go/internal/api"
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/resources"
 	"github.com/veandco/go-sdl2/img"
@@ -18,7 +17,7 @@ type ImageElement struct {
 	texture        *sdl.Texture
 }
 
-func NewImageElement(fN string, oX, oY int32, dO sdl.Keycode) api.IRenderable {
+func NewImageElement(fN string, oX, oY int32, dO sdl.Keycode) ImageElement {
 	surface, _ := img.LoadRW(resources.GetResource(fN), true)
 	defer surface.Free()
 	txt, err := ctx.Renderer.CreateTextureFromSurface(surface)

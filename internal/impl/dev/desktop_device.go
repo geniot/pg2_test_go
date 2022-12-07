@@ -21,6 +21,8 @@ func (device DesktopDeviceImpl) UpdateBatteryStatus() {
 
 func (device DesktopDeviceImpl) UpdateDiskStatus() {
 	updateDiskInfo("C:\\", &ctx.DiskInfo1)
+	//can be uncommented for debugging
+	//updateDiskInfo("C:\\", &ctx.DiskInfo2)
 }
 
 func (device DesktopDeviceImpl) UpdateVolume() {

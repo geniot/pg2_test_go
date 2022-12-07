@@ -36,3 +36,16 @@ func humanateBytes(s uint64, base float64, sizes []string) string {
 func logn(n, b float64) float64 {
 	return math.Log(n) / math.Log(b)
 }
+
+func initImageElements(imageDescriptors []ImageDescriptor) []ImageElement {
+	imgElements := make([]ImageElement, len(imageDescriptors))
+	for i := range imageDescriptors {
+		iEl := NewImageElement(
+			imageDescriptors[i].ImageName,
+			imageDescriptors[i].OffsetX,
+			imageDescriptors[i].OffsetY,
+			imageDescriptors[i].DisplayOnPress)
+		imgElements[i] = iEl
+	}
+	return imgElements
+}

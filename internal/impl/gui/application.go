@@ -49,6 +49,9 @@ func (app *ApplicationImpl) Start() {
 	c.Start()
 
 	ctx.Loop.Start()
+
+	//graceful shutdown :) we let the loop finish all rendering/processing
+	app.Stop()
 }
 
 func (app *ApplicationImpl) PlaySound() {
@@ -59,5 +62,4 @@ func (app *ApplicationImpl) Stop() {
 	app.audioChunk.Free()
 	ctx.Font.Close()
 	ctx.Device.Stop()
-	ctx.Loop.Stop()
 }
