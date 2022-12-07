@@ -13,8 +13,15 @@ var (
 func GetResource(fileName string) *sdl.RWops {
 	file, _ := mediaList.Open("media/" + fileName)
 	stat, _ := file.Stat()
-	buf := make([]byte, stat.Size())
-	file.Read(buf)
+	size := stat.Size()
+	buf := make([]byte, size)
+	r, err := file.Read(buf)
+	if err != nil {
+		println(err.Error())
+	}
+	if r < int(size) {
+		println("Couldn't read the whole file.")
+	}
 	rwOps, _ := sdl.RWFromMem(buf)
 	return rwOps
 }

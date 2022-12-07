@@ -1,6 +1,9 @@
 package dev
 
 import (
+	"geniot.com/geniot/pg2_test_go/internal/ctx"
+	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
+	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 	"strconv"
 )
@@ -9,6 +12,23 @@ type HandheldDeviceImpl struct {
 	haptic            *sdl.Haptic
 	joystick          *sdl.Joystick
 	isRumbleSupported bool
+}
+
+func (device HandheldDeviceImpl) ProcessKeyActions() {
+	if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L1) &&
+		ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_START) {
+		ctx.Loop.Stop()
+	}
+	if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L1) &&
+		ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_X) {
+		if mix.Playing(-1) != 1 {
+			ctx.Application.PlaySound()
+		}
+	}
+	if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L2) &&
+		ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_R2) {
+		device.rumble()
+	}
 }
 
 func (device HandheldDeviceImpl) GetWindowPosAndSize() (int32, int32, int32, int32) {
@@ -23,12 +43,7 @@ func (h HandheldDeviceImpl) IsRumbleSupported() bool {
 	return h.isRumbleSupported
 }
 
-func (h HandheldDeviceImpl) Rumble() {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (h HandheldDeviceImpl) PlaySound() {
+func (h HandheldDeviceImpl) rumble() {
 	//TODO implement me
 	panic("implement me")
 }

@@ -3,10 +3,22 @@ package dev
 import (
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
+	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
 type DesktopDeviceImpl struct {
+}
+
+func (device DesktopDeviceImpl) ProcessKeyActions() {
+	if ctx.PressedKeysCodes.Contains(sdl.K_q) {
+		ctx.Loop.Stop()
+	}
+	if ctx.PressedKeysCodes.Contains(sdl.K_s) {
+		if mix.Playing(-1) != 1 {
+			ctx.Application.PlaySound()
+		}
+	}
 }
 
 func (device DesktopDeviceImpl) GetWindowPosAndSize() (int32, int32, int32, int32) {
@@ -22,23 +34,10 @@ func (device DesktopDeviceImpl) GetWindowState() uint32 {
 	return sdl.WINDOW_SHOWN
 }
 
-func (device DesktopDeviceImpl) PlaySound() {
-	//TODO implement me
-	panic("implement me")
-}
-
 func NewDesktopDevice() DesktopDeviceImpl {
 	device := DesktopDeviceImpl{}
 	device.init()
 	return device
-}
-
-func (device DesktopDeviceImpl) IsRumbleSupported() bool {
-	return false
-}
-
-func (device DesktopDeviceImpl) Rumble() {
-	println("Rumble is not supported on this device.")
 }
 
 func (device DesktopDeviceImpl) init() {

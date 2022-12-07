@@ -16,11 +16,9 @@ type IConfig interface {
 }
 
 type IDevice interface {
-	IsRumbleSupported() bool
-	Rumble()
-	PlaySound()
 	GetWindowState() uint32
 	GetWindowPosAndSize() (int32, int32, int32, int32)
+	ProcessKeyActions()
 }
 
 type IRunnable interface {
