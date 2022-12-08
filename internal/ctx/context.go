@@ -23,7 +23,7 @@ var (
 	PowerInformation api.PowerInfo = api.PowerInfo{100, false}
 	DiskInfo1        api.DiskInfo  = api.DiskInfo{false, "", ""}
 	DiskInfo2        api.DiskInfo  = api.DiskInfo{false, "", ""}
-	CurrentVolume    int           = 0
+	CurrentVolume    int           = -1
 
 	Renderer         *sdl.Renderer
 	Font             *ttf.Font

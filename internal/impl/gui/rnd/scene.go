@@ -20,6 +20,7 @@ func NewScene() *Scene {
 		l.PushBack(iEl)
 	}
 	l.PushBack(NewDiskInfos())
+	l.PushBack(NewVolumeIndicator())
 	return &Scene{l}
 }
 
