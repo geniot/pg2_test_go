@@ -6,6 +6,7 @@ import (
 	"github.com/itchyny/volume-go"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
+	"runtime"
 )
 
 type DesktopDeviceImpl struct {
@@ -20,7 +21,11 @@ func (device DesktopDeviceImpl) UpdateBatteryStatus() {
 }
 
 func (device DesktopDeviceImpl) UpdateDiskStatus() {
-	updateDiskInfo("C:\\", &ctx.DiskInfo1)
+	if runtime.GOOS == "windows" {
+		updateDiskInfo("C:\\", &ctx.DiskInfo1)
+	} else {
+		updateDiskInfo("/", &ctx.DiskInfo1)
+	}
 	//can be uncommented for debugging
 	//updateDiskInfo("C:\\", &ctx.DiskInfo2)
 }
