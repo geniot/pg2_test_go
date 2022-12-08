@@ -1,7 +1,7 @@
 package gui
 
 import (
-	"geniot.com/geniot/pg2_test_go/internal/api"
+	"geniot.com/geniot/pg2_test_go/internal/glb"
 	"github.com/magiconair/properties"
 	"github.com/veandco/go-sdl2/sdl"
 	"os"
@@ -17,7 +17,7 @@ type ConfigImpl struct {
 
 func NewConfig() *ConfigImpl {
 	hD, _ := os.UserHomeDir()
-	pToC := filepath.Join(hD, api.CONF_FILE_NAME)
+	pToC := filepath.Join(hD, glb.CONF_FILE_NAME)
 	cfg := &ConfigImpl{nil,
 		hD,
 		pToC}
@@ -40,20 +40,20 @@ func (cfg *ConfigImpl) load() {
 
 	if loadedProps == nil {
 		loadedProps = properties.NewProperties()
-		loadedProps.Set(api.WINDOW_XPOS_KEY, strconv.FormatInt(int64(sdl.WINDOWPOS_UNDEFINED), 10))
-		loadedProps.Set(api.WINDOW_YPOS_KEY, strconv.FormatInt(int64(sdl.WINDOWPOS_UNDEFINED), 10))
+		loadedProps.Set(glb.WINDOW_XPOS_KEY, strconv.FormatInt(int64(sdl.WINDOWPOS_UNDEFINED), 10))
+		loadedProps.Set(glb.WINDOW_YPOS_KEY, strconv.FormatInt(int64(sdl.WINDOWPOS_UNDEFINED), 10))
 		displayMode, _ := sdl.GetCurrentDisplayMode(0)
-		loadedProps.Set(api.WINDOW_WIDTH_KEY, strconv.FormatInt(int64(displayMode.W/2), 10))
-		loadedProps.Set(api.WINDOW_HEIGHT_KEY, strconv.FormatInt(int64(displayMode.H/2), 10))
-		loadedProps.Set(api.WINDOW_STATE_KEY, strconv.FormatInt(int64(sdl.WINDOW_SHOWN|sdl.WINDOW_RESIZABLE), 10))
+		loadedProps.Set(glb.WINDOW_WIDTH_KEY, strconv.FormatInt(int64(displayMode.W/2), 10))
+		loadedProps.Set(glb.WINDOW_HEIGHT_KEY, strconv.FormatInt(int64(displayMode.H/2), 10))
+		loadedProps.Set(glb.WINDOW_STATE_KEY, strconv.FormatInt(int64(sdl.WINDOW_SHOWN|sdl.WINDOW_RESIZABLE), 10))
 	}
 
 	//patching window state
-	windowStateStr, _ := loadedProps.Get(api.WINDOW_STATE_KEY)
+	windowStateStr, _ := loadedProps.Get(glb.WINDOW_STATE_KEY)
 	windowState, _ := strconv.ParseInt(windowStateStr, 10, 0)
 	windowState |= sdl.WINDOW_SHOWN
 	windowState |= sdl.WINDOW_RESIZABLE
-	loadedProps.Set(api.WINDOW_STATE_KEY, strconv.FormatInt(windowState, 10))
+	loadedProps.Set(glb.WINDOW_STATE_KEY, strconv.FormatInt(windowState, 10))
 
 	cfg.props = loadedProps
 }

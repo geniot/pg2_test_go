@@ -2,6 +2,7 @@ package dev
 
 import (
 	"geniot.com/geniot/pg2_test_go/internal/api"
+	"geniot.com/geniot/pg2_test_go/internal/glb"
 	"github.com/pydio/minio-srv/pkg/disk"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
@@ -48,8 +49,8 @@ func updateDiskInfo(path string, diskInfo *api.DiskInfo) {
 	//we only do this once: when initializing or the disk has been inserted
 	if !diskInfo.IsDiskAvailable {
 		diskInfo.IsDiskAvailable = true
-		diskInfo.MaxDiskSpace = api.Bytes(di.Total)
-		diskInfo.FreeDiskSpace = api.Bytes(di.Free)
+		diskInfo.MaxDiskSpace = glb.Bytes(di.Total)
+		diskInfo.FreeDiskSpace = glb.Bytes(di.Free)
 	}
 
 }

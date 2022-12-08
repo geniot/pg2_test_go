@@ -1,6 +1,7 @@
 package api
 
 import (
+	"geniot.com/geniot/pg2_test_go/internal/glb"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -90,13 +91,13 @@ var (
 			OffsetX:        169,
 			OffsetY:        53,
 			ImageName:      "pg2_button_vol1_pressed.png",
-			DisplayOnPress: GCW_VOLUMEDOWN,
+			DisplayOnPress: glb.GCW_VOLUMEDOWN,
 		},
 		{
 			OffsetX:        156,
 			OffsetY:        40,
 			ImageName:      "info_voldw.png",
-			DisplayOnPress: GCW_VOLUMEDOWN,
+			DisplayOnPress: glb.GCW_VOLUMEDOWN,
 		},
 		//VOLUME UP
 		{
@@ -109,13 +110,13 @@ var (
 			OffsetX:        169,
 			OffsetY:        53,
 			ImageName:      "pg2_button_vol2_pressed.png",
-			DisplayOnPress: GCW_VOLUMEUP,
+			DisplayOnPress: glb.GCW_VOLUMEUP,
 		},
 		{
 			OffsetX:        177,
 			OffsetY:        40,
 			ImageName:      "info_volup.png",
-			DisplayOnPress: GCW_VOLUMEUP,
+			DisplayOnPress: glb.GCW_VOLUMEUP,
 		},
 		//A
 		{
@@ -128,13 +129,13 @@ var (
 			OffsetX:        216,
 			OffsetY:        77,
 			ImageName:      "pg2_button_a_pressed.png",
-			DisplayOnPress: GCW_BUTTON_A,
+			DisplayOnPress: glb.GCW_BUTTON_A,
 		},
 		{
 			OffsetX:        226,
 			OffsetY:        73,
 			ImageName:      "info_btna.png",
-			DisplayOnPress: GCW_BUTTON_A,
+			DisplayOnPress: glb.GCW_BUTTON_A,
 		},
 		//B
 		{
@@ -147,13 +148,13 @@ var (
 			OffsetX:        209,
 			OffsetY:        86,
 			ImageName:      "pg2_button_b_pressed.png",
-			DisplayOnPress: GCW_BUTTON_B,
+			DisplayOnPress: glb.GCW_BUTTON_B,
 		},
 		{
 			OffsetX:        218,
 			OffsetY:        90,
 			ImageName:      "info_btnb.png",
-			DisplayOnPress: GCW_BUTTON_B,
+			DisplayOnPress: glb.GCW_BUTTON_B,
 		},
 		//X
 		{
@@ -166,13 +167,13 @@ var (
 			OffsetX:        209,
 			OffsetY:        70,
 			ImageName:      "pg2_button_x_pressed.png",
-			DisplayOnPress: GCW_BUTTON_X,
+			DisplayOnPress: glb.GCW_BUTTON_X,
 		},
 		{
 			OffsetX:        218,
 			OffsetY:        64,
 			ImageName:      "info_btnx.png",
-			DisplayOnPress: GCW_BUTTON_X,
+			DisplayOnPress: glb.GCW_BUTTON_X,
 		},
 		//Y
 		{
@@ -185,13 +186,13 @@ var (
 			OffsetX:        201,
 			OffsetY:        78,
 			ImageName:      "pg2_button_y_pressed.png",
-			DisplayOnPress: GCW_BUTTON_Y,
+			DisplayOnPress: glb.GCW_BUTTON_Y,
 		},
 		{
 			OffsetX:        211,
 			OffsetY:        82,
 			ImageName:      "info_btny.png",
-			DisplayOnPress: GCW_BUTTON_Y,
+			DisplayOnPress: glb.GCW_BUTTON_Y,
 		},
 		//UP
 		{
@@ -204,13 +205,13 @@ var (
 			OffsetX:        102,
 			OffsetY:        70,
 			ImageName:      "pg2_button_up_pressed.png",
-			DisplayOnPress: GCW_BUTTON_UP,
+			DisplayOnPress: glb.GCW_BUTTON_UP,
 		},
 		{
 			OffsetX:        71,
 			OffsetY:        64,
 			ImageName:      "info_padup.png",
-			DisplayOnPress: GCW_BUTTON_UP,
+			DisplayOnPress: glb.GCW_BUTTON_UP,
 		},
 		//DOWN
 		{
@@ -223,13 +224,13 @@ var (
 			OffsetX:        102,
 			OffsetY:        84,
 			ImageName:      "pg2_button_down_pressed.png",
-			DisplayOnPress: GCW_BUTTON_DOWN,
+			DisplayOnPress: glb.GCW_BUTTON_DOWN,
 		},
 		{
 			OffsetX:        59,
 			OffsetY:        92,
 			ImageName:      "info_paddown.png",
-			DisplayOnPress: GCW_BUTTON_DOWN,
+			DisplayOnPress: glb.GCW_BUTTON_DOWN,
 		},
 		//LEFT
 		{
@@ -242,13 +243,13 @@ var (
 			OffsetX:        95,
 			OffsetY:        77,
 			ImageName:      "pg2_button_left_pressed.png",
-			DisplayOnPress: GCW_BUTTON_LEFT,
+			DisplayOnPress: glb.GCW_BUTTON_LEFT,
 		},
 		{
 			OffsetX:        63,
 			OffsetY:        73,
 			ImageName:      "info_padleft.png",
-			DisplayOnPress: GCW_BUTTON_LEFT,
+			DisplayOnPress: glb.GCW_BUTTON_LEFT,
 		},
 		//RIGHT
 		{
@@ -261,13 +262,13 @@ var (
 			OffsetX:        109,
 			OffsetY:        77,
 			ImageName:      "pg2_button_right_pressed.png",
-			DisplayOnPress: GCW_BUTTON_RIGHT,
+			DisplayOnPress: glb.GCW_BUTTON_RIGHT,
 		},
 		{
 			OffsetX:        58,
 			OffsetY:        81,
 			ImageName:      "info_padright.png",
-			DisplayOnPress: GCW_BUTTON_RIGHT,
+			DisplayOnPress: glb.GCW_BUTTON_RIGHT,
 		},
 		//MENU
 		{
@@ -280,13 +281,13 @@ var (
 			OffsetX:        200,
 			OffsetY:        96,
 			ImageName:      "pg2_button_s_pressed.png",
-			DisplayOnPress: GCW_BUTTON_MENU,
+			DisplayOnPress: glb.GCW_BUTTON_MENU,
 		},
 		{
 			OffsetX:        206,
 			OffsetY:        98,
 			ImageName:      "info_menu.png",
-			DisplayOnPress: GCW_BUTTON_MENU,
+			DisplayOnPress: glb.GCW_BUTTON_MENU,
 		},
 		//SELECT
 		{
@@ -299,13 +300,13 @@ var (
 			OffsetX:        200,
 			OffsetY:        105,
 			ImageName:      "pg2_button_s_pressed.png",
-			DisplayOnPress: GCW_BUTTON_SELECT,
+			DisplayOnPress: glb.GCW_BUTTON_SELECT,
 		},
 		{
 			OffsetX:        206,
 			OffsetY:        107,
 			ImageName:      "info_select.png",
-			DisplayOnPress: GCW_BUTTON_SELECT,
+			DisplayOnPress: glb.GCW_BUTTON_SELECT,
 		},
 		//START
 		{
@@ -318,13 +319,13 @@ var (
 			OffsetX:        200,
 			OffsetY:        114,
 			ImageName:      "pg2_button_s_pressed.png",
-			DisplayOnPress: GCW_BUTTON_START,
+			DisplayOnPress: glb.GCW_BUTTON_START,
 		},
 		{
 			OffsetX:        206,
 			OffsetY:        116,
 			ImageName:      "info_start.png",
-			DisplayOnPress: GCW_BUTTON_START,
+			DisplayOnPress: glb.GCW_BUTTON_START,
 		},
 		//L1
 		{
@@ -337,13 +338,13 @@ var (
 			OffsetX:        92,
 			OffsetY:        55,
 			ImageName:      "pg2_button_l1_pressed.png",
-			DisplayOnPress: GCW_BUTTON_L1,
+			DisplayOnPress: glb.GCW_BUTTON_L1,
 		},
 		{
 			OffsetX:        86,
 			OffsetY:        40,
 			ImageName:      "info_btnl1.png",
-			DisplayOnPress: GCW_BUTTON_L1,
+			DisplayOnPress: glb.GCW_BUTTON_L1,
 		},
 		//L2
 		{
@@ -356,13 +357,13 @@ var (
 			OffsetX:        110,
 			OffsetY:        53,
 			ImageName:      "pg2_button_l2_pressed.png",
-			DisplayOnPress: GCW_BUTTON_L2,
+			DisplayOnPress: glb.GCW_BUTTON_L2,
 		},
 		{
 			OffsetX:        109,
 			OffsetY:        40,
 			ImageName:      "info_btnl2.png",
-			DisplayOnPress: GCW_BUTTON_L2,
+			DisplayOnPress: glb.GCW_BUTTON_L2,
 		},
 		//R1
 		{
@@ -375,13 +376,13 @@ var (
 			OffsetX:        213,
 			OffsetY:        55,
 			ImageName:      "pg2_button_r1_pressed.png",
-			DisplayOnPress: GCW_BUTTON_R1,
+			DisplayOnPress: glb.GCW_BUTTON_R1,
 		},
 		{
 			OffsetX:        213,
 			OffsetY:        40,
 			ImageName:      "info_btnr1.png",
-			DisplayOnPress: GCW_BUTTON_R1,
+			DisplayOnPress: glb.GCW_BUTTON_R1,
 		},
 		//R2
 		{
@@ -394,13 +395,13 @@ var (
 			OffsetX:        199,
 			OffsetY:        53,
 			ImageName:      "pg2_button_r2_pressed.png",
-			DisplayOnPress: GCW_BUTTON_R2,
+			DisplayOnPress: glb.GCW_BUTTON_R2,
 		},
 		{
 			OffsetX:        200,
 			OffsetY:        40,
 			ImageName:      "info_btnr2.png",
-			DisplayOnPress: GCW_BUTTON_R2,
+			DisplayOnPress: glb.GCW_BUTTON_R2,
 		},
 	}
 )

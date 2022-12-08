@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"geniot.com/geniot/pg2_test_go/internal/api"
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
+	"geniot.com/geniot/pg2_test_go/internal/glb"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -16,8 +17,8 @@ func NewBatteryIndicator() api.IRenderable {
 }
 
 func (batteryIndicator BatteryIndicator) Render() {
-	drawText(fmt.Sprintf("%2d%%", ctx.PowerInformation.Pct), 279, 120, api.COLOR_WHITE)
-	drawText("POW", 275, 55, api.COLOR_WHITE)
+	drawText(fmt.Sprintf("%2d%%", ctx.PowerInformation.Pct), 279, 120, glb.COLOR_WHITE)
+	drawText("POW", 275, 55, glb.COLOR_WHITE)
 	renderImageElement(batteryIndicator.imageElements, 0)
 	batteryLevelHeight := int32(ctx.PowerInformation.Pct * 39 / 100)
 	if ctx.PowerInformation.Pct > 24 {

@@ -24,6 +24,7 @@ type IDevice interface {
 	UpdateDiskStatus()
 	UpdateVolume()
 	Stop()
+	GetJoystickAxis(axis int) int16
 }
 
 type IRunnable interface {

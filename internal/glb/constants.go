@@ -1,4 +1,4 @@
-package api
+package glb
 
 import (
 	"fmt"
@@ -15,6 +15,7 @@ const (
 	TEXT_OFFSET_X  = 10
 	TEXT_PADDING_X = 4
 	J_CROSS_WIDTH  = 7
+	J_CROSS_HEIGHT = 7
 
 	MAX_VOLTAGE = 4150000
 	MIN_VOLTAGE = 3330000

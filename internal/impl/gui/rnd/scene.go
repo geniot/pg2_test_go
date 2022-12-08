@@ -22,6 +22,7 @@ func NewScene() *Scene {
 	l.PushBack(NewDiskInfos())
 	l.PushBack(NewVolumeIndicator())
 	l.PushBack(NewBatteryIndicator())
+	l.PushBack(NewJoystick())
 	return &Scene{l}
 }
 

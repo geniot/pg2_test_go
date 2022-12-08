@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"geniot.com/geniot/pg2_test_go/internal/api"
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
+	"geniot.com/geniot/pg2_test_go/internal/glb"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -25,7 +26,7 @@ func (volumeIndicator VolumeIndicator) Render() {
 				X: volumeIndicator.imageElements[0].offsetX + 1,
 				Y: volumeIndicator.imageElements[0].offsetY + 43 - volumeLevelHeight,
 				W: 14, H: volumeLevelHeight})
-		drawText(fmt.Sprintf("%2d%%", ctx.CurrentVolume), 24, 120, api.COLOR_WHITE)
-		drawText("VOL", 20, 55, api.COLOR_WHITE)
+		drawText(fmt.Sprintf("%2d%%", ctx.CurrentVolume), 24, 120, glb.COLOR_WHITE)
+		drawText("VOL", 20, 55, glb.COLOR_WHITE)
 	}
 }
