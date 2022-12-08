@@ -52,7 +52,7 @@ func (joystick Joystick) Render() {
 	//white rectangle can be used for debugging the small screen area
 	//err = surface.FillRect(&sdl.Rect{X: SMALL_SCREEN_X1, Y: SMALL_SCREEN_Y1, W: SMALL_SCREEN_WIDTH, H: SMALL_SCREEN_HEIGHT}, sdl.MapRGB(surface.Format, 255, 255, 255))
 
-	ctx.Renderer.SetDrawColor(255, 0, 255, 255)
+	ctx.Renderer.SetDrawColor(255, 0, 255, 255) //fuchsia
 	ctx.Renderer.DrawLine(
 		int32(glb.SMALL_SCREEN_X_CENTER-glb.J_CROSS_WIDTH/2+cPosX),
 		int32(glb.SMALL_SCREEN_Y_CENTER+cPosY),

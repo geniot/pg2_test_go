@@ -28,4 +28,5 @@ var (
 	Renderer         *sdl.Renderer
 	Font             *ttf.Font
 	PressedKeysCodes mapset.Set[sdl.Keycode] = mapset.NewSet[sdl.Keycode]()
+	LastPressedKey   sdl.Keycode
 )

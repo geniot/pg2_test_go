@@ -6,11 +6,10 @@ import (
 )
 
 type EventLoop struct {
-	lastPressedKey sdl.Keycode
 }
 
 func NewEventLoop() *EventLoop {
-	return &EventLoop{sdl.K_UNKNOWN}
+	return &EventLoop{}
 }
 
 func (eventLoop EventLoop) Run() {
@@ -21,11 +20,11 @@ func (eventLoop EventLoop) Run() {
 			if t.Repeat > 0 {
 				break
 			}
-			eventLoop.lastPressedKey = t.Keysym.Sym
+			ctx.LastPressedKey = t.Keysym.Sym
 			if t.State == sdl.PRESSED {
-				ctx.PressedKeysCodes.Add(eventLoop.lastPressedKey)
+				ctx.PressedKeysCodes.Add(t.Keysym.Sym)
 			} else { // if t.State == sdl.RELEASED {
-				ctx.PressedKeysCodes.Remove(eventLoop.lastPressedKey)
+				ctx.PressedKeysCodes.Remove(t.Keysym.Sym)
 			}
 			break
 
