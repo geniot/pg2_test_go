@@ -1,4 +1,6 @@
 bin/pg2_test.exe
 bin/pg2_test_debug.exe
 bin/pg2_test
+bin/pg2_test.gcw
+bin/pg2_test.opk
 .idea

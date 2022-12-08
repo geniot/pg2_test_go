@@ -8,10 +8,11 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
 	"runtime"
+	"strings"
 )
 
 func NewDevice() api.IDevice {
-	if runtime.GOARCH == "mips" {
+	if strings.Index(runtime.GOARCH, "mips") == 0 {
 		return NewHandheldDevice()
 	} else {
 		return NewDesktopDevice()

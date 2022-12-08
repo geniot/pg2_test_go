@@ -15,13 +15,7 @@ func GetResource(fileName string) *sdl.RWops {
 	stat, _ := file.Stat()
 	size := stat.Size()
 	buf := make([]byte, size)
-	r, err := file.Read(buf)
-	if err != nil {
-		println(err.Error())
-	}
-	if r < int(size) {
-		println("Couldn't read the whole file.")
-	}
+	file.Read(buf)
 	rwOps, _ := sdl.RWFromMem(buf)
 	return rwOps
 }

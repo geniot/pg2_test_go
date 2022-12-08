@@ -12,19 +12,19 @@ import (
 type DesktopDeviceImpl struct {
 }
 
-func (device DesktopDeviceImpl) GetJoystickAxis(axis int) int16 {
+func (desktopDevice DesktopDeviceImpl) GetJoystickAxis(axis int) int16 {
 	return 0 //no joystick on desktop
 }
 
-func (device DesktopDeviceImpl) Stop() {
+func (desktopDevice DesktopDeviceImpl) Stop() {
 	closeCommon()
 }
 
-func (device DesktopDeviceImpl) UpdateBatteryStatus() {
+func (desktopDevice DesktopDeviceImpl) UpdateBatteryStatus() {
 
 }
 
-func (device DesktopDeviceImpl) UpdateDiskStatus() {
+func (desktopDevice DesktopDeviceImpl) UpdateDiskStatus() {
 	if runtime.GOOS == "windows" {
 		updateDiskInfo("C:\\", &ctx.DiskInfo1)
 		//can be uncommented for debugging
@@ -36,7 +36,7 @@ func (device DesktopDeviceImpl) UpdateDiskStatus() {
 	}
 }
 
-func (device DesktopDeviceImpl) UpdateVolume() {
+func (desktopDevice DesktopDeviceImpl) UpdateVolume() {
 	newVolume, err := volume.GetVolume()
 	if err != nil {
 		println(err.Error())
@@ -45,7 +45,7 @@ func (device DesktopDeviceImpl) UpdateVolume() {
 	}
 }
 
-func (device DesktopDeviceImpl) ProcessKeyActions() {
+func (desktopDevice DesktopDeviceImpl) ProcessKeyActions() {
 	if ctx.PressedKeysCodes.Contains(sdl.K_q) {
 		ctx.Loop.Stop()
 	}
@@ -56,7 +56,7 @@ func (device DesktopDeviceImpl) ProcessKeyActions() {
 	}
 }
 
-func (device DesktopDeviceImpl) GetWindowPosAndSize() (int32, int32, int32, int32) {
+func (desktopDevice DesktopDeviceImpl) GetWindowPosAndSize() (int32, int32, int32, int32) {
 	return int32(ctx.Config.Get(glb.WINDOW_XPOS_KEY)),
 		int32(ctx.Config.Get(glb.WINDOW_YPOS_KEY)),
 		320, 240
@@ -64,7 +64,7 @@ func (device DesktopDeviceImpl) GetWindowPosAndSize() (int32, int32, int32, int3
 	//int32(ctx.Config.Get(mdl.WINDOW_HEIGHT_KEY))
 }
 
-func (device DesktopDeviceImpl) GetWindowState() uint32 {
+func (desktopDevice DesktopDeviceImpl) GetWindowState() uint32 {
 	//return ctx.Config.Get(mdl.WINDOW_STATE_KEY)
 	return sdl.WINDOW_SHOWN
 }
@@ -75,6 +75,6 @@ func NewDesktopDevice() DesktopDeviceImpl {
 	return device
 }
 
-func (device DesktopDeviceImpl) init() {
+func (desktopDevice DesktopDeviceImpl) init() {
 	initCommon()
 }

@@ -56,11 +56,11 @@ func (joystick Joystick) Render() {
 	ctx.Renderer.DrawLine(
 		int32(glb.SMALL_SCREEN_X_CENTER-glb.J_CROSS_WIDTH/2+cPosX),
 		int32(glb.SMALL_SCREEN_Y_CENTER+cPosY),
-		int32(glb.SMALL_SCREEN_X_CENTER-glb.J_CROSS_WIDTH/2+cPosX+glb.J_CROSS_WIDTH),
+		int32(glb.SMALL_SCREEN_X_CENTER+glb.J_CROSS_WIDTH/2+cPosX),
 		int32(glb.SMALL_SCREEN_Y_CENTER+cPosY))
 	ctx.Renderer.DrawLine(
 		int32(glb.SMALL_SCREEN_X_CENTER+cPosX),
 		int32(glb.SMALL_SCREEN_Y_CENTER-glb.J_CROSS_HEIGHT/2+cPosY),
 		int32(glb.SMALL_SCREEN_X_CENTER+cPosX),
-		int32(glb.SMALL_SCREEN_Y_CENTER-glb.J_CROSS_HEIGHT/2+cPosY+glb.J_CROSS_HEIGHT))
+		int32(glb.SMALL_SCREEN_Y_CENTER+glb.J_CROSS_HEIGHT/2+cPosY))
 }

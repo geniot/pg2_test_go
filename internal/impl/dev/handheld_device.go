@@ -17,17 +17,17 @@ type HandheldDeviceImpl struct {
 	isRumbleSupported bool
 }
 
-func (device HandheldDeviceImpl) GetJoystickAxis(axis int) int16 {
-	return device.joystick.Axis(axis)
+func (handhelpDevice HandheldDeviceImpl) GetJoystickAxis(axis int) int16 {
+	return handhelpDevice.joystick.Axis(axis)
 }
 
-func (device HandheldDeviceImpl) Stop() {
+func (handhelpDevice HandheldDeviceImpl) Stop() {
+	handhelpDevice.joystick.Close()
+	handhelpDevice.haptic.Close()
 	closeCommon()
-	device.joystick.Close()
-	device.haptic.Close()
 }
 
-func (device HandheldDeviceImpl) UpdateBatteryStatus() {
+func (handhelpDevice HandheldDeviceImpl) UpdateBatteryStatus() {
 	dat, err := os.ReadFile("/sys/class/power_supply/usb/online")
 	if err != nil {
 		fmt.Println(err.Error())
@@ -65,7 +65,7 @@ func (device HandheldDeviceImpl) UpdateBatteryStatus() {
 	ctx.PowerInformation.IsCharging = isCharging
 }
 
-func (device HandheldDeviceImpl) UpdateDiskStatus() {
+func (handhelpDevice HandheldDeviceImpl) UpdateDiskStatus() {
 	updateDiskInfo("/usr/local/home", &ctx.DiskInfo1)
 	updateDiskInfo("/media/sdcard/", &ctx.DiskInfo2)
 }
@@ -73,7 +73,7 @@ func (device HandheldDeviceImpl) UpdateDiskStatus() {
 /*
 see: https://github.com/libsdl-org/SDL/issues/6744
 */
-func (device HandheldDeviceImpl) UpdateVolume() {
+func (handhelpDevice HandheldDeviceImpl) UpdateVolume() {
 	//cmd := exec.Command("amixer", "sget", "Master")
 	//res, _ := cmd.Output()
 	//lines := strings.Split(string(res), "\n")
@@ -83,7 +83,7 @@ func (device HandheldDeviceImpl) UpdateVolume() {
 	//currentVolume, _ = strconv.Atoi(percentStr)
 }
 
-func (device HandheldDeviceImpl) ProcessKeyActions() {
+func (handhelpDevice HandheldDeviceImpl) ProcessKeyActions() {
 	if ctx.PressedKeysCodes.Contains(glb.GCW_BUTTON_L1) &&
 		ctx.PressedKeysCodes.Contains(glb.GCW_BUTTON_START) {
 		ctx.Loop.Stop()
@@ -96,25 +96,27 @@ func (device HandheldDeviceImpl) ProcessKeyActions() {
 	}
 	if ctx.PressedKeysCodes.Contains(glb.GCW_BUTTON_L2) &&
 		ctx.PressedKeysCodes.Contains(glb.GCW_BUTTON_R2) {
-		device.rumble()
+		handhelpDevice.rumble()
 	}
 }
 
-func (device HandheldDeviceImpl) GetWindowPosAndSize() (int32, int32, int32, int32) {
+func (handhelpDevice HandheldDeviceImpl) GetWindowPosAndSize() (int32, int32, int32, int32) {
 	return 0, 0, 320, 240
 }
 
-func (h HandheldDeviceImpl) GetWindowState() uint32 {
+func (handhelpDevice HandheldDeviceImpl) GetWindowState() uint32 {
 	return sdl.WINDOW_SHOWN | sdl.WINDOW_BORDERLESS
 }
 
-func (h HandheldDeviceImpl) IsRumbleSupported() bool {
-	return h.isRumbleSupported
+func (handhelpDevice HandheldDeviceImpl) IsRumbleSupported() bool {
+	return handhelpDevice.isRumbleSupported
 }
 
-func (h HandheldDeviceImpl) rumble() {
-	//TODO implement me
-	panic("implement me")
+func (handhelpDevice HandheldDeviceImpl) rumble() {
+	err := handhelpDevice.haptic.RumblePlay(0.33, 500)
+	if err != nil {
+		println(err.Error())
+	}
 }
 
 func NewHandheldDevice() HandheldDeviceImpl {
@@ -123,7 +125,7 @@ func NewHandheldDevice() HandheldDeviceImpl {
 	return device
 }
 
-func (device HandheldDeviceImpl) init() {
+func (handhelpDevice *HandheldDeviceImpl) init() {
 	initCommon()
 	numHaptics, err := sdl.NumHaptics()
 	if err != nil {
@@ -132,21 +134,21 @@ func (device HandheldDeviceImpl) init() {
 	if numHaptics > 0 {
 		println("Haptics: " + strconv.Itoa(numHaptics))
 		println(sdl.HapticName(0))
-		device.haptic, err = sdl.HapticOpen(0)
+		handhelpDevice.haptic, err = sdl.HapticOpen(0)
 		if err != nil {
 			panic(err)
 		}
-		err = device.haptic.RumbleInit()
+		err = handhelpDevice.haptic.RumbleInit()
 		if err != nil {
 			panic(err)
 		}
-		device.isRumbleSupported, _ = device.haptic.RumbleSupported()
+		handhelpDevice.isRumbleSupported, _ = handhelpDevice.haptic.RumbleSupported()
 	}
 	numJoysticks := sdl.NumJoysticks()
 	if numJoysticks > 0 {
 		println("Joysticks: " + strconv.Itoa(numJoysticks))
 		println(sdl.JoystickNameForIndex(0))
-		device.joystick = sdl.JoystickOpen(0)
+		handhelpDevice.joystick = sdl.JoystickOpen(0)
 	}
 	sdl.JoystickEventState(sdl.ENABLE)
 }

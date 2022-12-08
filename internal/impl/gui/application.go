@@ -15,6 +15,7 @@ import (
 
 type ApplicationImpl struct {
 	audioChunk *mix.Chunk
+	cron       *cron.Cron
 }
 
 func NewApplication() *ApplicationImpl {
@@ -40,14 +41,14 @@ func (app *ApplicationImpl) Start() {
 	go ctx.Device.UpdateDiskStatus()
 	go ctx.Device.UpdateVolume()
 
-	c := cron.New()
-	_, err := c.AddFunc("@every 1s", ctx.Device.UpdateBatteryStatus)
-	_, err = c.AddFunc("@every 1s", ctx.Device.UpdateDiskStatus)
-	_, err = c.AddFunc("@every 1s", ctx.Device.UpdateVolume)
+	app.cron = cron.New()
+	_, err := app.cron.AddFunc("@every 1s", ctx.Device.UpdateBatteryStatus)
+	_, err = app.cron.AddFunc("@every 1s", ctx.Device.UpdateDiskStatus)
+	_, err = app.cron.AddFunc("@every 1s", ctx.Device.UpdateVolume)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	c.Start()
+	app.cron.Start()
 
 	ctx.Loop.Start()
 
@@ -60,6 +61,7 @@ func (app *ApplicationImpl) PlaySound() {
 }
 
 func (app *ApplicationImpl) Stop() {
+	app.cron.Stop()
 	app.audioChunk.Free()
 	ctx.Font.Close()
 	ctx.Device.Stop()
