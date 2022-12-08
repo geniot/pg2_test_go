@@ -20,10 +20,10 @@ var (
 
 	CurrentScene api.IRenderable
 
-	PowerInformation PowerInfo = PowerInfo{100, false}
-	DiskInfo1        DiskInfo  = DiskInfo{false, "", ""}
-	DiskInfo2        DiskInfo  = DiskInfo{false, "", ""}
-	CurrentVolume    int       = 0
+	PowerInformation api.PowerInfo = api.PowerInfo{100, false}
+	DiskInfo1        api.DiskInfo  = api.DiskInfo{false, "", ""}
+	DiskInfo2        api.DiskInfo  = api.DiskInfo{false, "", ""}
+	CurrentVolume    int           = 0
 
 	Renderer         *sdl.Renderer
 	Font             *ttf.Font

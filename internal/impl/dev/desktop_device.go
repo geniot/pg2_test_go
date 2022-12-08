@@ -1,8 +1,8 @@
 package dev
 
 import (
+	"geniot.com/geniot/pg2_test_go/internal/api"
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
-	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
 	"github.com/itchyny/volume-go"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
@@ -51,8 +51,8 @@ func (device DesktopDeviceImpl) ProcessKeyActions() {
 }
 
 func (device DesktopDeviceImpl) GetWindowPosAndSize() (int32, int32, int32, int32) {
-	return int32(ctx.Config.Get(mdl.WINDOW_XPOS_KEY)),
-		int32(ctx.Config.Get(mdl.WINDOW_YPOS_KEY)),
+	return int32(ctx.Config.Get(api.WINDOW_XPOS_KEY)),
+		int32(ctx.Config.Get(api.WINDOW_YPOS_KEY)),
 		320, 240
 	//int32(ctx.Config.Get(mdl.WINDOW_WIDTH_KEY)),
 	//int32(ctx.Config.Get(mdl.WINDOW_HEIGHT_KEY))

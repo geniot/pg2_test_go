@@ -1,4 +1,4 @@
-package ctx
+package api
 
 type PowerInfo struct {
 	Pct        int

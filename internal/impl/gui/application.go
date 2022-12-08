@@ -2,10 +2,11 @@ package gui
 
 import (
 	"fmt"
+	"geniot.com/geniot/pg2_test_go/internal/api"
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/internal/impl/dev"
 	"geniot.com/geniot/pg2_test_go/internal/impl/gui/loop"
-	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
+	"geniot.com/geniot/pg2_test_go/internal/impl/gui/rnd"
 	"geniot.com/geniot/pg2_test_go/resources"
 	"github.com/robfig/cron/v3"
 	"github.com/veandco/go-sdl2/mix"
@@ -30,9 +31,9 @@ func (app *ApplicationImpl) Start() {
 	ctx.PhysicsLoop = loop.NewPhysicsLoop()
 	ctx.RenderLoop = loop.NewRenderLoop()
 
-	ctx.CurrentScene = mdl.NewScene()
+	ctx.CurrentScene = rnd.NewScene()
 
-	ctx.Font, _ = ttf.OpenFontRW(resources.GetResource(mdl.FONT_FILE_NAME), 1, mdl.FONT_SIZE)
+	ctx.Font, _ = ttf.OpenFontRW(resources.GetResource(api.FONT_FILE_NAME), 1, api.FONT_SIZE)
 	app.audioChunk, _ = mix.LoadWAVRW(resources.GetResource("tone.wav"), true)
 
 	go ctx.Device.UpdateBatteryStatus()

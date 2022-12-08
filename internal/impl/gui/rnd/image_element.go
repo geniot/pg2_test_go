@@ -1,6 +1,7 @@
-package mdl
+package rnd
 
 import (
+	"geniot.com/geniot/pg2_test_go/internal/api"
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
 	"geniot.com/geniot/pg2_test_go/resources"
 	"github.com/veandco/go-sdl2/img"
@@ -33,4 +34,17 @@ func (iEl ImageElement) Render() {
 		dstRect := sdl.Rect{iEl.offsetX, iEl.offsetY, iEl.width, iEl.height}
 		ctx.Renderer.Copy(iEl.texture, nil, &dstRect)
 	}
+}
+
+func initImageElements(imageDescriptors []api.ImageDescriptor) []ImageElement {
+	imgElements := make([]ImageElement, len(imageDescriptors))
+	for i := range imageDescriptors {
+		iEl := NewImageElement(
+			imageDescriptors[i].ImageName,
+			imageDescriptors[i].OffsetX,
+			imageDescriptors[i].OffsetY,
+			imageDescriptors[i].DisplayOnPress)
+		imgElements[i] = iEl
+	}
+	return imgElements
 }

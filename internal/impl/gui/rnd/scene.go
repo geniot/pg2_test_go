@@ -1,4 +1,4 @@
-package mdl
+package rnd
 
 import (
 	"container/list"
@@ -11,12 +11,12 @@ type Scene struct {
 
 func NewScene() *Scene {
 	l := list.New()
-	for i := range ButtonImages {
+	for i := range api.ButtonImages {
 		iEl := NewImageElement(
-			ButtonImages[i].ImageName,
-			ButtonImages[i].OffsetX,
-			ButtonImages[i].OffsetY,
-			ButtonImages[i].DisplayOnPress)
+			api.ButtonImages[i].ImageName,
+			api.ButtonImages[i].OffsetX,
+			api.ButtonImages[i].OffsetY,
+			api.ButtonImages[i].DisplayOnPress)
 		l.PushBack(iEl)
 	}
 	l.PushBack(NewDiskInfos())

@@ -2,8 +2,6 @@ package dev
 
 import (
 	"geniot.com/geniot/pg2_test_go/internal/api"
-	"geniot.com/geniot/pg2_test_go/internal/ctx"
-	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
 	"github.com/pydio/minio-srv/pkg/disk"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
@@ -40,7 +38,7 @@ func closeCommon() {
 	mix.CloseAudio()
 }
 
-func updateDiskInfo(path string, diskInfo *ctx.DiskInfo) {
+func updateDiskInfo(path string, diskInfo *api.DiskInfo) {
 	di, err := disk.GetInfo(path)
 	if err != nil {
 		println(err.Error())
@@ -50,8 +48,8 @@ func updateDiskInfo(path string, diskInfo *ctx.DiskInfo) {
 	//we only do this once: when initializing or the disk has been inserted
 	if !diskInfo.IsDiskAvailable {
 		diskInfo.IsDiskAvailable = true
-		diskInfo.MaxDiskSpace = mdl.Bytes(di.Total)
-		diskInfo.FreeDiskSpace = mdl.Bytes(di.Free)
+		diskInfo.MaxDiskSpace = api.Bytes(di.Total)
+		diskInfo.FreeDiskSpace = api.Bytes(di.Free)
 	}
 
 }

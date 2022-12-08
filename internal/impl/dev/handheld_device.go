@@ -2,8 +2,8 @@ package dev
 
 import (
 	"fmt"
+	"geniot.com/geniot/pg2_test_go/internal/api"
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
-	"geniot.com/geniot/pg2_test_go/internal/impl/mdl"
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 	"os"
@@ -36,9 +36,9 @@ func (device HandheldDeviceImpl) UpdateBatteryStatus() {
 	pct, err := strconv.Atoi(strings.TrimSpace(string(voltage)))
 
 	if isCharging {
-		pct = ((pct - mdl.MIN_VOLTAGE) - mdl.USB_VOLTAGE) * 100 / (mdl.MAX_VOLTAGE - mdl.MIN_VOLTAGE)
+		pct = ((pct - api.MIN_VOLTAGE) - api.USB_VOLTAGE) * 100 / (api.MAX_VOLTAGE - api.MIN_VOLTAGE)
 	} else {
-		pct = (pct - mdl.MIN_VOLTAGE) * 100 / (mdl.MAX_VOLTAGE - mdl.MIN_VOLTAGE)
+		pct = (pct - api.MIN_VOLTAGE) * 100 / (api.MAX_VOLTAGE - api.MIN_VOLTAGE)
 	}
 
 	if pct > 100 {
@@ -80,18 +80,18 @@ func (device HandheldDeviceImpl) UpdateVolume() {
 }
 
 func (device HandheldDeviceImpl) ProcessKeyActions() {
-	if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L1) &&
-		ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_START) {
+	if ctx.PressedKeysCodes.Contains(api.GCW_BUTTON_L1) &&
+		ctx.PressedKeysCodes.Contains(api.GCW_BUTTON_START) {
 		ctx.Loop.Stop()
 	}
-	if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L1) &&
-		ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_X) {
+	if ctx.PressedKeysCodes.Contains(api.GCW_BUTTON_L1) &&
+		ctx.PressedKeysCodes.Contains(api.GCW_BUTTON_X) {
 		if mix.Playing(-1) != 1 {
 			ctx.Application.PlaySound()
 		}
 	}
-	if ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_L2) &&
-		ctx.PressedKeysCodes.Contains(mdl.GCW_BUTTON_R2) {
+	if ctx.PressedKeysCodes.Contains(api.GCW_BUTTON_L2) &&
+		ctx.PressedKeysCodes.Contains(api.GCW_BUTTON_R2) {
 		device.rumble()
 	}
 }
