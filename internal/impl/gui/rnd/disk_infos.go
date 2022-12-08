@@ -3,7 +3,6 @@ package rnd
 import (
 	"geniot.com/geniot/pg2_test_go/internal/api"
 	"geniot.com/geniot/pg2_test_go/internal/ctx"
-	"github.com/veandco/go-sdl2/sdl"
 )
 
 type DiskInfos struct {
@@ -20,25 +19,20 @@ func (diskInfos DiskInfos) Render() {
 
 	if ctx.DiskInfo1.IsDiskAvailable {
 		renderImageElement(diskInfos.imageElements, 0)
-
-		textTexture1, w1, h1 := genTexture(ctx.DiskInfo1.FreeDiskSpace, api.COLOR_RED)
-		textTexture2, w2, h2 := genTexture(" / ", api.COLOR_GREEN)
-		textTexture3, w3, h3 := genTexture(ctx.DiskInfo1.MaxDiskSpace, api.COLOR_GRAY)
-
-		ctx.Renderer.Copy(textTexture1, nil, &sdl.Rect{X: 120 - w1 - w2 - w3, Y: 20, W: w1, H: h1})
-		ctx.Renderer.Copy(textTexture2, nil, &sdl.Rect{X: 120 - w2 - w3, Y: 20, W: w2, H: h2})
-		ctx.Renderer.Copy(textTexture3, nil, &sdl.Rect{X: 120 - w3, Y: 20, W: w3, H: h3})
+		text1 := ctx.DiskInfo1.FreeDiskSpace
+		text2 := " / "
+		text3 := ctx.DiskInfo1.MaxDiskSpace
+		width1 := getTextWidth(text1)
+		width2 := getTextWidth(text2)
+		width3 := getTextWidth(text3)
+		drawText(text1, 120-width1-width2-width3, 20, api.COLOR_RED)
+		drawText(text2, 120-width2-width3, 20, api.COLOR_GREEN)
+		drawText(text3, 120-width3, 20, api.COLOR_GRAY)
 	}
 	if ctx.DiskInfo2.IsDiskAvailable {
 		renderImageElement(diskInfos.imageElements, 1)
-
-		textTexture1, w1, h1 := genTexture(ctx.DiskInfo2.FreeDiskSpace, api.COLOR_RED)
-		textTexture2, w2, h2 := genTexture(" / ", api.COLOR_GREEN)
-		textTexture3, w3, h3 := genTexture(ctx.DiskInfo2.MaxDiskSpace, api.COLOR_GRAY)
-
-		ctx.Renderer.Copy(textTexture1, nil, &sdl.Rect{X: 197, Y: 20, W: w1, H: h1})
-		ctx.Renderer.Copy(textTexture2, nil, &sdl.Rect{X: 197 + w1, Y: 20, W: w2, H: h2})
-		ctx.Renderer.Copy(textTexture3, nil, &sdl.Rect{X: 197 + w1 + w2, Y: 20, W: w3, H: h3})
-
+		width1 := drawText(ctx.DiskInfo2.FreeDiskSpace, 197, 20, api.COLOR_RED)
+		width2 := drawText(" / ", 197+width1, 20, api.COLOR_GREEN)
+		drawText(ctx.DiskInfo2.MaxDiskSpace, 197+width1+width2, 20, api.COLOR_GRAY)
 	}
 }

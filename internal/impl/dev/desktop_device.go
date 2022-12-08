@@ -23,11 +23,13 @@ func (device DesktopDeviceImpl) UpdateBatteryStatus() {
 func (device DesktopDeviceImpl) UpdateDiskStatus() {
 	if runtime.GOOS == "windows" {
 		updateDiskInfo("C:\\", &ctx.DiskInfo1)
+		//can be uncommented for debugging
+		updateDiskInfo("C:\\", &ctx.DiskInfo2)
 	} else {
 		updateDiskInfo("/", &ctx.DiskInfo1)
+		//can be uncommented for debugging
+		updateDiskInfo("/", &ctx.DiskInfo2)
 	}
-	//can be uncommented for debugging
-	//updateDiskInfo("C:\\", &ctx.DiskInfo2)
 }
 
 func (device DesktopDeviceImpl) UpdateVolume() {
