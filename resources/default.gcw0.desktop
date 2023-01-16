@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=PocketGo2v2 Test
+Name=Hardware Test
 Comment=Test your PocketGo2v2
-Exec=pg2_test.gcw
+Exec=pg2_test_go.gcw
 Terminal=false
 Type=Application
 StartupNotify=true
-Icon=pg2test
+Icon=pg2_test_go
 Categories=applications;

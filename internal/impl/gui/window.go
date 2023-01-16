@@ -23,7 +23,7 @@ func NewWindow() *Window {
 		xPos, yPos, width, height,
 		ctx.Device.GetWindowState())
 
-	w.iconSurface, _ = img.LoadRW(resources.GetResource("pg2test.png"), true)
+	w.iconSurface, _ = img.LoadRW(resources.GetResource("pg2_test_go.png"), true)
 	w.sdlWindow.SetIcon(w.iconSurface)
 
 	ctx.Renderer, _ = sdl.CreateRenderer(w.sdlWindow, -1,

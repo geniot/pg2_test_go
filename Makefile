@@ -1,11 +1,12 @@
+PROGRAM_NAME := pg2_test_go
+
 all: clean build
 
 clean:
-	rm bin/pg2_test -f
-	rm bin/pg2_test.gcw -f
+	rm bin/* -f
 
 build:
-	go build -o bin/pg2_test geniot.com/geniot/pg2_test_go/cmd/pg2_test
+	go build -o bin/${PROGRAM_NAME} geniot.com/geniot/pg2_test_go/cmd/pg2_test
 
 mips:
 	CC='/opt/gcw0-toolchain/usr/bin/mipsel-gcw0-linux-uclibc-gcc' \
@@ -16,12 +17,15 @@ mips:
 	 GOMIPS=softfloat \
 	 GOOS=linux \
 	 PKG_CONFIG='/opt/gcw0-toolchain/usr/bin/pkg-config' \
-	 go build -o bin/pg2_test.gcw geniot.com/geniot/pg2_test_go/cmd/pg2_test
+	 go build -o bin/${PROGRAM_NAME}.gcw geniot.com/geniot/pg2_test_go/cmd/pg2_test
 
 squash:
-	mksquashfs bin/pg2_test.gcw resources/media/pg2test.png resources/default.gcw0.desktop bin/pg2_test.opk -all-root -no-xattrs -noappend -no-exports
+	mksquashfs bin/${PROGRAM_NAME}.gcw resources/media/${PROGRAM_NAME}.png resources/default.gcw0.desktop bin/${PROGRAM_NAME}.opk -all-root -no-xattrs -noappend -no-exports
 
-opk: clean mips squash
+opk: clean mips squash deploy
+
+deploy:
+	scp bin/${PROGRAM_NAME}.opk root@10.1.1.2:/media/data/apps
 
 #on PG2 use opkrun
 
