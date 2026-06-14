@@ -2,8 +2,9 @@ package glb
 
 import (
 	"fmt"
-	"github.com/veandco/go-sdl2/sdl"
 	"math"
+
+	"github.com/veandco/go-sdl2/sdl"
 )
 
 const (

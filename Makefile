@@ -17,7 +17,7 @@ mips:
 	 GOMIPS=softfloat \
 	 GOOS=linux \
 	 PKG_CONFIG='/opt/gcw0-toolchain/usr/bin/pkg-config' \
-	 go build -o bin/${PROGRAM_NAME}.gcw geniot.com/geniot/pg2_test_go/cmd/pg2_test
+	 go build -tags netgo -o bin/${PROGRAM_NAME}.gcw geniot.com/geniot/pg2_test_go/cmd/pg2_test
 
 squash:
 	mksquashfs bin/${PROGRAM_NAME}.gcw resources/media/${PROGRAM_NAME}.png resources/default.gcw0.desktop bin/${PROGRAM_NAME}.opk -all-root -no-xattrs -noappend -no-exports
